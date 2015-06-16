@@ -4,16 +4,6 @@ title: C++ Toolkit test
 nav: experiments
 ---
 
-| Argument    | Effect                                                             | Comments                           |
-|-------------|--------------------------------------------------------------------|------------------------------------|
-| -h          | Display the <span class="nctnt ncbi-app">DATATOOL</span> arguments | Ignores other arguments            |
-| -m \<file\> | module specification file(s) - ASN.1, DTD, or XSD                  | Required argument                  |
-| -M \<file\> | External module file(s)                                            | Is used for IMPORT type resolution |
-| -i          | Ignore unresolved types                                            | Is used for IMPORT type resolution |
-| -f \<file\> | Write ASN.1 module file                                            |                                    |
-
-Assa-Bessa
-
 
 [Contents ▾](#__nav_cntnt)
 [Table of Contents Page](toc.html)
@@ -301,69 +291,33 @@ See [Table 1](ch_app.html#ch_app.tools_table1).
 
 Table 1. Main arguments
 
-Argument
-Effect
-Comments
--h
-Display the <span class="nctnt ncbi-app">DATATOOL</span> arguments
-Ignores other arguments
--m \<file\>
-module specification file(s) - ASN.1, DTD, or XSD
-Required argument
--M \<file\>
-External module file(s)
-Is used for IMPORT type resolution
--i
-Ignore unresolved types
-Is used for IMPORT type resolution
--f \<file\>
-Write ASN.1 module file
--fx \<file\>
-Write DTD module file
-"-fx m" writes modular DTD file
--fxs \<file\>
-Write XML Schema file
--fd \<file\>
-Write specification dump file in datatool internal format
--ms \<string\>
-Suffix of modular DTD or XML Schema file name
--dn \<string\>
-DTD module name in XML header
-No extension. If empty, omit DOCTYPE declaration.
--v \<file\>
-Read value in ASN.1 text format
--vx \<file\>
-Read value in XML format
--F
-Read value completely into memory
--p \<file\>
-Write value in ASN.1 text format
--px \<file\>
-Write value in XML format
--pj \<file\>
-Write value in JSON format
--d \<file\>
-Read value in ASN.1 binary format
--t argument required
--t \<type\>
-Binary value type name
-See -d argument
--e \<file\>
-Write value in ASN.1 binary format
--xmlns
-XML namespace name
-When specified, also makes XML output file reference Schema instead of DTD
--sxo
-No scope prefixes in XML output
--sxi
-No scope prefixes in XML input
--logfile \<File\_Out\>
-File to which the program log should be redirected
-conffile \<File\_In\>
-Program's configuration (registry) data file
--version
-Print version number
-Ignores other arguments
+| Argument               | Effect                                                             | Comments                                                                   |
+|------------------------|--------------------------------------------------------------------|----------------------------------------------------------------------------|
+| -h                     | Display the <span class="nctnt ncbi-app">DATATOOL</span> arguments | Ignores other arguments                                                    |
+| -m \<file\>            | module specification file(s) - ASN.1, DTD, or XSD                  | Required argument                                                          |
+| -M \<file\>            | External module file(s)                                            | Is used for IMPORT type resolution                                         |
+| -i                     | Ignore unresolved types                                            | Is used for IMPORT type resolution                                         |
+| -f \<file\>            | Write ASN.1 module file                                            |                                                                            |
+| -fx \<file\>           | Write DTD module file                                              | "-fx m" writes modular DTD file                                            |
+| -fxs \<file\>          | Write XML Schema file                                              |                                                                            |
+| -fd \<file\>           | Write specification dump file in datatool internal format          |                                                                            |
+| -ms \<string\>         | Suffix of modular DTD or XML Schema file name                      |                                                                            |
+| -dn \<string\>         | DTD module name in XML header                                      | No extension. If empty, omit DOCTYPE declaration.                          |
+| -v \<file\>            | Read value in ASN.1 text format                                    |                                                                            |
+| -vx \<file\>           | Read value in XML format                                           |                                                                            |
+| -F                     | Read value completely into memory                                  |                                                                            |
+| -p \<file\>            | Write value in ASN.1 text format                                   |                                                                            |
+| -px \<file\>           | Write value in XML format                                          |                                                                            |
+| -pj \<file\>           | Write value in JSON format                                         |                                                                            |
+| -d \<file\>            | Read value in ASN.1 binary format                                  | -t argument required                                                       |
+| -t \<type\>            | Binary value type name                                             | See -d argument                                                            |
+| -e \<file\>            | Write value in ASN.1 binary format                                 |                                                                            |
+| -xmlns                 | XML namespace name                                                 | When specified, also makes XML output file reference Schema instead of DTD |
+| -sxo                   | No scope prefixes in XML output                                    |                                                                            |
+| -sxi                   | No scope prefixes in XML input                                     |                                                                            |
+| -logfile \<File\_Out\> | File to which the program log should be redirected                 |                                                                            |
+| conffile \<File\_In\>  | Program's configuration (registry) data file                       |                                                                            |
+| -version               | Print version number                                               | Ignores other arguments                                                    |
 
 #### <span class="title">Code Generation Arguments</span>
 
@@ -371,70 +325,34 @@ See [Table 2](ch_app.html#ch_app.tools_table2).
 
 Table 2. Code generation arguments
 
-Argument
-Effect
-Comments
--od \<file\>
-C++ code [definition file](ch_app.html#ch_app.datatool.html_refDefFile)
-See [Definition file](ch_app.html#ch_app.datatool.html_refDefFile)
--ods
-Generate an example definition file (e.g. <span class="nctnt ncbi-path">MyModuleName.\_sample\_def</span>)
-Must be used with another option that generates code such as -oA.
--odi
-Ignore absent code definition file
--odw
-Issue a warning about absent code definition file
--oA
-Generate C++ files for all types
-Only types from the main module are used (see [-m](ch_app.html#ch_app.tools_table1) and -mx arguments).
--ot \<types\>
-Generate C++ files for listed types
-Only types from the main module are used (see [-m](ch_app.html#ch_app.tools_table1) and -mx arguments).
--ox \<types\>
-Exclude types from generation
--oX
-Turn off recursive type generation
--of \<file\>
-Write the list of generated C++ files
--oc \<file\>
-Write combining C++ files
--on \<string\>
-Default namespace
-The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't use a namespace at all and overrides the -on option specified elsewhere.
--opm \<dir\>
-Directory for searching source modules
--oph \<dir\>
-Directory for generated \*.hpp files
--opc \<dir\>
-Directory for generated \*.cpp files
--or \<prefix\>
-Add prefix to generated file names
--orq
-Use quoted syntax form for generated include files
--ors
-Add source file dir to generated file names
--orm
-Add module name to generated file names
--orA
-Combine all -or\* prefixes
--ocvs
-create ".cvsignore" files
--oR \<dir\>
-Set -op\* and -or\* arguments for NCBI directory tree
--oDc
-Turn ON generation of Doxygen-style comments
-The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't generate Doxygen comments and overrides the -oDc option specified elsewhere.
--odx \<string\>
-URL of documentation root folder
-For Doxygen
--lax\_syntax
-Allow non-standard ASN.1 syntax accepted by asntool
-The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't allow non-standard syntax and overrides the -lax\_syntax option specified elsewhere.
--pch \<string\>
-Name of the precompiled header file to include in all \*.cpp files
--oex \<export\>
-Add storage-class modifier to generated classes
-Can be overriden by [[-].\_export](ch_app.html#ch_app.datatool.html_refDefCommon) in the definition file.
+| Argument        | Effect                                                                                                     | Comments                                                                                                                                                                             |
+|-----------------|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| -od \<file\>    | C++ code [definition file](ch_app.html#ch_app.datatool.html_refDefFile)                                    | See [Definition file](ch_app.html#ch_app.datatool.html_refDefFile)                                                                                                                   |
+| -ods            | Generate an example definition file (e.g. <span class="nctnt ncbi-path">MyModuleName.\_sample\_def</span>) | Must be used with another option that generates code such as -oA.                                                                                                                    |
+| -odi            | Ignore absent code definition file                                                                         |                                                                                                                                                                                      |
+| -odw            | Issue a warning about absent code definition file                                                          |                                                                                                                                                                                      |
+| -oA             | Generate C++ files for all types                                                                           | Only types from the main module are used (see [-m](ch_app.html#ch_app.tools_table1) and -mx arguments).                                                                              |
+| -ot \<types\>   | Generate C++ files for listed types                                                                        | Only types from the main module are used (see [-m](ch_app.html#ch_app.tools_table1) and -mx arguments).                                                                              |
+| -ox \<types\>   | Exclude types from generation                                                                              |                                                                                                                                                                                      |
+| -oX             | Turn off recursive type generation                                                                         |                                                                                                                                                                                      |
+| -of \<file\>    | Write the list of generated C++ files                                                                      |                                                                                                                                                                                      |
+| -oc \<file\>    | Write combining C++ files                                                                                  |                                                                                                                                                                                      |
+| -on \<string\>  | Default namespace                                                                                          | The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't use a namespace at all and overrides the -on option specified elsewhere.             |
+| -opm \<dir\>    | Directory for searching source modules                                                                     |                                                                                                                                                                                      |
+| -oph \<dir\>    | Directory for generated \*.hpp files                                                                       |                                                                                                                                                                                      |
+| -opc \<dir\>    | Directory for generated \*.cpp files                                                                       |                                                                                                                                                                                      |
+| -or \<prefix\>  | Add prefix to generated file names                                                                         |                                                                                                                                                                                      |
+| -orq            | Use quoted syntax form for generated include files                                                         |                                                                                                                                                                                      |
+| -ors            | Add source file dir to generated file names                                                                |                                                                                                                                                                                      |
+| -orm            | Add module name to generated file names                                                                    |                                                                                                                                                                                      |
+| -orA            | Combine all -or\* prefixes                                                                                 |                                                                                                                                                                                      |
+| -ocvs           | create ".cvsignore" files                                                                                  |                                                                                                                                                                                      |
+| -oR \<dir\>     | Set -op\* and -or\* arguments for NCBI directory tree                                                      |                                                                                                                                                                                      |
+| -oDc            | Turn ON generation of Doxygen-style comments                                                               | The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't generate Doxygen comments and overrides the -oDc option specified elsewhere.         |
+| -odx \<string\> | URL of documentation root folder                                                                           | For Doxygen                                                                                                                                                                          |
+| -lax\_syntax    | Allow non-standard ASN.1 syntax accepted by asntool                                                        | The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't allow non-standard syntax and overrides the -lax\_syntax option specified elsewhere. |
+| -pch \<string\> | Name of the precompiled header file to include in all \*.cpp files                                         |                                                                                                                                                                                      |
+| -oex \<export\> | Add storage-class modifier to generated classes                                                            | Can be overriden by [[-].\_export](ch_app.html#ch_app.datatool.html_refDefCommon) in the definition file.                                                                            |
 
 ### <span class="title">Data Specification Conversion</span>
 
@@ -656,20 +574,16 @@ If we have the following ASN.1 specification (this not a "real" specification - 
 
 Then the following definitions will effect the generation of objects:
 
-Definition
-Effected Objects
-<span class="nctnt ncbi-monospace">[Date]</span>
-<span class="nctnt ncbi-monospace">str.\_type = string</span>
-the <span class="nctnt ncbi-monospace">str</span> member of the <span class="nctnt ncbi-monospace">Date</span> structure
-<span class="nctnt ncbi-monospace">[Dates]</span>
-<span class="nctnt ncbi-monospace">E.\_pointer = true</span>
-elements of the <span class="nctnt ncbi-monospace">Dates</span> container
-<span class="nctnt ncbi-monospace">[Int-fuzz]</span>
-<span class="nctnt ncbi-monospace">range.min.\_type = long</span>
-the <span class="nctnt ncbi-monospace">min</span> member of the <span class="nctnt ncbi-monospace">range</span> member of the <span class="nctnt ncbi-monospace">Int-fuzz</span> structure
-<span class="nctnt ncbi-monospace">[Int-fuzz]</span>
-<span class="nctnt ncbi-monospace">alt.E.\_type = long</span>
-elements of the <span class="nctnt ncbi-monospace">alt</span> member of the <span class="nctnt ncbi-monospace">Int-fuzz</span> structure
+| Definition                                                        | Effected Objects                                                                                                                                                                           |
+|-------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <span class="nctnt ncbi-monospace">[Date]</span>                  
+ <span class="nctnt ncbi-monospace">str.\_type = string</span>      | the <span class="nctnt ncbi-monospace">str</span> member of the <span class="nctnt ncbi-monospace">Date</span> structure                                                                   |
+| <span class="nctnt ncbi-monospace">[Dates]</span>                 
+ <span class="nctnt ncbi-monospace">E.\_pointer = true</span>       | elements of the <span class="nctnt ncbi-monospace">Dates</span> container                                                                                                                  |
+| <span class="nctnt ncbi-monospace">[Int-fuzz]</span>              
+ <span class="nctnt ncbi-monospace">range.min.\_type = long</span>  | the <span class="nctnt ncbi-monospace">min</span> member of the <span class="nctnt ncbi-monospace">range</span> member of the <span class="nctnt ncbi-monospace">Int-fuzz</span> structure |
+| <span class="nctnt ncbi-monospace">[Int-fuzz]</span>              
+ <span class="nctnt ncbi-monospace">alt.E.\_type = long</span>      | elements of the <span class="nctnt ncbi-monospace">alt</span> member of the <span class="nctnt ncbi-monospace">Int-fuzz</span> structure                                                   |
 
 As another example, suppose you have a <span class="nctnt ncbi-type">CatalogEntry</span> type comprised of a <span class="nctnt ncbi-type">Summary</span> element and either a <span class="nctnt ncbi-type">RecordA</span> element or a <span class="nctnt ncbi-type">RecordB</span> element, as defined by the following XSD specification:
 
@@ -757,7 +671,7 @@ The following topics are discussed in this section:
 
 See [Figure 1](ch_app.html#ch_app.specs_asn).
 
-[![1. ASN.1 specification analysis.](static/img/specs_asn.gif?raw=true)](static/img/specs_asn.gif?raw=true "Click to see the full-resolution image")
+[![1. ASN.1 specification analysis.](static/img/specs_asn.gif)](static/img/specs_asn.gif "Click to see the full-resolution image")
 
 1. ASN.1 specification analysis.
 
@@ -765,7 +679,7 @@ See [Figure 1](ch_app.html#ch_app.specs_asn).
 
 See [Figure 2](ch_app.html#ch_app.specs_dtd).
 
-[![2. DTD specification analysis.](img/specs_dtd.gif)](img/specs_dtd.gif "Click to see the full-resolution image")
+[![2. DTD specification analysis.](static/img/specs_dtd.gif)](static/img/specs_dtd.gif "Click to see the full-resolution image")
 
 2. DTD specification analysis.
 
@@ -777,7 +691,7 @@ See [CDataType](http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/doxyhtml/classCD
 
 See [Figure 3](ch_app.html#ch_app.data_values).
 
-[![3. Data values.](img/data_types.gif)](img/data_types.gif "Click to see the full-resolution image")
+[![3. Data values.](static/img/data_types.gif)](static/img/data_types.gif "Click to see the full-resolution image")
 
 3. Data values.
 
@@ -785,7 +699,7 @@ See [Figure 3](ch_app.html#ch_app.data_values).
 
 See [Figure 4](ch_app.html#ch_app.code_gen).
 
-[![4. Code generation.](img/type_strings.gif)](img/type_strings.gif "Click to see the full-resolution image")
+[![4. Code generation.](static/img/type_strings.gif)](static/img/type_strings.gif "Click to see the full-resolution image")
 
 4. Code generation.
 
@@ -828,7 +742,7 @@ The section covers the following topics:
 
 The purpose of load balancing is distributing the load among the service providers available on the NCBI network basing on certain rules. The load is generated by both locally-connected and Internet-connected users. The figures below show the most typical usage scenarios.
 
-<span>[![Image LoadBalancingLocal.jpg](img/LoadBalancingLocal.jpg)](img/LoadBalancingLocal.jpg "Click to see the full-resolution image")</span>
+<span>[![Image LoadBalancingLocal.jpg](static/img/LoadBalancingLocal.jpg)](static/img/LoadBalancingLocal.jpg "Click to see the full-resolution image")</span>
 
 Figure 5. Local Clients
 
@@ -846,7 +760,7 @@ Another typical scenario for the local NCBI clients is when client code is run o
 
 The communication scenarios become more complicated in case when clients are located outside of the NCBI network. The figure below describes the interactions between modules when the user requested a service which does not suppose a long term connection.
 
-<span>[![Image LoadBalancingInternetShort.jpg](img/LoadBalancingInternetShort.jpg)](img/LoadBalancingInternetShort.jpg "Click to see the full-resolution image")</span>
+<span>[![Image LoadBalancingInternetShort.jpg](static/img/LoadBalancingInternetShort.jpg)](static/img/LoadBalancingInternetShort.jpg "Click to see the full-resolution image")</span>
 
 Figure 6. Internet Clients. Short Term Connection
 
@@ -854,7 +768,7 @@ The clients have no abilities to connect to front end Apache web servers directl
 
 The next figure explains the interactions for the case when an Internet client requests a service which supposes a long term connection.
 
-<span>[![Image LoadBalancingInternetLong.jpg](img/LoadBalancingInternetLong.jpg)](img/LoadBalancingInternetLong.jpg "Click to see the full-resolution image")</span>
+<span>[![Image LoadBalancingInternetLong.jpg](static/img/LoadBalancingInternetLong.jpg)](static/img/LoadBalancingInternetLong.jpg "Click to see the full-resolution image")</span>
 
 Figure 7. Internet Clients. Long Term Connection
 
@@ -864,7 +778,7 @@ The data flow in the scenario is as follows. A request from the client reaches a
 
 The most complicated scenario comes to the picture when an arbitrary Unix filter program is used as a service provided for the outside NCBI users. The figure below shows all the components involved into the scenario.
 
-<span>[![Image LoadBalancingDispD.jpg](img/LoadBalancingDispD.jpg)](img/LoadBalancingDispD.jpg "Click to see the full-resolution image")</span>
+<span>[![Image LoadBalancingDispD.jpg](static/img/LoadBalancingDispD.jpg)](static/img/LoadBalancingDispD.jpg "Click to see the full-resolution image")</span>
 
 Figure 8. NCBID at Work
 
@@ -1026,35 +940,22 @@ Output to <span class="nctnt ncbi-var">stderr</span> is attached to the LBSMD lo
 
 The check script is expected to produce one of the following exit codes:
 
-Code(s)
-Meaning
-0
-The server is fully available, i.e. "running at full throttle".
-1 - 99
-Indicates the approximate percent of base capacity used.
-100 - 110
-Server state is set as RESERVED. RESERVED servers are unavailable to most clients but not considered as officially DOWN.
-111 - 120
-The server is not available and must not be used, i.e. DOWN.
-123
-Retain the previous exit code (as supplied in <span class="nctnt ncbi-var">argv[3]</span>) and increment the repetition count. Retain the current server state, otherwise, and log a warning.
-124 (*not* followed by 125)
-Retain the current server state.
-124 followed by 125
-Turn the server off, with no more checks. <span class="nctnt highlight">Note:</span> This only applies when 124 is followed by 125, both without repetitions.
-125 (*not* preceded by 124)
-Retain the current server state.
-126
-Script was found but not executable (POSIX, script error).
-127
-Script was not found (POSIX, script error).
-200 - 210
-STANDBY server (set the rate to 0.005). The rate will be rolled back to the previously set "regular" rate the next time the RERATE command comes; or when the check script returns anything other than 123, 124, 125, or the state-retaining ALERTs (211-220).
-STANDBY servers are those having base rate in the range [0.001..0.009], with higher rates having better chance to get drafted for service. STANDBY servers are only used by clients if there are no usable non-STANDBY counterparts found.
-211 - 220
-ALERT (email contacts and retain the current server state).
-221 - 230
-ALERT (email contacts and base the server rate on the dependency check only).
+| Code(s)                     | Meaning                                                                                                                                                                                                                                                        |
+|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0                           | The server is fully available, i.e. "running at full throttle".                                                                                                                                                                                                |
+| 1 - 99                      | Indicates the approximate percent of base capacity used.                                                                                                                                                                                                       |
+| 100 - 110                   | Server state is set as RESERVED. RESERVED servers are unavailable to most clients but not considered as officially DOWN.                                                                                                                                       |
+| 111 - 120                   | The server is not available and must not be used, i.e. DOWN.                                                                                                                                                                                                   |
+| 123                         | Retain the previous exit code (as supplied in <span class="nctnt ncbi-var">argv[3]</span>) and increment the repetition count. Retain the current server state, otherwise, and log a warning.                                                                  |
+| 124 (*not* followed by 125) | Retain the current server state.                                                                                                                                                                                                                               |
+| 124 followed by 125         | Turn the server off, with no more checks. <span class="nctnt highlight">Note:</span> This only applies when 124 is followed by 125, both without repetitions.                                                                                                  |
+| 125 (*not* preceded by 124) | Retain the current server state.                                                                                                                                                                                                                               |
+| 126                         | Script was found but not executable (POSIX, script error).                                                                                                                                                                                                     |
+| 127                         | Script was not found (POSIX, script error).                                                                                                                                                                                                                    |
+| 200 - 210                   | STANDBY server (set the rate to 0.005). The rate will be rolled back to the previously set "regular" rate the next time the RERATE command comes; or when the check script returns anything other than 123, 124, 125, or the state-retaining ALERTs (211-220). 
+                               STANDBY servers are those having base rate in the range [0.001..0.009], with higher rates having better chance to get drafted for service. STANDBY servers are only used by clients if there are no usable non-STANDBY counterparts found.                      |
+| 211 - 220                   | ALERT (email contacts and retain the current server state).                                                                                                                                                                                                    |
+| 221 - 230                   | ALERT (email contacts and base the server rate on the dependency check only).                                                                                                                                                                                  |
 
 Exit codes 126, 127, and other unlisted codes are treated as if 0 had been returned (i.e. the server rate is based on the dependency check only).
 
@@ -1172,7 +1073,7 @@ The table below describes the LBSMD daemon signal processing.
 
 The configuration files structure is unified for all the hosts in the NCBI network. It is shown on the figure below.
 
-<span>[![Image ch\_app\_lbsmd\_cfg\_structure.png](img/ch_app_lbsmd_cfg_structure.png)](img/ch_app_lbsmd_cfg_structure.png "Click to see the full-resolution image")</span>
+<span>[![Image ch\_app\_lbsmd\_cfg\_structure.png](static/img/ch_app_lbsmd_cfg_structure.png)](static/img/ch_app_lbsmd_cfg_structure.png "Click to see the full-resolution image")</span>
 
 Figure 9. LBSMD Configuration Files Structure
 
@@ -1192,7 +1093,7 @@ So, if it is required to change the <span class="nctnt ncbi-path">/etc/lbsmd/loc
 
 As soon as the modified file is checked in the file will be delivered to the corresponding host with the proper name automatically. The changes will take effect in a few minutes. The process of the configuration distribution is illustrated on the figure below.
 
-<span>[![Image CFEngine.jpg](img/CFEngine.jpg)](img/CFEngine.jpg "Click to see the full-resolution image")</span>
+<span>[![Image CFEngine.jpg](static/img/CFEngine.jpg)](static/img/CFEngine.jpg "Click to see the full-resolution image")</span>
 
 Figure 10. Automatic Configuration Distribution
 
@@ -1206,7 +1107,7 @@ The following web page can be used to search for a service:
 
 The following screen will appear
 
-<span>[![Image LBSMDSearchMain.gif](img/LBSMDSearchMain.gif)](img/LBSMDSearchMain.gif "Click to see the full-resolution image")</span>
+<span>[![Image LBSMDSearchMain.gif](static/img/LBSMDSearchMain.gif)](static/img/LBSMDSearchMain.gif "Click to see the full-resolution image")</span>
 
 Figure 11. NCBI Service Search Page
 
@@ -1246,7 +1147,7 @@ In case if the service name is more than the allowed number of characters to dis
 
 The utility allows to report problems of accessing a certain server to the LBSMD daemon, in the form of a penalty which is a value in the range [0..100] that shows, in percentages, how bad the server is. The value 0 means that the server is completely okay, whereas 100 means that the server (is misbehaving and) should **not** be used at all. The penalty is not a constant value: once set, it starts to decrease in time, at first slowly, then faster and faster until it reaches zero. This way, if a server was penalized for some reason and later the problem has been resolved, then the server becomes available gradually as its penalty (not being reset by applications again in the absence of the offending reason) becomes zero. The figure below illustrates how the value of penalty behaves.
 
-<span>[![Image Penalty.jpg](img/Penalty.jpg)](img/Penalty.jpg "Click to see the full-resolution image")</span>
+<span>[![Image Penalty.jpg](static/img/Penalty.jpg)](static/img/Penalty.jpg "Click to see the full-resolution image")</span>
 
 Figure 12. Penalty Value Characteristics
 
@@ -1272,7 +1173,7 @@ The command resets the penalty to 0 (no penalty) and is useful when, as for the 
 
 The formal description of the lbsm\_feedback utility parameters is given below.
 
-<span>[![Image lbsm\_feedback.gif](img/lbsm_feedback.gif)](img/lbsm_feedback.gif "Click to see the full-resolution image")</span>
+<span>[![Image lbsm\_feedback.gif](static/img/lbsm_feedback.gif)](static/img/lbsm_feedback.gif "Click to see the full-resolution image")</span>
 
 Figure 13. lbsm\_feedback Arguments
 
@@ -1326,7 +1227,7 @@ Database load balancing is an important part of the overall load balancing funct
 
 The cookie / argument affinity module (CAF module in the further discussion) helps to virtualize and to dispatch a web site by modifying the way how Apache resolves host names. It is done by superseding conventional <span class="nctnt ncbi-code">gethostbyname\*()</span> API. The CAF module is implemented as an Apache web server module and uses the LBSMD daemon collected data to make a decision how to dispatch a request. The data exchange between the CAF module and the LBSMD daemon is done via a shared memory segment as shown on the figure below.
 
-<span>[![Image CAF-LBSMD.gif](img/CAF-LBSMD.gif)](img/CAF-LBSMD.gif "Click to see the full-resolution image")</span>
+<span>[![Image CAF-LBSMD.gif](static/img/CAF-LBSMD.gif)](static/img/CAF-LBSMD.gif "Click to see the full-resolution image")</span>
 
 Figure 14. CAF Module and LBSMD daemon data exchange
 
@@ -1771,13 +1672,13 @@ The FWDaemon could be monitored using the following web page:
 
 Having the page loaded into a browser the user will see the following.
 
-<span>[![Image FWDaemonMonitor.gif](img/FWDaemonMonitor.gif)](img/FWDaemonMonitor.gif "Click to see the full-resolution image")</span>
+<span>[![Image FWDaemonMonitor.gif](static/img/FWDaemonMonitor.gif)](static/img/FWDaemonMonitor.gif "Click to see the full-resolution image")</span>
 
 Figure 15. FWDaemon Checking Web Page
 
 By clicking the “Check” button a page similar to the following will appear.
 
-<span>[![Image FWDaemonCheckPage.gif](img/FWDaemonCheckPage.gif)](img/FWDaemonCheckPage.gif "Click to see the full-resolution image")</span>
+<span>[![Image FWDaemonCheckPage.gif](static/img/FWDaemonCheckPage.gif)](static/img/FWDaemonCheckPage.gif "Click to see the full-resolution image")</span>
 
 Figure 16. FWDaemon Presence Check
 
@@ -1809,7 +1710,7 @@ One of the key points in the communications between the NCBID server and the FWD
 
 The data exchange is illustrated on the figure below.
 
-<span>[![Image DISPDAndFWDaemon.jpg](img/DISPDAndFWDaemon.jpg)](img/DISPDAndFWDaemon.jpg "Click to see the full-resolution image")</span>
+<span>[![Image DISPDAndFWDaemon.jpg](static/img/DISPDAndFWDaemon.jpg)](static/img/DISPDAndFWDaemon.jpg "Click to see the full-resolution image")</span>
 
 Figure 17. DISPD FWDaemon Data Exchange
 
@@ -1876,7 +1777,7 @@ To set the cookie the user can visit the following link:
 
 A screen similar to the following will appear:
 
-<span>[![Image QACookieManager.gif](img/QACookieManager.gif)](img/QACookieManager.gif "Click to see the full-resolution image")</span>
+<span>[![Image QACookieManager.gif](static/img/QACookieManager.gif)](static/img/QACookieManager.gif "Click to see the full-resolution image")</span>
 
 Figure 18. QA Cookie Manager.
 
@@ -1892,7 +1793,7 @@ which means to replace <span class="nctnt ncbi-monospace">portal</span> with <sp
 
 So the further processing of the request is done using the substituted name. The process is illustrated on the figure below.
 
-<span>[![Image QA.jpg](img/QA.jpg)](img/QA.jpg "Click to see the full-resolution image")</span>
+<span>[![Image QA.jpg](static/img/QA.jpg)](static/img/QA.jpg "Click to see the full-resolution image")</span>
 
 Figure 19. NCBI QA
 
@@ -1994,7 +1895,7 @@ Programs can use <span class="nctnt ncbi-app">NetCache</span> for data exchange.
 
 The diagram below illustrates how <span class="nctnt ncbi-app">NetCache</span> works.
 
-<span>[![Image NetCache\_diagramm.gif](img/NetCache_diagramm.gif)](img/NetCache_diagramm.gif "Click to see the full-resolution image")</span>
+<span>[![Image NetCache\_diagramm.gif](static/img/NetCache_diagramm.gif)](static/img/NetCache_diagramm.gif "Click to see the full-resolution image")</span>
 
 1  
 Client requests a named service from the Load Balancer.
@@ -2205,7 +2106,7 @@ A:I have seen 400MB blobs there being written and read without an incident a tho
 
 A:You can specify a "time-to-live" when you create a blob. If you don't specify a value, you can find the service's default value by calling <span class="nctnt ncbi-func">GetBlobInfo()</span>. See the [basic ideas](ch_app.html#ch_app.The_basic_ideas) section for more details.
 
-[![Cover of The NCBI C++ Toolkit Book](img/th-toolkit-lrg.png)](toc.html "Table of Contents Page")
+[![Cover of The NCBI C++ Toolkit Book](static/img/th-toolkit-lrg.png)](toc.html "Table of Contents Page")
 The NCBI C++ Toolkit Book [Internet].
 
 Vakatov D, editor.
@@ -2268,7 +2169,7 @@ Resources
 -   [Mailing Lists](ch_faq.html#ch_faq.mailing_lists)
 -   [<span title="Contact C++ Toolkit group">Help and Support</span>](mailto:cpp-doc@ncbi.nlm.nih.gov)
 
-[![Cover of The NCBI C++ Toolkit Book](img/th-toolkit-lrg.png)](toc.html "Table of Contents Page")
+[![Cover of The NCBI C++ Toolkit Book](static/img/th-toolkit-lrg.png)](toc.html "Table of Contents Page")
 The NCBI C++ Toolkit Book [Internet].
 
 Vakatov D, editor.
