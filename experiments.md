@@ -10,7 +10,7 @@ nav: experiments
 | -m \<file\> | module specification file(s) - ASN.1, DTD, or XSD                  | Required argument                  |
 | -M \<file\> | External module file(s)                                            | Is used for IMPORT type resolution |
 | -i          | Ignore unresolved types                                            | Is used for IMPORT type resolution |
-| -f \<file\> | Write ASN.1 module file                                            | Â¡                                  |
+| -f \<file\> | Write ASN.1 module file                                            |                                    |
 
 Assa-Bessa
 
