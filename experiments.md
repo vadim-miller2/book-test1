@@ -4,6 +4,17 @@ title: C++ Toolkit test
 nav: experiments
 ---
 
+| Argument    | Effect                                                             | Comments                           |
+|-------------|--------------------------------------------------------------------|------------------------------------|
+| -h          | Display the <span class="nctnt ncbi-app">DATATOOL</span> arguments | Ignores other arguments            |
+| -m \<file\> | module specification file(s) - ASN.1, DTD, or XSD                  | Required argument                  |
+| -M \<file\> | External module file(s)                                            | Is used for IMPORT type resolution |
+| -i          | Ignore unresolved types                                            | Is used for IMPORT type resolution |
+| -f \<file\> | Write ASN.1 module file                                            | Â¡                                  |
+
+Assa-Bessa
+
+
 [Contents ▾](#__nav_cntnt)
 [Table of Contents Page](toc.html)
 -   [Book Information](toolkit.fm.html)
