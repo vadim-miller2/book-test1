@@ -746,7 +746,7 @@ The following topics are discussed in this section:
 
 See [Figure 1](ch_app.html#ch_app.specs_asn).
 
-[![1. ASN.1 specification analysis.](/static/img/specs_asn.gif)](/static/img/specs_asn.gif?raw=true "Click to see the full-resolution image")
+[![1. ASN.1 specification analysis.](static/img/specs_asn.gif?raw=true)](static/img/specs_asn.gif?raw=true "Click to see the full-resolution image")
 
 1. ASN.1 specification analysis.
 
