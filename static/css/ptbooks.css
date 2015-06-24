@@ -53,14 +53,16 @@
 .portlet_content .image .img_link { font-size:1em; float: left; }
 
 
-.portlet_shutter { background: transparent url(/portal/portal3rc.fcgi/2486979/img/32197) no-repeat scroll left top; display: block; float: right; width: 15px; height: 15px; position: absolute; top: -.2em; margin-left: .6em; right: 0; }
+/* .portlet_shutter { background: transparent url(/portal/portal3rc.fcgi/2486979/img/32197) no-repeat scroll left top; display: block; float: right; width: 15px; height: 15px; position: absolute; top: -.2em; margin-left: .6em; right: 0; } */
 .shutter_closed { background-position: left bottom; }
 .portlet .related li { font-size: 1.2em; border-bottom: 0; }
 .portlet .right { text-align: right; }
 
 .ra_qry, .ra_rcd { padding-left: 2em; }
+/*
 .ra_qry { background: transparent url(/portal/portal3rc.fcgi/2486979/img/32182) no-repeat scroll 0 1px; }
 .ra_rcd { background: transparent url(/portal/portal3rc.fcgi/2486979/img/32183) no-repeat scroll 0 1px; }
+*/
 
 /********************************************************************/
 /*  ComponentID=36060 /imported/WebDesign/historyportletCSS@3.3  */
@@ -166,14 +168,14 @@ display: none;
     padding-top: 1em;
     padding-bottom: 0.2em;
 }
-
+/*
 #content li.DiscoveryItem, .content li.DiscoveryItem {
-   background: url(/portal:img/ra_red) no-repeat top left;
+   background: url(/portal:img/ra_red) no-repeat top left; 
    padding-left: 1.2em;
    padding-bottom: 0.3em;
    font-size:0.9em;
 }
-
+*/
 #content li.DiscoveryItem a, .content li.DiscoveryItem a {
     color:#232323;
     border-bottom: none;
@@ -280,6 +282,7 @@ div.brieflink.window ul li.item{
   I stole this from Entrez 3.15, Entrez_DisplayBarStyle css v. 1.7.
   The following was designed for 12px font with 18px line-height
 */
+/*
 .source-contents-label {
   font-size: 1em;
   background:transparent url(/portal/portal3rc.fcgi/2486979/img/27532) no-repeat 100% 100%;
@@ -289,7 +292,7 @@ div.brieflink.window ul li.item{
   background:transparent url(/portal/portal3rc.fcgi/2486979/img/27532) no-repeat 100% 58%;
   padding-right: 17px;
 }
-
+*/
 /**********************************/
 /* The "Contents" hyperlink       */
 
@@ -469,6 +472,7 @@ h2.has-page-navigation, h3.has-page-navigation, h4.has-page-navigation {
   I stole this from Entrez 3.15, Entrez_DisplayBarStyle css v. 1.7.
   The following was designed for 12px font with 18px line-height
 */
+/*
 .page-toc-label {
   font-size: 1em;
   background:transparent url(/portal/portal3rc.fcgi/2486979/img/27532) no-repeat 100% 100%;
@@ -480,6 +484,7 @@ h2.has-page-navigation, h3.has-page-navigation, h4.has-page-navigation {
   padding-right: 17px;
   margin-right: 3px;
 }
+*/
 
 /**********************************/
 /* The page-toc popper area itself.    */
@@ -552,7 +557,10 @@ h2.has-page-navigation, h3.has-page-navigation, h4.has-page-navigation {
 .search { z-index: 0\0; *z-index: 0; height: 7.1em\0; *height: 7.1em; _width: 60.2em; }
 .search .search_top { z-index: 3\0; *z-index:3; }
 .search .search_bottom { z-index: 2\0; *z-index:2; }
+/*
 .search .tr, .search .tl, .search .br, .search .bl, .search .tr2 { display: block\0; *display:block; font-size: 0\0; *font-size:0; height: 6px\0; *height:6px; position: relative\0; *position:relative; background: url(/portal/portal3rc.fcgi/2486979/img/26974) no-repeat\0; *background:url(/portal/portal3rc.fcgi/2486979/img/26974) no-repeat; z-index: 5\0; *z-index:5; }
+*/
+
 .search .tr, .search .br, .search .tr2 { position: absolute\0; *position: absolute;}
 .search .tr, .search .tr2 {background-position: 100% 0\0; *background-position: 100% 0;}
 .search .tr {width: 43.2%\0; *width: 43.2%; _width: 41.5%; top: 0px\0; *top:0px;}
@@ -576,13 +584,14 @@ h2.has-page-navigation, h3.has-page-navigation, h4.has-page-navigation {
 
 /********************************************************************/
 /*  ComponentID=14534 /projects/PAF/BaseComponents/Support/PAFJSCheckCSS@1.2  */
-
+/*
 noscript p.nojs {
 	background: #ffb url(/portal/portal3rc.fcgi/2486979/img/25968) no-repeat 5px center;
 	padding: 4px;
 	padding-left: 28px;
 	margin:0;
 }
+*/
 
 /********************************************************************/
 /*  ComponentID=44577 /projects/standards/meyer_reset@1.1  */
@@ -869,7 +878,9 @@ sub{vertical-align:sub;}
 /*  ComponentID=251719 /projects/standards/standard_resheader_css@1.4  */
 
 /* header css */
+/*
 .header { height: 9em; position: relative; background: #e5e5e5 url(/portal/portal3rc.fcgi/2486979/img/28042) repeat-x scroll left bottom; margin-bottom: 1.5em; }
+*/
 .header a {text-decoration: none;}
 .header a:hover{text-decoration: underline;}
 
@@ -896,11 +907,12 @@ sub{vertical-align:sub;}
 
 /********************************************************************/
 /*  ComponentID=63266 /projects/standards/standard_popper_css@1.1  */
-
+/*
 .tgt_light{background:transparent url(http://www.ncbi.nlm.nih.gov/portal/portal3rc.fcgi/2486979/img/27532) no-repeat 100% -3%; padding-right: 17px; margin-right: 3px;}
 .tgt_light:active{background:transparent url(http://www.ncbi.nlm.nih.gov/portal/portal3rc.fcgi/2486979/img/27532) no-repeat 100% 28%; padding-right: 17px; margin-right: 3px;}
 .tgt_dark{background:transparent url(http://www.ncbi.nlm.nih.gov/portal/portal3rc.fcgi/2486979/img/27532) no-repeat 100% 100%; padding-right: 17px; margin-right: 3px;}
 .tgt_dark:active{background:transparent url(http://www.ncbi.nlm.nih.gov/portal/portal3rc.fcgi/2486979/img/27532) no-repeat 100% 58%; padding-right: 17px; margin-right: 3px;}
+*/
 
 .tabPopper{ position:absolute; top: 0; left:0; display: none; background-color:#fff; padding: .2em; margin-top: 3px; *padding-bottom:1em; box-shadow: .4em .4em .5em #999; -webkit-box-shadow: .4em .4em .5em #999; -moz-box-shadow: .4em .4em .5em #999; border: 1px solid #ccc; /* IE hack (6, 7, 8) */ border-bottom: 1px solid #666\0; border-right: 1px solid #666\0; }
 .tabPopperCover{ position:absolute; top:0px; left: 0px; height: 1px; background-color: #FFA600; overflow:hidden; }
@@ -934,6 +946,7 @@ ul.messages li {
     background-repeat: no-repeat;
     background-color: transparent;
 }
+/*
 ul.messages li.success {
     background-image: url(/portal/portal3rc.fcgi/2486979/img/67325);
 }
@@ -953,6 +966,7 @@ ul.messages li.hi_warn {
     background-image: url(/portal/portal3rc.fcgi/2486979/img/67327);
     font-weight: bold;
 }
+*/
 div#messagearea ul.messages li.hi_warn { margin: 2.5em 0; }
 ul.messages li.hi_warn em.detail{
     font-weight: normal;
