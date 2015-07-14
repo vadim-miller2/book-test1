@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -19,6 +19,7 @@
 
 <body class=" CppTkbPage">
     <div class="grid">
+        <div class="col twelve_col nomargin shadow">
             <div class="wrap">
                 <div class="page">
                     
@@ -33,15 +34,44 @@
                     <!-- was itemctrl -->
                     <div class="container">
                         <div id="maincontent" class="content">
-   
+                            <div class="col1">
                                 <div class="content">
-
+                                    <div class="col eight_col">
                                         {{ content }}
- 
+                                    </div>
 
-                                    <div id="tkb_internal">{% include nav.html %}</div>
+                                    <div id="tkb_internal" class="col four_col last">{% include nav.html %}</div>
                                 </div>
 
+                            </div>
+                            <!--/.col1-->
+                            <div class="col2">
+
+                            </div>
+                            <!--/.col2-->
+                            <div class="col3">
+
+                            </div>
+                            <!--/.col3-->
+                            <div class="col4">
+
+                            </div>
+                            <!--/.col4-->
+                            <div class="col5">
+
+                            </div>
+                            <div class="col6">
+
+                            </div>
+                            <div class="col7">
+
+                            </div>
+                            <div class="col8">
+
+                            </div>
+                            <div class="col9">
+
+                            </div>
                         </div><!--/.content-->
                     </div><!--/.container-->
                     
@@ -60,6 +90,8 @@
             <!--/.wrap-->
             
 
+
+        </div><!-- /.twelve_col -->
 
     </div>
 
