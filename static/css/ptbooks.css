@@ -1,4 +1,17 @@
+/********************************************************************/
+/*  Styles added for github  */
 
+.sidebar 
+	{
+         float:right;
+         width:350px;
+         margin:auto 2% auto auto;
+.content
+	{
+        float:left;
+        margin:auto 2% auto auto;
+                        }
+                        
 /********************************************************************/
 /*  ComponentID=285982 /projects/standards/standard_grid_css@1.3  */
 
