@@ -11,7 +11,17 @@
         float:left;
         margin:auto 2% auto auto;
                         }
-                        
+ pre {
+    background: #EEE none repeat scroll 0% 0%;
+    border: 1px solid #C0C0C0;
+    overflow: auto;
+    max-width: none;
+    max-height: 500px;
+    font-family: Courier,monospace;
+}
+p, table, pre, fieldset, dl {
+    margin: 0.6923em 0px;
+}                       
 /********************************************************************/
 /*  ComponentID=285982 /projects/standards/standard_grid_css@1.3  */
 
