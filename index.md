@@ -3,54 +3,6 @@ layout: default
 title: C++ Toolkit test
 ---
 
-
-[Contents ▾](#__nav_cntnt)
-[Table of Contents Page](toc.html)
--   [Book Information](toolkit.fm.html)
--   [Part 1. Overview](part1.html)
-    -   [1. Introduction to the C++ Toolkit](ch_intro.html)
-    -   [2. Getting Started](ch_start.html)
--   [Part 2. Development Framework](part2.html)
-    -   [3. Retrieve the Source Code (FTP and Subversion)](ch_getcode_svn.html)
-    -   [4. Configure, Build, and Use the Toolkit](ch_config.html)
-    -   [5. Working with Makefiles](ch_build.html)
-    -   [6. Project Creation and Management](ch_proj.html)
-    -   [7. Programming Policies and Guidelines](ch_style.html)
--   [Part 3. C++ Toolkit Library Reference](part3.html)
-    -   [8. Portability, Core Functionality and Application Framework](ch_core.html)
-    -   [9. Networking and IPC](ch_conn.html)
-    -   [10. Database Access Support](ch_dbapi.html)
-    -   [11. CGI and Fast-CGI](ch_cgi.html)
-    -   [12. HTML](ch_html.html)
-    -   [13. Data Serialization (ASN.1, XML)](ch_ser.html)
-    -   [14. Biological Sequence Data Model](ch_datamod.html)
-    -   [15. Biological Object Manager](ch_objmgr.html)
-    -   [16. BLAST API](ch_blast.html)
-    -   [17. Access to NCBI data](ch_dataaccess.html)
-    -   [18. Biological Sequence Alignment](ch_algoalign.html)
-    -   [19. GUI and Graphics](ch_gui.html)
-    -   [20. Using the Boost Unit Test Framework](ch_boost.html)
--   [Part 4. Wrappers for 3rd-Party Packages](part4.html)
-    -   [21. XmlWrapp (XML parsing and handling, XSLT, XPath)](ch_xmlwrapp.html)
--   [Part 5. Software](part5.html)
-    -   [22. Debugging, Exceptions, and Error Handling](ch_debug.html)
-    -   [23. Distributed Computing](ch_grid.html)
-    -   [24. Applications](ch_app.html)
-    -   [25. Examples and Demos](ch_demo.html)
-    -   [26. C Toolkit Resources for C++ Toolkit Users](ch_res.html)
--   [Part 6. Help and Support](part6.html)
-    -   [27. NCBI C++ Toolkit Source Browser](ch_browse.html)
-    -   [28. Software Development Tools](ch_devtools.html)
-    -   [29. FAQs, Useful Documentation Links, and Mailing Lists](ch_faq.html)
--   [Part 7. Library and Applications Configuration](part7.html)
-    -   [30. Library Configuration](ch_libconfig.html)
--   [Release Notes](part8.html)
--   [Appendix - Books and Styles](app1.appendix1.html)
-
-[\< Prev](ch_grid.html "Previous page")[Next \>](ch_demo.html "Next page")
-
-[PDF](http://www.ncbi.nlm.nih.gov/toolkit/doc/book/pdf/ch_app.pdf "PDF version of this page")
-
 <span class="label">24</span><span class="title">Applications</span>
 ====================================================================
 
