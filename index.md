@@ -1,7 +1,6 @@
 ---
 layout: default
 title: C++ Toolkit test
-nav: experiments
 ---
 
 
