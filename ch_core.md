@@ -1,4 +1,3 @@
-
 ---
 layout: default
 title: C++ Toolkit test - CORE
