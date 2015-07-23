@@ -3,7 +3,6 @@ layout: default
 title: C++ Toolkit test
 ---
 
-
 <span class="label">24</span><span class="title">Applications</span>
 ====================================================================
 
@@ -386,11 +385,23 @@ When parsing a data specification, <span class="nctnt ncbi-app">DATATOOL</span> 
 
 Initially, <span class="nctnt ncbi-app">DATATOOL</span> and the serial library supported serialization in ASN.1 and XML format, and conversion of ASN.1 specification into DTD. Compared to ASN.1, DTD is a very sketchy specification in the sense that there is only one primitive type - string, and all elements are defined globally. The latter feature of DTD led to a decision to use ‘scope prefixes’ in XML output to avoid potential name conflicts. For example, consider the following ASN.1 specification:
 
-    Date ::= CHOICE {    str VisibleString,     std Date-std}Time ::= CHOICE {    str VisibleString,     std Time-std}
+    Date ::= CHOICE {
+        str VisibleString, 
+        std Date-std
+    }
+    Time ::= CHOICE {
+        str VisibleString, 
+        std Time-std
+    }
 
 Here, accidentally, element <span class="nctnt ncbi-type">str</span> is defined identically both in <span class="nctnt ncbi-type">Date</span> and <span class="nctnt ncbi-type">Time</span> productions; while the meaning of element <span class="nctnt ncbi-type">std</span> depends on the context. To avoid ambiguity, this specification translates into the following DTD:
 
-    <!ELEMENT Date (Date_str | Date_std)><!ELEMENT Date_str (#PCDATA)><!ELEMENT Date_std (Date-std)><!ELEMENT Time (Time_str | Time_std)><!ELEMENT Time_str (#PCDATA)><!ELEMENT Time_std (Time-std)>
+    <!ELEMENT Date (Date_str | Date_std)>
+    <!ELEMENT Date_str (#PCDATA)>
+    <!ELEMENT Date_std (Date-std)>
+    <!ELEMENT Time (Time_str | Time_std)>
+    <!ELEMENT Time_str (#PCDATA)>
+    <!ELEMENT Time_std (Time-std)>
 
 Accordingly, these scope prefixes made their way into XML output.
 
@@ -408,11 +419,51 @@ You can find a number of DTDs and Schema converted by <span class="nctnt ncbi-ap
 
 There are two major problems in converting XML schema into ASN.1 specification: how to define XML attributes and how to convert complex content models. The solution was greatly affected by the underlying implementation of data storage classes (classes which <span class="nctnt ncbi-app">DATATOOL</span> generates based on a specification). So, for example the following Schema
 
-    <xs:element name="Author">  <xs:complexType>    <xs:sequence>      <xs:element name="LastName" type="xs:string"/>      <xs:choice minOccurs="0">        <xs:element name="ForeName" type="xs:string"/>        <xs:sequence>          <xs:element name="FirstName" type="xs:string"/>          <xs:element name="MiddleName" type="xs:string" minOccurs="0"/>        </xs:sequence>      </xs:choice>      <xs:element name="Initials" type="xs:string" minOccurs="0"/>      <xs:element name="Suffix" type="xs:string" minOccurs="0"/>    </xs:sequence>    <xs:attribute name="gender" use="optional">      <xs:simpleType>        <xs:restriction base="xs:string">          <xs:enumeration value="male"/>          <xs:enumeration value="female"/>        </xs:restriction>      </xs:simpleType>    </xs:attribute>  </xs:complexType></xs:element>
+    <xs:element name="Author">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="LastName" type="xs:string"/>
+          <xs:choice minOccurs="0">
+            <xs:element name="ForeName" type="xs:string"/>
+            <xs:sequence>
+              <xs:element name="FirstName" type="xs:string"/>
+              <xs:element name="MiddleName" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+          </xs:choice>
+          <xs:element name="Initials" type="xs:string" minOccurs="0"/>
+          <xs:element name="Suffix" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="gender" use="optional">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="male"/>
+              <xs:enumeration value="female"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:complexType>
+    </xs:element>
 
 translates into this ASN.1:
 
-    Author ::= SEQUENCE {  attlist SET {    gender ENUMERATED {      male (1),      female (2)    } OPTIONAL  },  lastName VisibleString,  fF CHOICE {    foreName VisibleString,    fM SEQUENCE {      firstName VisibleString,      middleName VisibleString OPTIONAL    }  } OPTIONAL,  initials VisibleString OPTIONAL,  suffix VisibleString OPTIONAL}
+    Author ::= SEQUENCE {
+      attlist SET {
+        gender ENUMERATED {
+          male (1),
+          female (2)
+        } OPTIONAL
+      },
+      lastName VisibleString,
+      fF CHOICE {
+        foreName VisibleString,
+        fM SEQUENCE {
+          firstName VisibleString,
+          middleName VisibleString OPTIONAL
+        }
+      } OPTIONAL,
+      initials VisibleString OPTIONAL,
+      suffix VisibleString OPTIONAL
+    }
 
 Each unnamed local element gets a name. When generating C++ data storage classes from Schema, <span class="nctnt ncbi-app">DATATOOL</span> marks such data types as anonymous.
 
@@ -442,11 +493,33 @@ To modify a top-level element, use a definition line where the name part is simp
 
 For example, consider the following ASN.1 specification:
 
-    MyType ::= SEQUENCE {    label VisibleString ,    points SEQUENCE OF        SEQUENCE {            x INTEGER ,            y INTEGER        }}
+    MyType ::= SEQUENCE {
+        label VisibleString ,
+        points SEQUENCE OF
+            SEQUENCE {
+                x INTEGER ,
+                y INTEGER
+            }
+    }
 
 Code generation for the various elements can be fine-tuned as illustrated by the following sample definition file:
 
-    [MyModule.MyType]; modify the top-level element (MyType)_class = CMyTypeX; modify a contained elementlabel._class = CTitle; modify a "SEQUENCE OF" container typepoints._type = vector; modify members of an anonymous SEQUENCE contained in a "SEQUENCE OF"points.E.x._type = doublepoints.E.y._type = double; modify a DATATOOL-assigned class namepoints.E._class = CPoint
+    [MyModule.MyType]
+    ; modify the top-level element (MyType)
+    _class = CMyTypeX
+
+    ; modify a contained element
+    label._class = CTitle
+
+    ; modify a "SEQUENCE OF" container type
+    points._type = vector
+
+    ; modify members of an anonymous SEQUENCE contained in a "SEQUENCE OF"
+    points.E.x._type = double
+    points.E.y._type = double
+
+    ; modify a DATATOOL-assigned class name
+    points.E._class = CPoint
 
 <span class="nctnt highlight">Note: </span><span class="nctnt ncbi-app">DATATOOL</span> assigns arbitrary names to otherwise anonymous containers. In the example above, the <span class="nctnt ncbi-monospace">SEQUENCE</span> containing <span class="nctnt ncbi-monospace">x</span> and <span class="nctnt ncbi-monospace">y</span> has no name in the specification, so <span class="nctnt ncbi-app">DATATOOL</span> assigned the name <span class="nctnt ncbi-monospace">E</span>. If you want to change the name of a <span class="nctnt ncbi-app">DATATOOL</span>-assigned name, create a definition file and rename the class using the appropriate <span class="nctnt ncbi-monospace">**\_class**</span> entry as shown above. To find out what the <span class="nctnt ncbi-app">DATATOOL</span>-assigned name will be, create a sample definition file using the <span class="nctnt ncbi-app">DATATOOL </span><span class="nctnt ncbi-monospace">-ods</span> option. This approach will work regardless of the data specification format (ASN.1, DTD, or XSD).
 
@@ -468,19 +541,23 @@ Some definitions refer to the generated class as a whole.
 
 For example, the following definitions:
 
-    [ModuleName.TypeName]_file=AnotherName
+    [ModuleName.TypeName]
+    _file=AnotherName
 
 Or
 
-    [TypeName]_file=AnotherName
+    [TypeName]
+    _file=AnotherName
 
 would put the class <span class="nctnt ncbi-class">CTypeName</span> in files with the base name <span class="nctnt ncbi-path">AnotherName</span>, whereas these two:
 
-    [ModuleName]_file=AnotherName
+    [ModuleName]
+    _file=AnotherName
 
 Or
 
-    [-]_file=AnotherName
+    [-]
+    _file=AnotherName
 
 put **all** the generated classes into a single file with the base name <span class="nctnt ncbi-path">AnotherName</span>.
 
@@ -488,11 +565,14 @@ put **all** the generated classes into a single file with the base name <span cl
 
 For example, the following definition:
 
-    [-]_extra_headers=name1 name2 \"name3\"
+    [-]
+    _extra_headers=name1 name2 \"name3\"
 
 would put the following lines into all generated headers:
 
-    #include <name1>#include <name2>#include "name3"
+    #include <name1>
+    #include <name2>
+    #include "name3"
 
 Note the name3 clause. Putting name3 in quotes instructs <span class="nctnt ncbi-app">DATATOOL</span> to use the quoted syntax in generated files. Also, the quotes must be escaped with backslashes.
 
@@ -502,19 +582,23 @@ Note the name3 clause. Putting name3 in quotes instructs <span class="nctnt ncbi
 
 For example, the following definitions:
 
-    [ModuleName.TypeName]_class=CAnotherName
+    [ModuleName.TypeName]
+    _class=CAnotherName
 
 Or
 
-    [TypeName]_class=CAnotherName
+    [TypeName]
+    _class=CAnotherName
 
 would cause the class generated for the type <span class="nctnt ncbi-path">TypeName</span> to be named <span class="nctnt ncbi-class">CAnotherName</span>, whereas these two:
 
-    [ModuleName]_class=CAnotherName
+    [ModuleName]
+    _class=CAnotherName
 
 Or
 
-    [-]_class=CAnotherName
+    [-]
+    _class=CAnotherName
 
 would result in **all** the generated classes having the same name <span class="nctnt ncbi-class">CAnotherName</span> (which is probably not what you want).
 
@@ -526,7 +610,8 @@ would result in **all** the generated classes having the same name <span class="
 
 It is also possible to specify a storage-class modifier, which is required on Microsoft Windows to export/import generated classes from/to a DLL. This setting affects all generated classes in a module. An appropriate section of the definition file should look like this:
 
-    [-]_export = EXPORT_SPECIFIER
+    [-]
+    _export = EXPORT_SPECIFIER
 
 Because this modifier could also be specified in the [command line](ch_app.html#ch_app.tools_table2), the <span class="nctnt ncbi-app">DATATOOL</span> code generator uses the following rules to choose the proper one:
 
@@ -584,7 +669,21 @@ The following additional topics are discussed in this section:
 
 There is a special section <span class="nctnt ncbi-monospace">[-]</span> allowed in the definition file which can contain definitions related to code generation. This is a good place to define a namespace or identify additional headers. It is a "top level" section, so entries placed here will override entries with the same name in other sections or on the command-line. For example, the following entries set the proper parameters for placing header files alongside source files:
 
-    [-]; Do not use a namespace at all:-on  = -; Use the current directory for generated .cpp files:-opc = .; Use the current directory for generated .hpp files:-oph = .; Do not add a prefix to generated file names:-or  = -; Generate #include directives with quotes rather than angle brackets:-orq = 1
+    [-]
+    ; Do not use a namespace at all:
+    -on  = -
+
+    ; Use the current directory for generated .cpp files:
+    -opc = .
+
+    ; Use the current directory for generated .hpp files:
+    -oph = .
+
+    ; Do not add a prefix to generated file names:
+    -or  = -
+
+    ; Generate #include directives with quotes rather than angle brackets:
+    -orq = 1
 
 Any of the code generation arguments in [Table 2](ch_app.html#ch_app.tools_table2) (except <span class="nctnt ncbi-monospace">-od</span>, <span class="nctnt ncbi-monospace">-odi</span>, and <span class="nctnt ncbi-monospace">-odw</span> which are related to specifying the definition file) can be placed in the <span class="nctnt ncbi-monospace">[-]</span> section.
 
@@ -594,28 +693,71 @@ In some cases, the special value <span class="nctnt ncbi-monospace">"-"</span> c
 
 If we have the following ASN.1 specification (this not a "real" specification - it is only for illustration):
 
-    Date ::= CHOICE {    str VisibleString,    std Date-std}Date-std ::= SEQUENCE {    year INTEGER,    month INTEGER OPTIONAL}Dates ::= SEQUENCE OF DateInt-fuzz ::= CHOICE {    p-m INTEGER,    range SEQUENCE {        max INTEGER,        min INTEGER    },    pct INTEGER,    lim ENUMERATED {        unk (0),        gt (1),        lt (2),        tr (3),        tl (4),        circle (5),        other (255)    },    alt SET OF INTEGER}
+    Date ::= CHOICE {
+        str VisibleString,
+        std Date-std
+    }
+    Date-std ::= SEQUENCE {
+        year INTEGER,
+        month INTEGER OPTIONAL
+    }
+    Dates ::= SEQUENCE OF Date
+    Int-fuzz ::= CHOICE {
+        p-m INTEGER,
+        range SEQUENCE {
+            max INTEGER,
+            min INTEGER
+        },
+        pct INTEGER,
+        lim ENUMERATED {
+            unk (0),
+            gt (1),
+            lt (2),
+            tr (3),
+            tl (4),
+            circle (5),
+            other (255)
+        },
+        alt SET OF INTEGER
+    }
 
 Then the following definitions will effect the generation of objects:
 
 Definition
 Effected Objects
-<span class="nctnt ncbi-monospace">[Date]</span>
-<span class="nctnt ncbi-monospace">str.\_type = string</span>
+<span class="nctnt ncbi-monospace">[Date]</span> <span class="nctnt ncbi-monospace">str.\_type = string</span>
 the <span class="nctnt ncbi-monospace">str</span> member of the <span class="nctnt ncbi-monospace">Date</span> structure
-<span class="nctnt ncbi-monospace">[Dates]</span>
-<span class="nctnt ncbi-monospace">E.\_pointer = true</span>
+<span class="nctnt ncbi-monospace">[Dates]</span> <span class="nctnt ncbi-monospace">E.\_pointer = true</span>
 elements of the <span class="nctnt ncbi-monospace">Dates</span> container
-<span class="nctnt ncbi-monospace">[Int-fuzz]</span>
-<span class="nctnt ncbi-monospace">range.min.\_type = long</span>
+<span class="nctnt ncbi-monospace">[Int-fuzz]</span> <span class="nctnt ncbi-monospace">range.min.\_type = long</span>
 the <span class="nctnt ncbi-monospace">min</span> member of the <span class="nctnt ncbi-monospace">range</span> member of the <span class="nctnt ncbi-monospace">Int-fuzz</span> structure
-<span class="nctnt ncbi-monospace">[Int-fuzz]</span>
-<span class="nctnt ncbi-monospace">alt.E.\_type = long</span>
+<span class="nctnt ncbi-monospace">[Int-fuzz]</span> <span class="nctnt ncbi-monospace">alt.E.\_type = long</span>
 elements of the <span class="nctnt ncbi-monospace">alt</span> member of the <span class="nctnt ncbi-monospace">Int-fuzz</span> structure
 
 As another example, suppose you have a <span class="nctnt ncbi-type">CatalogEntry</span> type comprised of a <span class="nctnt ncbi-type">Summary</span> element and either a <span class="nctnt ncbi-type">RecordA</span> element or a <span class="nctnt ncbi-type">RecordB</span> element, as defined by the following XSD specification:
 
-    <?xml version="1.0" encoding="UTF-8"?><schema    xmlns="http://www.w3.org/2001/XMLSchema"    xmlns:tns="http://ncbi.nlm.nih.gov/some/unique/path"    targetNamespace="http://ncbi.nlm.nih.gov/some/unique/path"    elementFormDefault="qualified">    <element name="CatalogEntry" type="tns:CatalogEntryType" />    <complexType name="CatalogEntryType">        <sequence>            <element name="Summary" type="string" />            <choice>                <element name="RecordA" type="int" />                <element name="RecordB" type="int" />            </choice>        </sequence>    </complexType></schema>
+    <?xml version="1.0" encoding="UTF-8"?>
+
+    <schema
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://ncbi.nlm.nih.gov/some/unique/path"
+        targetNamespace="http://ncbi.nlm.nih.gov/some/unique/path"
+        elementFormDefault="qualified"
+    >
+
+        <element name="CatalogEntry" type="tns:CatalogEntryType" />
+
+        <complexType name="CatalogEntryType">
+            <sequence>
+                <element name="Summary" type="string" />
+                <choice>
+                    <element name="RecordA" type="int" />
+                    <element name="RecordB" type="int" />
+                </choice>
+            </sequence>
+        </complexType>
+
+    </schema>
 
 In this specification, the <span class="nctnt ncbi-monospace">\<choice\></span> element in <span class="nctnt ncbi-type">CatalogEntryType</span> is anonymous, so <span class="nctnt ncbi-app">DATATOOL</span> will assign an arbitrary name to it. The assigned name will not be descriptive, but fortunately you can use a definition file to change the assigned name.
 
@@ -625,11 +767,14 @@ First find the <span class="nctnt ncbi-app">DATATOOL</span>-assigned name by cre
 
 The sample definition file (<span class="nctnt ncbi-path">catalogentry.\_sample\_def</span>) shows <span class="nctnt ncbi-monospace">RR</span> as the class name:
 
-    [CatalogEntry]RR._class = Summary._class = 
+    [CatalogEntry]
+    RR._class = 
+    Summary._class = 
 
 Then edit the module definition file (<span class="nctnt ncbi-path">catalogentry.def</span>) and change <span class="nctnt ncbi-monospace">RR</span> to a more descriptive class name, for example:
 
-    [CatalogEntry]RR._class=CRecordChoice
+    [CatalogEntry]
+    RR._class=CRecordChoice
 
 The new name will be used the next time the module is built.
 
@@ -639,9 +784,7 @@ Module files are not used directly by <span class="nctnt ncbi-app">DATATOOL</spa
 
 Module files simply consist of lines of the form "<span class="nctnt ncbi-monospace">KEY = VALUE</span>". Only the key <span class="nctnt ncbi-monospace">MODULE\_IMPORT</span> is currently used (and is the only key ever recognized by <span class="nctnt ncbi-path">project\_tree\_builder</span>). Other keys used to be recognized by <span class="nctnt ncbi-path">module.sh</span> and still harmlessly remain in some files. The possible keys are:
 
--   <span class="nctnt ncbi-monospace">MODULE\_IMPORT</span>      These definitions contain a space-delimited list of other modules to import. The paths should be relative to <span class="nctnt ncbi-path">.../src</span> and should not include extensions.
-    For example, a valid entry could be:
-    MODULE\_IMPORT = objects/general/general objects/seq/seq
+-   <span class="nctnt ncbi-monospace">MODULE\_IMPORT</span>      These definitions contain a space-delimited list of other modules to import. The paths should be relative to <span class="nctnt ncbi-path">.../src</span> and should not include extensions. For example, a valid entry could be: MODULE\_IMPORT = objects/general/general objects/seq/seq
 
 -   <span class="nctnt ncbi-monospace">MODULE\_ASN</span>, <span class="nctnt ncbi-monospace">MODULE\_DTD</span>, <span class="nctnt ncbi-monospace">MODULE\_XSD</span>      These definitions explicitly set the specification filename (normally <span class="nctnt ncbi-path">foo.asn</span>, <span class="nctnt ncbi-path">foo.dtd</span>, or <span class="nctnt ncbi-path">foo.xsd</span> for <span class="nctnt ncbi-monospace">foo.module</span>). Almost no module files contain this definition. It is no longer used by the <span class="nctnt ncbi-path">project\_tree\_builder</span> and is therefore not necessary
 
@@ -669,7 +812,8 @@ For example, the default normalized C++ class name for the ASN.1 type name "<spa
 
 The default C++ class name can be overridden by explicitly specifying in the definition file a name for a given ASN.1 type name. For example:
 
-    [MyModule.Seq-data]_class=CMySeqData
+    [MyModule.Seq-data]
+    _class=CMySeqData
 
 #### <span class="title">ENUMERATED Types</span>
 
@@ -934,9 +1078,7 @@ defines a server. The detailed description of the individual fields is given bel
 
     -   <span class="nctnt ncbi-var">script</span> which specifies a path to a local executable which checks whether the server is operational. The LBSMD daemon starts this script periodically as specified by the check time parameter(s) above. Only a single script specification is allowed. See [Check Script Specification](ch_app.html#ch_app.Check_Script_Specification) for more details.
 
--   <span class="nctnt ncbi-var">server\_descriptor</span> specifies the address of the server and supplies additional information. An example of the <span class="nctnt ncbi-var">server\_descriptor</span>:
-    <span class="nctnt ncbi-code">STANDALONE somehost:1234 R=3000 L=yes S=yes B=-20</span>
-    See [Server Descriptor Specification](ch_app.html#ch_app.Server_Descriptor_Specification) for more details.
+-   <span class="nctnt ncbi-var">server\_descriptor</span> specifies the address of the server and supplies additional information. An example of the <span class="nctnt ncbi-var">server\_descriptor</span>: <span class="nctnt ncbi-code">STANDALONE somehost:1234 R=3000 L=yes S=yes B=-20</span> See [Server Descriptor Specification](ch_app.html#ch_app.Server_Descriptor_Specification) for more details.
 
 -   <span class="nctnt ncbi-var">launcher\_info</span> is basically a command line preceded by a pipe symbol ( | ) which plays a role of a delimiter from the <span class="nctnt ncbi-var">server\_descriptor</span>. It is only required for the <span class="nctnt ncbi-app">NCBID</span> type of service which are configured on the local host.
 
@@ -991,8 +1133,7 @@ Script was found but not executable (POSIX, script error).
 127
 Script was not found (POSIX, script error).
 200 - 210
-STANDBY server (set the rate to 0.005). The rate will be rolled back to the previously set "regular" rate the next time the RERATE command comes; or when the check script returns anything other than 123, 124, 125, or the state-retaining ALERTs (211-220).
-STANDBY servers are those having base rate in the range [0.001..0.009], with higher rates having better chance to get drafted for service. STANDBY servers are only used by clients if there are no usable non-STANDBY counterparts found.
+STANDBY server (set the rate to 0.005). The rate will be rolled back to the previously set "regular" rate the next time the RERATE command comes; or when the check script returns anything other than 123, 124, 125, or the state-retaining ALERTs (211-220). STANDBY servers are those having base rate in the range [0.001..0.009], with higher rates having better chance to get drafted for service. STANDBY servers are only used by clients if there are no usable non-STANDBY counterparts found.
 211 - 220
 ALERT (email contacts and retain the current server state).
 221 - 230
@@ -1060,34 +1201,30 @@ where:
 
 -   Stateful server:
 
-    -   S={yes|no}. The default is no.
-        Indication of stateful server, which allows only dedicated socket (stateful) connections. This tag is not allowed for HTTP\* and DNS servers.
+    -   S={yes|no}. The default is no. Indication of stateful server, which allows only dedicated socket (stateful) connections. This tag is not allowed for HTTP\* and DNS servers.
 
 -   Secure server:
 
-    -   $={yes|no}. The default is no.
-        Indication of the server to be used with secure connections only. For STANDALONE servers it means to use SSL, and for the HTTP\* ones – to use the HTTPS protocol.
+    -   $={yes|no}. The default is no. Indication of the server to be used with secure connections only. For STANDALONE servers it means to use SSL, and for the HTTP\* ones – to use the HTTPS protocol.
 
 -   Content type indication:
 
-    -   C=type/subtype [no default]
-        specification of Content-Type (including encoding), which server accepts. The value of this flag gets added automatically to any HTTP packet sent to the server by SERVICE connector. However, in order to communicate, a client still has to know and generate the data type accepted by the server, i.e. a protocol, which server understands. This flag just helps insure that HTTP packets all get proper content type, defined at service configuration. This tag is not allowed in DNS server specifications.
+    -   C=type/subtype [no default] specification of Content-Type (including encoding), which server accepts. The value of this flag gets added automatically to any HTTP packet sent to the server by SERVICE connector. However, in order to communicate, a client still has to know and generate the data type accepted by the server, i.e. a protocol, which server understands. This flag just helps insure that HTTP packets all get proper content type, defined at service configuration. This tag is not allowed in DNS server specifications.
 
 -   Bonus coefficient:
 
-    -   B=double [0.0 = default]
-        specifies a multiplicative bonus given to a server run locally, when calculating reachability rate. Special rules apply to negative/zero values: 0.0 means not to use the described rate increase at all (default rate calculation is used, which only slightly increases rates of locally run servers). Negative value denotes that locally run server should be taken in first place, regardless of its rate, if that rate is larger than percent of expressed by the absolute value of this coefficient of the average rate coefficient of other servers for the same service. That is -5 instructs to ignore locally run server if its status is less than 5% of average status of remaining servers for the same service.
+    -   B=double [0.0 = default] specifies a multiplicative bonus given to a server run locally, when calculating reachability rate. Special rules apply to negative/zero values: 0.0 means not to use the described rate increase at all (default rate calculation is used, which only slightly increases rates of locally run servers). Negative value denotes that locally run server should be taken in first place, regardless of its rate, if that rate is larger than percent of expressed by the absolute value of this coefficient of the average rate coefficient of other servers for the same service. That is -5 instructs to ignore locally run server if its status is less than 5% of average status of remaining servers for the same service.
 
 -   Validity period:
 
-    -   T=integer [0 = default]
-        specifies the time in seconds this server entry is valid without update. (If equal to 0 then defaulted by the LBSM Daemon to some reasonable value.)
+    -   T=integer [0 = default] specifies the time in seconds this server entry is valid without update. (If equal to 0 then defaulted by the LBSM Daemon to some reasonable value.)
 
 Server descriptors of type <span class="nctnt ncbi-type">NAMEHOLD</span> are special. As <span class="nctnt ncbi-var">arguments</span>, they have only a server type keyword. The namehold specification informs the daemon that the service of this name and type is not to be defined later in any configuration file except for the current one. Also, if the host (and/or port) is specified, then this protection works only for the service name on the particular host (and/or port).
 
 <span class="nctnt highlight">Note:</span> it is recommended that a dummy port number (such as :0) is always put in the namehold specifications to avoid ambiguities with treating the server type as a host name. The following example disables <span class="nctnt ncbi-var">TestService</span> of type <span class="nctnt ncbi-type">DNS</span> from being defined in all other configuration files included later, and <span class="nctnt ncbi-var">TestService2</span> to be defined as a <span class="nctnt ncbi-app">NCBID</span> service on host foo:
 
-    TestService  NAMEHOLD    :0 DNSTestService2 NAMEHOLD foo:0 NCBID
+    TestService  NAMEHOLD    :0 DNS
+    TestService2 NAMEHOLD foo:0 NCBID
 
 #### <span class="title">Sites</span>
 
@@ -1164,7 +1301,51 @@ The NCBI intranet users can also get the list of options by clicking on this lin
 
 For example, to print a list of hosts which names match the pattern “sutil\*” the user can issue the following command:
 
-    >./lbsmc -h sutil* 0LBSMC - Load Balancing Service Mapping Client R10043203/13/08 16:20:23 ====== widget3.be-md.ncbi.nlm.nih.gov (00:00) ======= [2] V1.2Hostname/IPaddr Task/CPU LoadAv LoadBl    Joined      Status   StatBlsutils1          151/4     0.06   0.03  03/12 13:04   397.62  3973.51sutils2          145/4     0.17   0.03  03/12 13:04   155.95  3972.41sutils3          150/4     0.20   0.03  03/12 13:04   129.03  3973.33--------------------------------------------------------------------------------Service             T    Type    Hostname/IPaddr:Port LFS   B.Rate Coef   Ratingbounce            +25    NCBID   sutils1:80           L    1000.00        397.62bounce            +25    HTTP    sutils1:80                1000.00        397.62bounce            +25    NCBID   sutils2:80           L    1000.00        155.95bounce            +25    HTTP    sutils2:80                1000.00        155.95bounce            +27    NCBID   sutils3:80           L    1000.00        129.03bounce            +27    HTTP    sutils3:80                1000.00        129.03dispatcher_lb      25     DNS    sutils1:80                1000.00        397.62dispatcher_lb      25     DNS    sutils2:80                1000.00        155.95dispatcher_lb      27     DNS    sutils3:80                1000.00        129.03MapViewEntrez      25 STANDALONE sutils1:44616        L S  1000.00        397.62MapViewEntrez      25 STANDALONE sutils2:44616        L S  1000.00        155.95MapViewEntrez      27 STANDALONE sutils3:44616        L S  1000.00        129.03MapViewMeta        25 STANDALONE sutils2:44414        L S     0.00          0.00MapViewMeta        27 STANDALONE sutils3:44414        L S     0.00          0.00MapViewMeta        25 STANDALONE sutils1:44414        L S     0.00          0.00sutils_lb          25     DNS    sutils1:80                1000.00        397.62sutils_lb          25     DNS    sutils2:80                1000.00        155.95sutils_lb          27     DNS    sutils3:80                1000.00        129.03TaxService         25    NCBID   sutils1:80                1000.00        397.62TaxService         25    NCBID   sutils2:80                1000.00        155.95TaxService         27    NCBID   sutils3:80                1000.00        129.03TaxService3       +25  HTTP_POST sutils1:80                1000.00        397.62TaxService3       +25  HTTP_POST sutils2:80                1000.00        155.95TaxService3       +27  HTTP_POST sutils3:80                1000.00        129.03test              +25    HTTP    sutils1:80                1000.00        397.62test              +25    HTTP    sutils2:80                1000.00        155.95test              +27    HTTP    sutils3:80                1000.00        129.03testgenomes_lb     25     DNS    sutils1:2441              1000.00        397.62testgenomes_lb     25     DNS    sutils2:2441              1000.00        155.95testgenomes_lb     27     DNS    sutils3:2441              1000.00        129.03testsutils_lb      25     DNS    sutils1:2441              1000.00        397.62testsutils_lb      25     DNS    sutils2:2441              1000.00        155.95testsutils_lb      27     DNS    sutils3:2441              1000.00        129.03--------------------------------------------------------------------------------* Hosts:4\747, Srvrs:44/1223/23  |   Heap:249856, used:237291/249616, free:240 *LBSMD PID: 17530, config: /etc/lbsmd/servrc.cfg
+    >./lbsmc -h sutil* 0
+    LBSMC - Load Balancing Service Mapping Client R100432
+    03/13/08 16:20:23 ====== widget3.be-md.ncbi.nlm.nih.gov (00:00) ======= [2] V1.2
+    Hostname/IPaddr Task/CPU LoadAv LoadBl    Joined      Status   StatBl
+    sutils1          151/4     0.06   0.03  03/12 13:04   397.62  3973.51
+    sutils2          145/4     0.17   0.03  03/12 13:04   155.95  3972.41
+    sutils3          150/4     0.20   0.03  03/12 13:04   129.03  3973.33
+    --------------------------------------------------------------------------------
+    Service             T    Type    Hostname/IPaddr:Port LFS   B.Rate Coef   Rating
+    bounce            +25    NCBID   sutils1:80           L    1000.00        397.62
+    bounce            +25    HTTP    sutils1:80                1000.00        397.62
+    bounce            +25    NCBID   sutils2:80           L    1000.00        155.95
+    bounce            +25    HTTP    sutils2:80                1000.00        155.95
+    bounce            +27    NCBID   sutils3:80           L    1000.00        129.03
+    bounce            +27    HTTP    sutils3:80                1000.00        129.03
+    dispatcher_lb      25     DNS    sutils1:80                1000.00        397.62
+    dispatcher_lb      25     DNS    sutils2:80                1000.00        155.95
+    dispatcher_lb      27     DNS    sutils3:80                1000.00        129.03
+    MapViewEntrez      25 STANDALONE sutils1:44616        L S  1000.00        397.62
+    MapViewEntrez      25 STANDALONE sutils2:44616        L S  1000.00        155.95
+    MapViewEntrez      27 STANDALONE sutils3:44616        L S  1000.00        129.03
+    MapViewMeta        25 STANDALONE sutils2:44414        L S     0.00          0.00
+    MapViewMeta        27 STANDALONE sutils3:44414        L S     0.00          0.00
+    MapViewMeta        25 STANDALONE sutils1:44414        L S     0.00          0.00
+    sutils_lb          25     DNS    sutils1:80                1000.00        397.62
+    sutils_lb          25     DNS    sutils2:80                1000.00        155.95
+    sutils_lb          27     DNS    sutils3:80                1000.00        129.03
+    TaxService         25    NCBID   sutils1:80                1000.00        397.62
+    TaxService         25    NCBID   sutils2:80                1000.00        155.95
+    TaxService         27    NCBID   sutils3:80                1000.00        129.03
+    TaxService3       +25  HTTP_POST sutils1:80                1000.00        397.62
+    TaxService3       +25  HTTP_POST sutils2:80                1000.00        155.95
+    TaxService3       +27  HTTP_POST sutils3:80                1000.00        129.03
+    test              +25    HTTP    sutils1:80                1000.00        397.62
+    test              +25    HTTP    sutils2:80                1000.00        155.95
+    test              +27    HTTP    sutils3:80                1000.00        129.03
+    testgenomes_lb     25     DNS    sutils1:2441              1000.00        397.62
+    testgenomes_lb     25     DNS    sutils2:2441              1000.00        155.95
+    testgenomes_lb     27     DNS    sutils3:2441              1000.00        129.03
+    testsutils_lb      25     DNS    sutils1:2441              1000.00        397.62
+    testsutils_lb      25     DNS    sutils2:2441              1000.00        155.95
+    testsutils_lb      27     DNS    sutils3:2441              1000.00        129.03
+    --------------------------------------------------------------------------------
+    * Hosts:4\747, Srvrs:44/1223/23  |   Heap:249856, used:237291/249616, free:240 *
+    LBSMD PID: 17530, config: /etc/lbsmd/servrc.cfg
 
 ##### <span class="title">NCBI Intranet Web Utilities</span>
 
@@ -1202,7 +1383,9 @@ For script files (similar to the ones used to start/stop servers), there is a de
 
 <span class="nctnt ncbi-app">lbsm\_feedback</span> is a part of the LBSM set of tools installed on all hosts which run <span class="nctnt ncbi-app">LBSMD</span>. As it was explained above, penalizing means to make a server less favorable as a choice of the load balancing mechanism. Because of the fact that the full penalty of 100% makes a server unavailable for clients completely, at the time when the server is about to shut down (restart), it is wise to increase the server penalty to the maximal value, i.e. to exclude the server from the service mapping. (Otherwise, the LBSMD daemon might not immediately notice that the server is down and may continue dispatching to that server.) Usually, the penalty takes at most 5 seconds to propagate to all participating network hosts. Before an actual server shutdown, the following sequence of commands can be used:
 
-    > /opt/machine/lbsm/sbin/lbsm_feedback 'Servicename STANDALONE host 100 120'> sleep 5now you can shutdown the server
+    > /opt/machine/lbsm/sbin/lbsm_feedback 'Servicename STANDALONE host 100 120'
+    > sleep 5
+    now you can shutdown the server
 
 The effect of the above is to set the maximal penalty 100 for the service Servicename (of type <span class="nctnt ncbi-type">STANDALONE</span>) running on host <span class="nctnt ncbi-var">host</span> for at least 120 seconds. After 120 seconds the penalty value will start going down steadily and at some stage the penalty becomes 0. The default hold time equals 0. It takes some time to deliver the penalty value to the other hosts on the network so ‘sleep 5’ is used. Please note the single quotes surrounding the penalty specification: they are required in a command shell because <span class="nctnt ncbi-app">lbsm\_feedback</span> takes only one argument which is the entire penalty specification.
 
@@ -1252,7 +1435,29 @@ NCBI intranet users can get few (no more than 100) recent lines of the log file 
 
 Here is an example of a LBSMD configuration file:
 
-    # $Id$## This is a configuration file of new NCBI service dispatcher### DBLB interface definitions%include /etc/lbsmd/servrc.cfg.db# IEB's servicestestHTTP      /Service/test.cgi?Welcome L=noEntrez2[0] HTTP_POST www.ncbi.nlm.nih.gov /entrez/eutils/entrez2server.fcgi \    C=x-ncbi-data/x-asn-binary L=noEntrez2BLAST[0] HTTP_POST www.ncbi.nlm.nih.gov /entrez/eutils/entrez2server.cgi  \    C=x-ncbi-data/x-asn-binary L=yesCddSearch       [0] HTTP_POST www.ncbi.nlm.nih.gov /Structure/cdd/c_wrpsb.cgi \    C=application/x-www-form-urlencoded L=noCddSearch2      [0] HTTP_POST www.ncbi.nlm.nih.gov /Structure/cdd/wrpsb.cgi \    C=application/x-www-form-urlencoded L=noStrucFetch      [0] HTTP_POST www.ncbi.nlm.nih.gov /Structure/mmdb/mmdbsrv.cgi \    C=application/x-www-form-urlencoded L=nobounce[60]HTTP /Service/bounce.cgi L=no C=x-ncbi-data/x-unknown# Services of old dispatcherbounce[60]NCBID '' L=yes C=x-ncbi-data/x-unknown | \..../web/public/htdocs/Service/bounce
+    # $Id$
+    #
+    # This is a configuration file of new NCBI service dispatcher
+    #
+    #
+    # DBLB interface definitions
+    %include /etc/lbsmd/servrc.cfg.db
+    # IEB's services
+    testHTTP      /Service/test.cgi?Welcome L=no
+    Entrez2[0] HTTP_POST www.ncbi.nlm.nih.gov /entrez/eutils/entrez2server.fcgi \
+        C=x-ncbi-data/x-asn-binary L=no
+    Entrez2BLAST[0] HTTP_POST www.ncbi.nlm.nih.gov /entrez/eutils/entrez2server.cgi  \
+        C=x-ncbi-data/x-asn-binary L=yes
+    CddSearch       [0] HTTP_POST www.ncbi.nlm.nih.gov /Structure/cdd/c_wrpsb.cgi \
+        C=application/x-www-form-urlencoded L=no
+    CddSearch2      [0] HTTP_POST www.ncbi.nlm.nih.gov /Structure/cdd/wrpsb.cgi \
+        C=application/x-www-form-urlencoded L=no
+    StrucFetch      [0] HTTP_POST www.ncbi.nlm.nih.gov /Structure/mmdb/mmdbsrv.cgi \
+        C=application/x-www-form-urlencoded L=no
+    bounce[60]HTTP /Service/bounce.cgi L=no C=x-ncbi-data/x-unknown
+    # Services of old dispatcher
+    bounce[60]NCBID '' L=yes C=x-ncbi-data/x-unknown | \
+    ..../web/public/htdocs/Service/bounce
 
 NCBI intranet users can also visit the following link to get a sample configuration file:
 
@@ -1301,19 +1506,9 @@ The table below describes Apache configuration directives which are taken into a
 | CAFForbiddenIP address                            | It is similar to CAFFailoverIP described above yet applies only to the cases when the requested LB DNS name exists but cannot be returned as it would cause the name access violation (for example, an external access requires an internal name to be used to proxy the request). Default is to use the failover IP (as set by CAFFailoverIP), if available.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | CAFThrottleIP address                             | It is similar to CAFFailoverIP described above but applies only to abusive requests that should be throttled out. Despite this directive exists, the actual throttling mechanism is not yet in production. Default is to use the failover IP (as set by CAFFailoverIP), if available.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | CAFBusyIP address                                 | It is similar to CAFFailoverIP described above but gets returned to clients when it is known that the proxy otherwise serving the request is overloaded. Default is to use the failover IP, if available.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| CAFDebug { Off | On | 2 | 3 }                     | It controls whether to print none ("Off"), some ("On"), more ("2"), or all ("3") debugging information into Apache log file. Per-request logging is automatically on when debugging is enabled by the native LogLevel directive of Apache (LogLevel debug), or with a command line option -e (Apache 2). This directive controls whether mod\_caf produces additional logging when doing maintenance cleaning of its status information (see CAFMaxNStats below).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-                                                     Debug level 1 (On) produces cleanup synopsis and histogram, level 2 produces per-stat eviction messages and the synopsis, and debug level 3 is a combination of the above. Default is "Off". The setting is global, and the last encounter has the actual effect. NOTE: per-stat eviction messages may cause latencies in request processing; so debug levels "2" and "3" should be used carefully, and only when actually needed.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| CAFDebug { Off | On | 2 | 3 }                     | It controls whether to print none ("Off"), some ("On"), more ("2"), or all ("3") debugging information into Apache log file. Per-request logging is automatically on when debugging is enabled by the native LogLevel directive of Apache (LogLevel debug), or with a command line option -e (Apache 2). This directive controls whether mod\_caf produces additional logging when doing maintenance cleaning of its status information (see CAFMaxNStats below). Debug level 1 (On) produces cleanup synopsis and histogram, level 2 produces per-stat eviction messages and the synopsis, and debug level 3 is a combination of the above. Default is "Off". The setting is global, and the last encounter has the actual effect. NOTE: per-stat eviction messages may cause latencies in request processing; so debug levels "2" and "3" should be used carefully, and only when actually needed.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | CAFTiming { Off | On | TOD }                      | It controls whether the module timing profile is done while processing requests. For this to work, though, CAFMaxNStats must first enable collection of statistics. Module's status page then will show how much time is being spent at certain stages of a request processing. Since proxy requests and non-proxy requests are processed differently they are accounted separately. "On" enables to make the time marks using the gettimeofday(2) syscall (accurate up to 1us) without reset upon each stat cleanup (note that tick count will wrap around rather frequently). Setting "TOD" is same as "On" but extends it so that counts do get reset upon every cleanup. Default is "Off". The setting is global, and the last encounter in the configuration file has the actual effect.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| CAFMaxNStats number                               | The number defines how many statistics slots are allocated for CAF status (aka CAF odometer). Value "0" disables the status page at all. Value "-1" sets default number of slots (which currently corresponds to the value of 319). Note that the number only sets a lower bound, and the actual number of allocated slots may be automatically extended to occupy whole number of pages (so that no "memory waste" occurs). The actual number of stats (and memory pages) is printed to the log file. To access the status page, a special handler must be installed for a designated location, as in the following example:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-                                                     <span class="nctnt ncbi-monospace">\<Location /caf-status\></span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-                                                     <span class="nctnt ncbi-monospace"> SetHandler CAF-status</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-                                                     <span class="nctnt ncbi-monospace"> Order deny,allow</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-                                                     <span class="nctnt ncbi-monospace"> Deny from all</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-                                                     <span class="nctnt ncbi-monospace"> Allow from 130.14/16</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-                                                     <span class="nctnt ncbi-monospace">\</Location\></span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                                                     404 (Document not found) gets returned from the configured location if the status page has been disabled (number=0), or if it malfunctions. This directive is global across the entire configuration, and the last found setting takes the actual effect.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-                                                     CAF stats can survive server restarts [graceful and plain "restart"], but not stop / start triggering sequence.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-                                                     Note: "CAF Off" does not disable the status page if it has been configured before -- it just becomes frozen. So [graceful] restart with "CAF Off" won't prevent from gaining access to the status page, although the rest of the module will be rendered inactive.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| CAFMaxNStats number                               | The number defines how many statistics slots are allocated for CAF status (aka CAF odometer). Value "0" disables the status page at all. Value "-1" sets default number of slots (which currently corresponds to the value of 319). Note that the number only sets a lower bound, and the actual number of allocated slots may be automatically extended to occupy whole number of pages (so that no "memory waste" occurs). The actual number of stats (and memory pages) is printed to the log file. To access the status page, a special handler must be installed for a designated location, as in the following example: <span class="nctnt ncbi-monospace">\<Location /caf-status\></span> <span class="nctnt ncbi-monospace"> SetHandler CAF-status</span> <span class="nctnt ncbi-monospace"> Order deny,allow</span> <span class="nctnt ncbi-monospace"> Deny from all</span> <span class="nctnt ncbi-monospace"> Allow from 130.14/16</span> <span class="nctnt ncbi-monospace">\</Location\></span> 404 (Document not found) gets returned from the configured location if the status page has been disabled (number=0), or if it malfunctions. This directive is global across the entire configuration, and the last found setting takes the actual effect. CAF stats can survive server restarts [graceful and plain "restart"], but not stop / start triggering sequence. Note: "CAF Off" does not disable the status page if it has been configured before -- it just becomes frozen. So [graceful] restart with "CAF Off" won't prevent from gaining access to the status page, although the rest of the module will be rendered inactive.                                                                                                                                                                                                                                     |
 | CAFUrlList url1 url2 ...                          | By default, CAF status does not distinguish individual CGIs as they are being accessed by clients. This option allows separating statistics on a per-URL basis. Care must be taken to remember of "combinatorial explosion", and thus the appropriate quantity of stats is to be pre-allocated with CAFMaxNStats if this directive is used, or else the statistics may renew too often to be useful. Special value "\*" allows to track every (F)CGI request by creating individual stat entries for unique (F)CGI names (with or without the path part, depending on a setting of CAFStatPath directive, below). Otherwise, only those listed are to be accounted for, leaving all others to accumulate into a nameless stat slot. URL names can have .cgi or .fcgi file name extensions. Alternatively, a URL name can have no extension to denote a CGI, or a trailing period (.) to denote an FCGI. A single dot alone (.) creates a specially named stat for all non-matching CGIs (both .cgi or .fcgi), and collects all other non-CGI requests in a nameless stat entry. (F)CGI names are case sensitive. When path stats are enabled (see CAFStatPath below), a relative path entry in the list matches any (F)CGI that has the trailing part matching the request (that is, "query.fcgi" matches any URL that ends in "query.fcgi", but "/query.fcgi" matches only the top-level ones). There is an internal limit of 1024 URLs that can be explicitly listed. Successive directives add to the list. A URL specified as a minus sign alone ("-") clears the list, so that no urls will be registered in stats. This is the default. This directive is only allowed at the top level, and applies to all virtual hosts.                                                                                                                                                                |
 | CAFUrlKeep url1 url2 ...                          | CAF status uses a fixed-size array of records to store access statistics, so whenever the table gets full, it has to be cleaned up by dropping some entries, which have not been updated too long, have fewer count values, etc. The eviction algorithm can be controlled by CAFexDecile, CAFexPoints, and CAFexSlope directives, described below, but even when finely tuned, can result in some important entries being pre-emptied, especially when per-URL stats are enabled. This directive helps avoid losing the important information, regardless of other empirical characteristics of a candidate-for-removal. The directive, like CAFUrlList above, lists individual URLs which, once recorded, have to be persistently kept in the table. Note that as a side effect, each value (except for "-") specified in this directive implicitly adds an entry as if it were specified with CAFUrlList. Special value "-" clears the keep list, but does not affect the URL list, so specifying "CAFUrlKeep a b -" is same as specifying "CAFUrlList a b" alone, that is, without obligation for CAF status to keep either "a" or "b" permanently. There is an internal limit of 1024 URLs that can be supplied by this directive. Successive uses add to the list. The directive is only allowed at the top level, and applies to all virtual hosts.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | CAFexDecile digit                                 | It specifies the top decile(s) of the total number of stat slots, sorted by the hit count and subject for expulsion, which may not be made available for stat's cleanup algorithms should it be necessary to arrange a new slot by removing old/stale entries. Decile is a single digit 0 through 9, or a special value "default" (which currently translates to 1). Note that each decile equals 10%.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -1365,10 +1560,7 @@ An IP spec is a word (no embedded whitespace characters) and is either:
 
 A networkIP / networkMask specification can contain an IP prefix for the network (with or without all trailing zeroes present), and the networkMask can be either in CIDR notation or in the form of a full IP address (all 4 octets) expressing contiguous high-bit ranges (all the records below are equivalent):
 
-<span class="nctnt ncbi-monospace">130.14.29.0/24</span>
-<span class="nctnt ncbi-monospace">130.14.29/24</span>
-<span class="nctnt ncbi-monospace">130.14.29/255.255.255.0</span>
-<span class="nctnt ncbi-monospace">130.14.29.0/255.255.255.0</span>
+<span class="nctnt ncbi-monospace">130.14.29.0/24</span> <span class="nctnt ncbi-monospace">130.14.29/24</span> <span class="nctnt ncbi-monospace">130.14.29/255.255.255.0</span> <span class="nctnt ncbi-monospace">130.14.29.0/255.255.255.0</span>
 
 An IP range is an incomplete IP address (that is, having less than 4 full octets) followed by exactly one dot and one integer range, e.g.:
 
@@ -1390,7 +1582,10 @@ denotes a host range from <span class="nctnt ncbi-monospace">130.14.8.0</span> t
 
 <!-- -->
 
-    <Location /Entrez>    CAFProxyCookie  pubmed.lb  WebEnv    CAFPreference   pubmed.lb  100</Location>
+    <Location /Entrez>
+        CAFProxyCookie  pubmed.lb  WebEnv
+        CAFPreference   pubmed.lb  100
+    </Location>
 
 The second directive in the above example sets the preference to 100% -- this is a preference, not a requirement, so meaning that using the host from the cookie is the most desirable, but not blindly instructing to go to in every case possible.
 
@@ -1398,7 +1593,13 @@ The second directive in the above example sets the preference to 100% -- this is
 
 <!-- -->
 
-    <Directory /SomeDir>    CAFProxyCookie  myname.lb  My-Cookie    CAFProxyCookie  other.lb   My-Cookie</Directory><Directory /SomeDir/SubDir>    CAFProxyCookie  myname.lb  My-Secondary-Cookie</Directory>
+    <Directory /SomeDir>
+        CAFProxyCookie  myname.lb  My-Cookie
+        CAFProxyCookie  other.lb   My-Cookie
+    </Directory>
+    <Directory /SomeDir/SubDir>
+        CAFProxyCookie  myname.lb  My-Secondary-Cookie
+    </Directory>
 
 The effect of the above is that "My-Cookie" will be used in LB name searches of "myname.lb" in directory "/SomeDir", but in "/SomeDir/SubDir" and all directories of that branch, "My-Secondary-Cookie" will be used instead. If an URL referred to "/SomeDir/AnotherDir", then "My-Cookie" would still be used.
 
@@ -1424,27 +1625,22 @@ Suppose that the DB=A is a query argument (explicit DB selection, including just
 
 |----------------|------------------------------------------------------------|
 | Match          | Description                                                |
-| DB=A           | Best.                                                      
-                  "A" may be "" to match the missing value                    |
-| DB=\*          | Good.                                                      
-                  "\*" stands for "any other"                                 |
+| DB=A           | Best. "A" may be "" to match the missing value             |
+| DB=\*          | Good. "\*" stands for "any other"                          |
 | DB not defined | Fair                                                       |
-| DB=-           | Poor.                                                      
-                  "-" stands for "missing in the request"                     |
+| DB=-           | Poor. "-" stands for "missing in the request"              |
 | DB=B           | Mismatch. It is used for fallbacks only as the last resort |
 
 No host with an explicit DB assignment (DB=B or DB=-) is being selected above if there is an exclamation point "!" [stands for "only"] in the assignment. DB=~A for the host causes the host to be skipped from selection as well. DBs are screened in the order of appearance, the first one is taken, so "DB=~A A" skips all requests having DB=A in their query strings.
 
 Suppose that there is no DB selection in the request. Then the hosts are selected in the following order:
 
-|----------------|-------------------------------------------|
-| Match          | Description                               |
-| DB=-           | Best                                      
-                  "-" stands for "missing from the request"  |
-| DB not defined | Good                                      |
-| DB=\*          | Fair.                                     
-                  "\*" stands for "any other"                |
-| DB=B           | Poor                                      |
+|----------------|------------------------------------------------|
+| Match          | Description                                    |
+| DB=-           | Best "-" stands for "missing from the request" |
+| DB not defined | Good                                           |
+| DB=\*          | Fair. "\*" stands for "any other"              |
+| DB=B           | Poor                                           |
 
 No host with a non-empty DB assignment (DB=B or DB=\*) is being selected in the above scenario if there is an exclamation point "!" [stands for "only"] in the assignment. DB=~- defined for the host causes the host not to be considered.
 
@@ -1541,7 +1737,7 @@ The following additional HTTP tags are recognized in the client request to the D
 <li><p><span class="nctnt ncbi-type">HTTP_POST</span></p></li>
 <li><p><span class="nctnt ncbi-type">FIREWALL</span></p></li>
 </ul>
-<br />The keyword describes the server type which the client is capable to handle. The default is any (when the tag is not present in the HTTP header), and in case of a connection request, the dispatcher will accommodate an actual found server with the connection mode, which the client requested, by relaying data appropriately and in a way suitable for the server.<br /><span class="nctnt highlight">Note: </span><span class="nctnt ncbi-type">FIREWALL</span> indicates that the client chooses a firewall method of communication.<br /><span class="nctnt highlight">Note:</span> Some server types can be ignored if not compatible with the current client mode</td>
+The keyword describes the server type which the client is capable to handle. The default is any (when the tag is not present in the HTTP header), and in case of a connection request, the dispatcher will accommodate an actual found server with the connection mode, which the client requested, by relaying data appropriately and in a way suitable for the server. <span class="nctnt highlight">Note: </span><span class="nctnt ncbi-type">FIREWALL</span> indicates that the client chooses a firewall method of communication. <span class="nctnt highlight">Note:</span> Some server types can be ignored if not compatible with the current client mode</td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="nctnt ncbi-code">Client-Mode: &lt;client-mode&gt;</span></td>
@@ -1550,7 +1746,7 @@ The following additional HTTP tags are recognized in the client request to the D
 <li><p><span class="nctnt ncbi-type">STATELESS_ONLY</span> - specifies that the client is not capable of doing full-duplex data exchange with the server in a session mode (e.g., in a dedicated connection).</p></li>
 <li><p><span class="nctnt ncbi-type">STATEFUL_CAPABLE</span> - should be used by the clients, which are capable of holding an opened connection to a server. This keyword serves as a hint to the dispatcher to try to open a direct TCP channel between the client and the server, thus reducing the network usage overhead.</p></li>
 </ul>
-<br />The default (when the tag is not present at all) is <span class="nctnt ncbi-type">STATELESS_ONLY</span> to support Web browsers.</td>
+The default (when the tag is not present at all) is <span class="nctnt ncbi-type">STATELESS_ONLY</span> to support Web browsers.</td>
 </tr>
 <tr class="even">
 <td align="left"><span class="nctnt ncbi-code">Dispatch-Mode: &lt;dispatch-mode&gt;</span></td>
@@ -1561,7 +1757,7 @@ The following additional HTTP tags are recognized in the client request to the D
 <li><p><span class="nctnt ncbi-type">STATEFUL_INCLUSIVE</span> - informs the DISPD dispatcher that the current request is a connection request, and because it is going over HTTP it is treated as stateless, thus dispatching would supply stateless servers only. This keyword modifies the default behavior, and dispatching information sent back along with the server reply (resulting from data exchange) should include stateful servers as well, allowing the client to go to a dedicated connection later.</p></li>
 <li><p><span class="nctnt ncbi-type">OK_DOWN</span> or <span class="nctnt ncbi-type">OK_SUPPRESSED</span> or <span class="nctnt ncbi-type">PROMISCUOUS</span> - defines a dispatch only request without actual data transfer for the client to obtain a list of servers which otherwise are not included such as, currently down servers (<span class="nctnt ncbi-type">OK_DOWN</span>), currently suppressed by having 100% penalty servers (<span class="nctnt ncbi-type">OK_SUPPRESSED</span>) or both (<span class="nctnt ncbi-type">PROMISCUOUS</span>)</p></li>
 </ul>
-<br />The default (in the absence of this tag) is a connection request, and because it is going over HTTP, it is automatically considered stateless. This is to support calls for NCBI services from Web browsers.</td>
+The default (in the absence of this tag) is a connection request, and because it is going over HTTP, it is automatically considered stateless. This is to support calls for NCBI services from Web browsers.</td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="nctnt ncbi-code">Skip-Info-&lt;n&gt;: &lt;server-info&gt;</span></td>
@@ -1573,7 +1769,7 @@ The following additional HTTP tags are recognized in the client request to the D
 </tr>
 <tr class="odd">
 <td align="left"><span class="nctnt ncbi-code">Server-Count: {N|ALL}</span></td>
-<td align="left">The tag defines how many server infos to include per response (default <span class="nctnt ncbi-code">N</span>=3, <span class="nctnt ncbi-code">ALL</span> causes everything to be returned at once).<br /><span class="nctnt ncbi-code">N</span> is an integer and <span class="nctnt ncbi-code">ALL</span> is a keyword.</td>
+<td align="left">The tag defines how many server infos to include per response (default <span class="nctnt ncbi-code">N</span>=3, <span class="nctnt ncbi-code">ALL</span> causes everything to be returned at once). <span class="nctnt ncbi-code">N</span> is an integer and <span class="nctnt ncbi-code">ALL</span> is a keyword.</td>
 </tr>
 </tbody>
 </table>
@@ -1587,10 +1783,8 @@ The DISPD dispatcher can produce the following HTTP tags in response to the clie
 | <span class="nctnt ncbi-code">Relay-Path: \<path\></span>                          | The tag shows how the information was passed along by the DISPD dispatcher and the NCBID utility. This is essential for debugging purposes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | <span class="nctnt ncbi-code">Server-Info-\<n\>: \<server-info\></span>            | The tag(s) (enumerated increasingly by suffix <span class="nctnt ncbi-code">\<n\></span>, starting from 1) give a list of servers, where the requested service is available. The list can have up to five entries. However, there is only one entry generated when the service was requested either in firewall mode or by a Web browser. For a non-local client, the returned server descriptors can include <span class="nctnt ncbi-type">FIREWALL</span> server specifications. Despite preserving information about host, port, type, and other (but not all) parameters of the original servers, <span class="nctnt ncbi-type">FIREWALL</span> descriptors are not specifications of real servers, but they are created on-the-fly by the DISPD dispatcher to indicate that the connection point of the server cannot be otherwise reached without the use of either firewalling or relaying. |
 | <span class="nctnt ncbi-code">Connection-Info: \<host\> \<port\> \<ticket\></span> | The tag is generated in a response to a stateful-capable client and includes a host (in a dotted notation) and a port number (decimal value) of the connection point where the server is listening (if either the server has specifically started or the FWDaemon created that connection point because of the client's request). The ticket value (hexadecimal) represents the 4-byte ticket that must be passed to the server as binary data at the very beginning of the stream. If instead of a host, a port, and ticket information there is a keyword <span class="nctnt ncbi-type">TRY\_STATELESS</span>, then for some reasons (see <span class="nctnt ncbi-code">Dispatcher-Failures</span> tag below) the request failed but may succeed if the client would switch into a stateless mode.                                                                                               |
-| <span class="nctnt ncbi-code">Dispatcher-Failures: \<failures\></span>             | The tag value lists all transient failures that the dispatcher might have experienced while processing the request. A fatal error (if any) always appears as the last failure in the list. In this case, the reply body would contain a copy of the message as well.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-                                                                                      <span class="nctnt highlight">Note:</span> Fatal dispatching failure is also indicated by an unsuccessful HTTP completion code.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| <span class="nctnt ncbi-code">Used-Server-Info-n: \<server\_info\></span>          | The tag informs the client end of server infos that having been unsuccessfully used during current connection request (so that the client will be able to skip over them if needs to).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-                                                                                      <span class="nctnt ncbi-code">n</span> is an integral suffix, enumerating from 1.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| <span class="nctnt ncbi-code">Dispatcher-Failures: \<failures\></span>             | The tag value lists all transient failures that the dispatcher might have experienced while processing the request. A fatal error (if any) always appears as the last failure in the list. In this case, the reply body would contain a copy of the message as well. <span class="nctnt highlight">Note:</span> Fatal dispatching failure is also indicated by an unsuccessful HTTP completion code.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| <span class="nctnt ncbi-code">Used-Server-Info-n: \<server\_info\></span>          | The tag informs the client end of server infos that having been unsuccessfully used during current connection request (so that the client will be able to skip over them if needs to). <span class="nctnt ncbi-code">n</span> is an integral suffix, enumerating from 1.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | <span class="nctnt ncbi-code">Dispatcher-Messages:</span>                          | The tag is used to issue a message into standard error log of a client. The message is intercepted and delivered from within Toolkit HTTP API.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 
 ##### <span class="title">Communication Schemes</span>
@@ -1671,11 +1865,10 @@ In the <span class="nctnt ncbi-type">STATEFUL</span> mode, the NCBID utility sta
 
 For the sake of the backward compatibility the NCBID utility creates the following environment variables (in addition to CGI/1.0 environment variables created by the HTTP daemon when calling NCBID) before starting the service executables:
 
-|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Name                 | Description                                                                                                                                                    |
-| NI\_CLIENT\_IPADDR   | The variable contains an IP address of the remote host.                                                                                                        
-                        It could also be an IP address of the firewall daemon if the NCBID utility was started as a result of firewalling.                                              |
-| NI\_CLIENT\_PLATFORM | The variable contains the client platform extracted from the HTTP tag <span class="nctnt ncbi-monospace">Client-Platform</span> provided by the client if any. |
+|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Name                 | Description                                                                                                                                                                |
+| NI\_CLIENT\_IPADDR   | The variable contains an IP address of the remote host. It could also be an IP address of the firewall daemon if the NCBID utility was started as a result of firewalling. |
+| NI\_CLIENT\_PLATFORM | The variable contains the client platform extracted from the HTTP tag <span class="nctnt ncbi-monospace">Client-Platform</span> provided by the client if any.             |
 
 ### <span class="title">Firewall Daemon (FWDaemon)</span>
 
@@ -1733,7 +1926,13 @@ The outside NCBI network users can check the connection to the NAT service follo
 
 <!-- -->
 
-    > telnet 130.14.29.112 5864Trying 130.14.29.112...Connected to 130.14.29.112.Escape character is '^]'.NCBI Firewall Daemon:  Invalid ticket.  Connection closed.See http://www.ncbi.nlm.nih.gov/cpp/network/firewall.html.Connection closed by foreign host.
+    > telnet 130.14.29.112 5864
+    Trying 130.14.29.112...
+    Connected to 130.14.29.112.
+    Escape character is '^]'.
+    NCBI Firewall Daemon:  Invalid ticket.  Connection closed.
+    See http://www.ncbi.nlm.nih.gov/cpp/network/firewall.html.
+    Connection closed by foreign host.
 
 #### <span class="title">Log Files</span>
 
@@ -1763,20 +1962,7 @@ The purpose of the launcherd utility is to replace the NCBID services on hosts w
 
 The launcherd utility is implemented as a command line utility which is controlled by command line arguments. The list of accepted arguments can be retrieved with the -h option:
 
-<span class="nctnt ncbi-code">service1:~\> /export/home/service/launcherd -h</span>
-<span class="nctnt ncbi-code">Usage:</span>
-<span class="nctnt ncbi-code">launcherd [-h] [-q] [-v] [-n] [-d] [-i] [-p \#] [-l file] service command [parameters...]</span>
-<span class="nctnt ncbi-code"> -h = Print usage information only; ignore anything else</span>
-<span class="nctnt ncbi-code"> -q = Quiet start [and silent exit if already running]</span>
-<span class="nctnt ncbi-code"> -v = Verbose logging [terse otherwise]</span>
-<span class="nctnt ncbi-code"> -n = No statistics collection</span>
-<span class="nctnt ncbi-code"> -d = Debug mode [do not go daemon, stay foreground]</span>
-<span class="nctnt ncbi-code"> -i = Internal mode [bind to localhost only]</span>
-<span class="nctnt ncbi-code"> -p \# = Port \# to listen on for incoming connection requests</span>
-<span class="nctnt ncbi-code"> -l = Set log file name [use \`-' or \`+' to run w/o logger]</span>
-<span class="nctnt ncbi-code">Note: Service must be of type STANDALONE to auto-get the port.</span>
-<span class="nctnt ncbi-code">Note: Logging to \`/dev/null' is treated as logging to a file.</span>
-<span class="nctnt ncbi-code">Signals: HUP, INT, QUIT, TERM to exit</span>
+<span class="nctnt ncbi-code">service1:~\> /export/home/service/launcherd -h</span> <span class="nctnt ncbi-code">Usage:</span> <span class="nctnt ncbi-code">launcherd [-h] [-q] [-v] [-n] [-d] [-i] [-p \#] [-l file] service command [parameters...]</span> <span class="nctnt ncbi-code"> -h = Print usage information only; ignore anything else</span> <span class="nctnt ncbi-code"> -q = Quiet start [and silent exit if already running]</span> <span class="nctnt ncbi-code"> -v = Verbose logging [terse otherwise]</span> <span class="nctnt ncbi-code"> -n = No statistics collection</span> <span class="nctnt ncbi-code"> -d = Debug mode [do not go daemon, stay foreground]</span> <span class="nctnt ncbi-code"> -i = Internal mode [bind to localhost only]</span> <span class="nctnt ncbi-code"> -p \# = Port \# to listen on for incoming connection requests</span> <span class="nctnt ncbi-code"> -l = Set log file name [use \`-' or \`+' to run w/o logger]</span> <span class="nctnt ncbi-code">Note: Service must be of type STANDALONE to auto-get the port.</span> <span class="nctnt ncbi-code">Note: Logging to \`/dev/null' is treated as logging to a file.</span> <span class="nctnt ncbi-code">Signals: HUP, INT, QUIT, TERM to exit</span>
 
 The launcherd utility accepts the name of the service to be daemonized. Using the service name the utility checks the LBSMD daemon table and retrieves port on which the service requests should be accepted. As soon as an incoming request is accepted the launched forks and connects the socket with the standard streams of the service executable.
 
@@ -1784,13 +1970,7 @@ One of the launcherd utility command line arguments is a path to a log file wher
 
 The common practice for the launcherd utility is to be run by the standard Unix cron daemon. Here is an example of a cron schedule which runs the launcherd utility every 3 minutes:
 
-<span class="nctnt ncbi-code">\# DO NOT EDIT THIS FILE - edit the master and reinstall.</span>
-<span class="nctnt ncbi-code">\# (/export/home/service/UPGRADE/crontabs/service1/crontab </span>
-<span class="nctnt ncbi-code">\# installed on Thu Mar 20 20:48:02 2008) </span>
-<span class="nctnt ncbi-code">\# (Cron version -- $Id: crontab.c,v 2.13 1994/01/17 03:20:37 vixie Exp $) </span>
-<span class="nctnt ncbi-code">MAILTO=ncbiduse@ncbi</span>
-<span class="nctnt ncbi-code">\*/3 \* \* \* \* test -x /export/home/service/launcherd && /export/home/service/launcherd -q -l /export/home/service/bounce.log -- Bounce /export/home/service/bounce \>/dev/null MAILTO=grid-mon@ncbi,taxhelp@ncbi</span>
-<span class="nctnt ncbi-code">\*/3 \* \* \* \* test -x /export/home/service/launcherd && /export/home/service/launcherd -q -l /var/log/taxservice -- TaxService /export /home/service/taxservice/taxservice \>/dev/null</span>
+<span class="nctnt ncbi-code">\# DO NOT EDIT THIS FILE - edit the master and reinstall.</span> <span class="nctnt ncbi-code">\# (/export/home/service/UPGRADE/crontabs/service1/crontab </span> <span class="nctnt ncbi-code">\# installed on Thu Mar 20 20:48:02 2008) </span> <span class="nctnt ncbi-code">\# (Cron version -- $Id: crontab.c,v 2.13 1994/01/17 03:20:37 vixie Exp $) </span> <span class="nctnt ncbi-code">MAILTO=ncbiduse@ncbi</span> <span class="nctnt ncbi-code">\*/3 \* \* \* \* test -x /export/home/service/launcherd && /export/home/service/launcherd -q -l /export/home/service/bounce.log -- Bounce /export/home/service/bounce \>/dev/null MAILTO=grid-mon@ncbi,taxhelp@ncbi</span> <span class="nctnt ncbi-code">\*/3 \* \* \* \* test -x /export/home/service/launcherd && /export/home/service/launcherd -q -l /var/log/taxservice -- TaxService /export /home/service/taxservice/taxservice \>/dev/null</span>
 
 ### <span class="title">Monitoring Tools</span>
 
@@ -2023,11 +2203,24 @@ To use <span class="nctnt ncbi-app">NetCache</span> from your application, you m
 
 You will need at least the following libraries in your <span class="nctnt ncbi-path">Makefile.\<appname\>.app</span>:
 
-    # For CNcbiApplication-derived programs:LIB = xconnserv xthrserv xconnect xutil xncbi# For CCgiApplication-derived programs:LIB = xcgi xconnserv xthrserv xconnect xutil xncbi# If you're using CNetICacheClient, also add ncbi_xcache_netcache to LIB.# All apps need this LIBS line:LIBS = $(NETWORK_LIBS) $(DL_LIBS) $(ORIG_LIBS)
+    # For CNcbiApplication-derived programs:
+    LIB = xconnserv xthrserv xconnect xutil xncbi
+
+    # For CCgiApplication-derived programs:
+    LIB = xcgi xconnserv xthrserv xconnect xutil xncbi
+
+    # If you're using CNetICacheClient, also add ncbi_xcache_netcache to LIB.
+
+    # All apps need this LIBS line:
+    LIBS = $(NETWORK_LIBS) $(DL_LIBS) $(ORIG_LIBS)
 
 Your source should include:
 
-    #include <corelib/ncbiapp.hpp> // for CNcbiApplication-derived programs#include <cgi/cgiapp.hpp>      // for CCgiApplication-derived programs#include <connect/services/netcache_api.hpp>     // if you use CNetCacheAPI#include <connect/services/neticache_client.hpp> // if you use CNetICacheClient
+    #include <corelib/ncbiapp.hpp> // for CNcbiApplication-derived programs
+    #include <cgi/cgiapp.hpp>      // for CCgiApplication-derived programs
+
+    #include <connect/services/netcache_api.hpp>     // if you use CNetCacheAPI
+    #include <connect/services/neticache_client.hpp> // if you use CNetICacheClient
 
 An even easier way to get a new CGI application started is to use the [new\_project](ch_proj.html#ch_proj.new_project_Starting) script:
 
@@ -2041,7 +2234,8 @@ Service names must match the pattern <span class="nctnt ncbi-monospace">[A-Za-z\
 
 Service names are typically specified on the command line or stored in the application configuration file. For example:
 
-    [netcache_api]service=the_svc_name_here
+    [netcache_api]
+    service=the_svc_name_here
 
 #### <span class="title">Initialize the client API</span>
 
@@ -2049,15 +2243,21 @@ Initializing the <span class="nctnt ncbi-app">NetCache</span> API is extremely e
 
 For example, put this in your source code:
 
-    // To configure automatically based on the config file, using CNetCacheAPI:CNetCacheAPI nc_api(GetConfig());// To configure automatically based on the config file, using CNetICacheClient:CNetICacheClient ic_client(CNetICacheClient::eAppRegistry);
+    // To configure automatically based on the config file, using CNetCacheAPI:
+    CNetCacheAPI nc_api(GetConfig());
+
+    // To configure automatically based on the config file, using CNetICacheClient:
+    CNetICacheClient ic_client(CNetICacheClient::eAppRegistry);
 
 and put this in your configuration file:
 
-    [netcache_api]client=your_app_name_here
+    [netcache_api]
+    client=your_app_name_here
 
 If you are using <span class="nctnt ncbi-class">CNetICacheClient</span>, you either need to use API methods that take a cache name or, to take advantage of automatic configuration based on the registry, specify a cache name in the <span class="nctnt ncbi-monospace">[netcache\_api]</span> section, for example:
 
-    [netcache_api]cache_name=your_cache_name_here
+    [netcache_api]
+    cache_name=your_cache_name_here
 
 For a complete reference of <span class="nctnt ncbi-app">NetCache</span> configuration parameters, please see the [NetCache and NetSchedule](ch_libconfig.html#ch_libconfig.NetCache_and_NetSchedule) section in the Library Configuration chapter:
 
@@ -2071,13 +2271,41 @@ With all the storage methods, you can supply a "time-to-live" parameter, which s
 
 If you are saving a new blob using <span class="nctnt ncbi-class">CNetCacheAPI</span>, it will create a unique blob key and pass it back to you. Here are several ways to store data using <span class="nctnt ncbi-class">CNetCacheAPI</span> (see the [class reference](http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/doxyhtml/classCNetCacheAPI.html) for additional methods):
 
-    CNetCacheAPI nc_api(GetConfig());// Write a simple object (and get the new blob key).key = nc_api.PutData(message.c_str(), message.size());// Or, overwrite the data by writing to the same key.nc_api.PutData(key, message.c_str(), message.size());// Or, create an ostream (and get a key), then insert into the stream.auto_ptr<CNcbiOstream> os(nc_api.CreateOStream(key));*os << "line one\n";*os << "line two\n";// (data written at stream deletion or os.reset())// Or, create a writer (and get a key), then write data in chunks.auto_ptr<IEmbeddedStreamWriter> writer(nc_api.PutData(&key));while(...) {    writer->Write(chunk_buf, chunk_size);    // (data written at writer deletion or writer.Close())
+    CNetCacheAPI nc_api(GetConfig());
+
+    // Write a simple object (and get the new blob key).
+    key = nc_api.PutData(message.c_str(), message.size());
+
+    // Or, overwrite the data by writing to the same key.
+    nc_api.PutData(key, message.c_str(), message.size());
+
+    // Or, create an ostream (and get a key), then insert into the stream.
+    auto_ptr<CNcbiOstream> os(nc_api.CreateOStream(key));
+    *os << "line one\n";
+    *os << "line two\n";
+    // (data written at stream deletion or os.reset())
+
+    // Or, create a writer (and get a key), then write data in chunks.
+    auto_ptr<IEmbeddedStreamWriter> writer(nc_api.PutData(&key));
+    while(...) {
+        writer->Write(chunk_buf, chunk_size);
+        // (data written at writer deletion or writer.Close())
 
 ##### <span class="title">Storing data using CNetICacheClient</span>
 
 If you are saving a new blob using <span class="nctnt ncbi-class">CNetICacheClient</span>, you must supply a unique { blob key / version / subkey / cache name } combination. Here are two ways (with the cache name coming from the registry) to store data using <span class="nctnt ncbi-class">CNetICacheClient</span> (see the [class reference](http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/doxyhtml/classCNetICacheClient.html) for additional methods):
 
-    CNetICacheClient ic_client(CNetICacheClient::eAppRegistry);// Write a simple object.ic_client.Store(key, version, subkey, message.c_str(), message.size());// Or, create a writer, then write data in chunks.auto_ptr<IEmbeddedStreamWriter>    writer(ic_client.GetNetCacheWriter(key, version, subkey));while(...) {    writer->Write(chunk_buf, chunk_size);    // (data written at writer deletion or writer.Close())
+    CNetICacheClient ic_client(CNetICacheClient::eAppRegistry);
+
+    // Write a simple object.
+    ic_client.Store(key, version, subkey, message.c_str(), message.size());
+
+    // Or, create a writer, then write data in chunks.
+    auto_ptr<IEmbeddedStreamWriter>
+        writer(ic_client.GetNetCacheWriter(key, version, subkey));
+    while(...) {
+        writer->Write(chunk_buf, chunk_size);
+        // (data written at writer deletion or writer.Close())
 
 #### <span class="title">Retrieve data</span>
 
@@ -2089,13 +2317,47 @@ If an attempt is made to retrieve a blob after its time-to-live has expired, an 
 
 The following code snippet demonstrates three ways of retrieving data using <span class="nctnt ncbi-class">CNetCacheAPI</span> (see the [class reference](http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/doxyhtml/classCNetCacheAPI.html) for additional methods):
 
-    // Read a simple object.nc_api.ReadData(key, message);// Or, extract words from a stream.auto_ptr<CNcbiIstream> is(nc_api.GetIStream(key));while (!is->eof()) {    *is >> message; // get one word at a time, ignoring whitespace// Or, retrieve the whole stream buffer.NcbiCout << "Read: '" << is->rdbuf() << "'" << NcbiEndl;// Or, read data in chunks.while (...) {    ERW_Result rw_res = reader->Read(chunk_buf, chunk_size, &bytes_read);    chunk_buf[bytes_read] = '\0';    if (rw_res == eRW_Success) {        NcbiCout << "Read: '" << chunk_buf << "'" << NcbiEndl;    } else {        NCBI_USER_THROW("Error while reading BLOB");    }
+    // Read a simple object.
+    nc_api.ReadData(key, message);
+
+    // Or, extract words from a stream.
+    auto_ptr<CNcbiIstream> is(nc_api.GetIStream(key));
+    while (!is->eof()) {
+        *is >> message; // get one word at a time, ignoring whitespace
+
+    // Or, retrieve the whole stream buffer.
+    NcbiCout << "Read: '" << is->rdbuf() << "'" << NcbiEndl;
+
+    // Or, read data in chunks.
+    while (...) {
+        ERW_Result rw_res = reader->Read(chunk_buf, chunk_size, &bytes_read);
+        chunk_buf[bytes_read] = '\0';
+        if (rw_res == eRW_Success) {
+            NcbiCout << "Read: '" << chunk_buf << "'" << NcbiEndl;
+        } else {
+            NCBI_USER_THROW("Error while reading BLOB");
+        }
 
 ##### <span class="title">Retrieving data using CNetICacheClient</span>
 
 The following code snippet demonstrates two ways to retrieve data using <span class="nctnt ncbi-class">CNetICacheClient</span>, with the cache name coming from the registry (see the [class reference](http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/doxyhtml/classCNetICacheClient.html) for additional methods):
 
-    // Read a simple object.ic_client.Read(key, version, subkey, chunk_buf, kMyBufSize);// Or, read data in chunks.size_t remaining(ic_client.GetSize(key, version, subkey));auto_ptr<IReader> reader(ic_client.GetReadStream(key, version, subkey));while (remaining > 0) {    size_t bytes_read;    ERW_Result rw_res = reader->Read(chunk_buf, chunk_size, &bytes_read);    if (rw_res != eRW_Success) {        NCBI_USER_THROW("Error while reading BLOB");    }    // do something with the data    ...    remaining -= bytes_read;}
+    // Read a simple object.
+    ic_client.Read(key, version, subkey, chunk_buf, kMyBufSize);
+
+    // Or, read data in chunks.
+    size_t remaining(ic_client.GetSize(key, version, subkey));
+    auto_ptr<IReader> reader(ic_client.GetReadStream(key, version, subkey));
+    while (remaining > 0) {
+        size_t bytes_read;
+        ERW_Result rw_res = reader->Read(chunk_buf, chunk_size, &bytes_read);
+        if (rw_res != eRW_Success) {
+            NCBI_USER_THROW("Error while reading BLOB");
+        }
+        // do something with the data
+        ...
+        remaining -= bytes_read;
+    }
 
 #### <span class="title">Samples and other resources</span>
 
@@ -2133,7 +2395,12 @@ A:We usually (except for PubMed) administer NC servers, most of which are shared
 
 A:Yes, also try the samples under [src/sample/app/netcache](http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/source/src/sample/app/netcache/) - for example:
 
-    new_project  pc_nc_client  app/netcachecd  pc_nc_clientmake./netcache_client_sample1  -service  NC_test./netcache_client_sample2  NC_test./netcache_client_sample3  NC_test
+    new_project  pc_nc_client  app/netcache
+    cd  pc_nc_client
+    make
+    ./netcache_client_sample1  -service  NC_test
+    ./netcache_client_sample2  NC_test
+    ./netcache_client_sample3  NC_test
 
 **Q:Is there a way to build in some redundancy, e.g. so that if an individual server/host goes down, we don't lose data?**
 
