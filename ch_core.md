@@ -3576,10 +3576,10 @@ The <span class="nctnt ncbi-class">CFastMutex</span> should be used only to prot
         static int Count = 0;
         DEFINE_STATIC_FAST_MUTEX(CountMutex);
         ...
-        {{
+        { {
             CFastMutexGuard guard(CountMutex);
             Count++;
-        }}
+        } }
         ...
     }
 
