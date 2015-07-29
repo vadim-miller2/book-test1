@@ -858,7 +858,7 @@ The [CArgDescriptions](#cargdescriptions) class provides an interface to describ
 
 The resulting [CArgs](#cargs) object will contain parsed, verified, and ready-to-use argument values, which are stored as [CArgValue](#cargvalue). The value of a particular argument can be accessed using the argument's name (as specified in the [CArgDescriptions](#cargdescriptions) object), and the returned [CArgValue](#cargvalue) object can then be safely type-cast to a correct C++ type (<span class="nctnt ncbi-type">int</span>, <span class="nctnt ncbi-type">string</span>, <span class="nctnt ncbi-type">stream</span>, etc.) because the argument types have been verified. These class relations and methods can be summarized schematically as shown in [Figure 1](#figure-1).
 
-[![Figure 1. Argument processing class relations.](../static/img/flow.gif)](../static/img/flow.gif "Click to see the full-resolution image")
+[![Figure 1. Argument processing class relations.](/book-test1/static/img/flow.gif)](/book-test1/static/img/flow.gif "Click to see the full-resolution image")
 
 Figure 1. Argument processing class relations.
 
@@ -2224,7 +2224,7 @@ Application state codes:
 
 The normal state transitions are:
 
-<span>[![Image ch\_core\_log\_fmt\_app\_states.png](../static/img/ch_core_log_fmt_app_states.png)](../static/img/ch_core_log_fmt_app_states.png "Click to see the full-resolution image")</span>
+<span>[![Image ch\_core\_log\_fmt\_app\_states.png](/book-test1/static/img/ch_core_log_fmt_app_states.png)](/book-test1/static/img/ch_core_log_fmt_app_states.png "Click to see the full-resolution image")</span>
 
 ##### Events and Messages
 
@@ -2360,13 +2360,13 @@ For example:
 
 An example of application events:
 
-<span>[![Image ch\_core\_log\_fmt\_event.png](../static/img/ch_core_log_fmt_event.png)](../static/img/ch_core_log_fmt_event.png "Click to see the full-resolution image")</span>
+<span>[![Image ch\_core\_log\_fmt\_event.png](/book-test1/static/img/ch_core_log_fmt_event.png)](/book-test1/static/img/ch_core_log_fmt_event.png "Click to see the full-resolution image")</span>
 
 (Click to see the full-resolution image.)
 
 An example of diagnostic messages:
 
-<span>[![Image ch\_core\_log\_fmt\_diagnostic.png](../static/img/ch_core_log_fmt_diagnostic.png)](../static/img/ch_core_log_fmt_diagnostic.png "Click to see the full-resolution image")</span>
+<span>[![Image ch\_core\_log\_fmt\_diagnostic.png](/book-test1/static/img/ch_core_log_fmt_diagnostic.png)](/book-test1/static/img/ch_core_log_fmt_diagnostic.png "Click to see the full-resolution image")</span>
 
 (Click to see the full-resolution image.)
 
@@ -3428,7 +3428,7 @@ The following subsections discuss the individual classes in more detail.
 
 [Figure 2](#figure-2) shows a typical thread life cycle. The figure demonstrates that thread constructors are called from the parent thread. The child thread is spawned by the <span class="nctnt ncbi-func">Run()</span> function only. Then, the user-provided <span class="nctnt ncbi-func">Main()</span> method (containing code created by user) gets executed. The thread's destructor may be called in the context of either parent or child thread depending on the state of the thread at the moment when <span class="nctnt ncbi-func">Join()</span> or <span class="nctnt ncbi-func">Detach()</span> is called.
 
-[![Figure 2. Thread Life Cycle](../static/img/thread_life_cycle.gif)](../static/img/thread_life_cycle.gif "Click to see the full-resolution image")
+[![Figure 2. Thread Life Cycle](/book-test1/static/img/thread_life_cycle.gif)](/book-test1/static/img/thread_life_cycle.gif "Click to see the full-resolution image")
 
 Figure 2. Thread Life Cycle
 
