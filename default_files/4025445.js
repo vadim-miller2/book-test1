@@ -661,7 +661,8 @@ function unoem()
                         var searchURI = dbNode.find("option:selected").data("search_uri");
                         url = searchURI ?  searchURI.replace('$',term) : 
                              "/" + dbNode.val() + "/" + ( term !="" ? "?term=" + term : "");
-                        }
+                       
+                        url = "//www.ncbi.nlm.nih.gov"+url;                         }
                     return url;
                 }
             
