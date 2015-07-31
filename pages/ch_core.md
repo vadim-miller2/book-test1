@@ -1,7 +1,7 @@
 ---
 layout: default
 title: C++ Toolkit test
-nav: ch_core
+nav: pages/ch_core
 ---
 
 <span class="label">8</span>Portability, Core Functionality and Application Framework
