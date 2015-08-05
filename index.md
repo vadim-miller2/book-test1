@@ -44,7 +44,7 @@ Contents
     -   [24. Applications](pages/ch_app)
     -   [25. Examples and Demos](pages/ch_demo)
     -   [26. C Toolkit Resources for C++ Toolkit Users](pages/ch_res)
--   [Part 6. Help and Support]pages/part6)
+-   [Part 6. Help and Support](pages/part6)
     -   [27. NCBI C++ Toolkit Source Browser](pages/ch_browse)
     -   [28. Software Development Tools](pages/ch_devtools)
     -   [29. FAQs, Useful Documentation Links, and Mailing Lists](pages/ch_faq)
