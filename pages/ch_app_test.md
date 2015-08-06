@@ -213,7 +213,7 @@ DATATOOL: Code Generation and Data Serialization Utility
 
 -   Convert data between ASN.1, XML and JSON formats.
 
-<span class="nctnt highlight">Note:</span> Because ASN.1, XML and JSON are, in general, incompatible, the last two functions are supported only partially.
+:heavy_exclamation_mark: __Notes__ Because ASN.1, XML and JSON are, in general, incompatible, the last two functions are supported only partially.
 
 The following topics are discussed in subsections:
 
@@ -312,7 +312,7 @@ When parsing a data specification, <span class="nctnt ncbi-app">DATATOOL</span> 
 
 #### Scope Prefixes
 
-Initially, <span class="nctnt ncbi-app">DATATOOL</span> and the serial library supported serialization in ASN.1 and XML format, and conversion of ASN.1 specification into DTD. Compared to ASN.1, DTD is a very sketchy specification in the sense that there is only one primitive type - string, and all elements are defined globally. The latter feature of DTD led to a decision to use ‘scope prefixes’ in XML output to avoid potential name conflicts. For example, consider the following ASN.1 specification:
+Initially, <span class="nctnt ncbi-app">DATATOOL</span> and the serial library supported serialization in ASN.1 and XML format, and conversion of ASN.1 specification into DTD. Compared to ASN.1, DTD is a very sketchy specification in the sense that there is only one primitive type - string, and all elements are defined globally. The latter feature of DTD led to a decision to use â€˜scope prefixesâ€™ in XML output to avoid potential name conflicts. For example, consider the following ASN.1 specification:
 
     Date ::= CHOICE {
         str VisibleString, 
@@ -340,7 +340,7 @@ With the addition of XML Schema parser and generator, when converting ASN.1 spec
 
 #### Modular DTD and Schemata
 
-Here, ‘module’ means ASN.1 module. Single ASN.1 specification file may contain several modules. When converting it into DTD or XML schema, it might be convenient to put each module definitions into a separate file. To do so, one should specify a special file name in <span class="nctnt ncbi-cmd">-fx</span> or <span class="nctnt ncbi-cmd">-fxs</span> command line parameter. The names of output DTD or Schema files will then be chosen automatically - they will be named after ASN.1 modules defined in the source. ‘Modular’ output does not make much sense when the source specification is DTD or Schema.
+Here, â€˜moduleâ€™ means ASN.1 module. Single ASN.1 specification file may contain several modules. When converting it into DTD or XML schema, it might be convenient to put each module definitions into a separate file. To do so, one should specify a special file name in <span class="nctnt ncbi-cmd">-fx</span> or <span class="nctnt ncbi-cmd">-fxs</span> command line parameter. The names of output DTD or Schema files will then be chosen automatically - they will be named after ASN.1 modules defined in the source. â€˜Modularâ€™ output does not make much sense when the source specification is DTD or Schema.
 
 You can find a number of DTDs and Schema converted by <span class="nctnt ncbi-app">DATATOOL</span> from NCBI public ASN.1 specifications [here](http://www.ncbi.nlm.nih.gov/data_specs).
 
@@ -418,7 +418,7 @@ It is possible to tune up the C++ code generation by using a definition file, wh
 
 Parameter definitions follow a "name = value" format. The "name" part of the definition serves two functions: (1) selecting the specific element to which the definition applies, and (2) selecting the code generation parameter (such as <span class="nctnt ncbi-monospace">**\_class**</span>) that will be fine-tuned for that element.
 
-To modify a top-level element, use a definition line where the name part is simply the desired code generation parameter (such as <span class="nctnt ncbi-monospace">**\_class**</span>). To modify a nested element, use a definition where the code generation parameter is prefixed by a dot-separated "path" of the successive container element names from the data format specification. For path elements of type <span class="nctnt ncbi-monospace">SET OF</span> or <span class="nctnt ncbi-monospace">SEQUENCE OF</span>, use an "<span class="nctnt ncbi-monospace">E</span>" as the element name (which would otherwise be anonymous). <span class="nctnt highlight">Note:</span> Element names will depend on whether you are using ASN.1, DTD, or Schema.
+To modify a top-level element, use a definition line where the name part is simply the desired code generation parameter (such as <span class="nctnt ncbi-monospace">**\_class**</span>). To modify a nested element, use a definition where the code generation parameter is prefixed by a dot-separated "path" of the successive container element names from the data format specification. For path elements of type <span class="nctnt ncbi-monospace">SET OF</span> or <span class="nctnt ncbi-monospace">SEQUENCE OF</span>, use an "<span class="nctnt ncbi-monospace">E</span>" as the element name (which would otherwise be anonymous). :heavy_exclamation_mark: __Notes__ Element names will depend on whether you are using ASN.1, DTD, or Schema.
 
 For example, consider the following ASN.1 specification:
 
@@ -466,7 +466,7 @@ The following additional topics are discussed in this section:
 
 Some definitions refer to the generated class as a whole.
 
-<span class="nctnt ncbi-monospace">**\_file**</span>      Defines the base filename for the generated or referenced C++ class.
+<span class="nctnt ncbi-monospace">**\_file**</span> Â Â Â Â  Defines the base filename for the generated or referenced C++ class.
 
 For example, the following definitions:
 
@@ -490,7 +490,7 @@ Or
 
 put **all** the generated classes into a single file with the base name <span class="nctnt ncbi-path">AnotherName</span>.
 
-<span class="nctnt ncbi-monospace">**\_extra\_headers**</span>      Specify additional header files to include.
+<span class="nctnt ncbi-monospace">**\_extra\_headers**</span> Â Â Â Â  Specify additional header files to include.
 
 For example, the following definition:
 
@@ -505,9 +505,9 @@ would put the following lines into all generated headers:
 
 Note the name3 clause. Putting name3 in quotes instructs <span class="nctnt ncbi-app">DATATOOL</span> to use the quoted syntax in generated files. Also, the quotes must be escaped with backslashes.
 
-<span class="nctnt ncbi-monospace">**\_dir**</span>      Subdirectory in which the generated C++ files will be stored (in case \_file not specified) or a subdirectory in which the referenced class from an external module could be found. The subdirectory is added to include directives.
+<span class="nctnt ncbi-monospace">**\_dir**</span> Â Â Â Â  Subdirectory in which the generated C++ files will be stored (in case \_file not specified) or a subdirectory in which the referenced class from an external module could be found. The subdirectory is added to include directives.
 
-<span class="nctnt ncbi-monospace">**\_class**</span>      The name of the generated class (if <span class="nctnt ncbi-monospace">\_class=-</span> is specified, then no code is generated for this type).
+<span class="nctnt ncbi-monospace">**\_class**</span> Â Â Â Â  The name of the generated class (if <span class="nctnt ncbi-monospace">\_class=-</span> is specified, then no code is generated for this type).
 
 For example, the following definitions:
 
@@ -531,11 +531,11 @@ Or
 
 would result in **all** the generated classes having the same name <span class="nctnt ncbi-class">CAnotherName</span> (which is probably not what you want).
 
-<span class="nctnt ncbi-monospace">**\_namespace**</span>      The namespace in which the generated class (or classes) will be placed.
+<span class="nctnt ncbi-monospace">**\_namespace**</span> Â Â Â Â  The namespace in which the generated class (or classes) will be placed.
 
-<span class="nctnt ncbi-monospace">**\_parent\_class**</span>      The name of the base class from which the generated C++ class is derived.
+<span class="nctnt ncbi-monospace">**\_parent\_class**</span> Â Â Â Â  The name of the base class from which the generated C++ class is derived.
 
-<span class="nctnt ncbi-monospace">**\_parent\_type**</span>      Derive the generated C++ class from the class, which corresponds to the specified type (in case \_parent\_class is not specified).
+<span class="nctnt ncbi-monospace">**\_parent\_type**</span> Â Â Â Â  Derive the generated C++ class from the class, which corresponds to the specified type (in case \_parent\_class is not specified).
 
 It is also possible to specify a storage-class modifier, which is required on Microsoft Windows to export/import generated classes from/to a DLL. This setting affects all generated classes in a module. An appropriate section of the definition file should look like this:
 
@@ -568,31 +568,31 @@ The following additional topics are discussed in this section:
 
 ##### INTEGER, REAL, BOOLEAN, NULL
 
-<span class="nctnt ncbi-monospace">**\_type**</span>      C++ type: int, short, unsigned, long, etc.
+<span class="nctnt ncbi-monospace">**\_type**</span> Â Â Â Â  C++ type: int, short, unsigned, long, etc.
 
 ##### ENUMERATED
 
-<span class="nctnt ncbi-monospace">**\_type**</span>      C++ type: int, short, unsigned, long, etc.
+<span class="nctnt ncbi-monospace">**\_type**</span> Â Â Â Â  C++ type: int, short, unsigned, long, etc.
 
-<span class="nctnt ncbi-monospace">**\_prefix**</span>      Prefix for names of enum values. The default is "e".
+<span class="nctnt ncbi-monospace">**\_prefix**</span> Â Â Â Â  Prefix for names of enum values. The default is "e".
 
 ##### OCTET STRING
 
-<span class="nctnt ncbi-monospace">**\_char**</span>      Vector element type: char, unsigned char, or signed char.
+<span class="nctnt ncbi-monospace">**\_char**</span> Â Â Â Â  Vector element type: char, unsigned char, or signed char.
 
 ##### SEQUENCE OF, SET OF
 
-<span class="nctnt ncbi-monospace">**\_type**</span>      STL container type: list, vector, set, or multiset.
+<span class="nctnt ncbi-monospace">**\_type**</span> Â Â Â Â  STL container type: list, vector, set, or multiset.
 
 ##### SEQUENCE, SET
 
-<span class="nctnt ncbi-monospace">**memberName.\_delay**</span>      Mark the specified member for delayed reading.
+<span class="nctnt ncbi-monospace">**memberName.\_delay**</span> Â Â Â Â  Mark the specified member for delayed reading.
 
 ##### CHOICE
 
-<span class="nctnt ncbi-monospace">**\_virtual\_choice**</span>      If not empty, do not generate a special class for choice. Rather make the choice class as the parent one of all its variants.
+<span class="nctnt ncbi-monospace">**\_virtual\_choice**</span> Â Â Â Â  If not empty, do not generate a special class for choice. Rather make the choice class as the parent one of all its variants.
 
-<span class="nctnt ncbi-monospace">**variantName.\_delay**</span>      Mark the specified variant for delayed reading.
+<span class="nctnt ncbi-monospace">**variantName.\_delay**</span> Â Â Â Â  Mark the specified variant for delayed reading.
 
 #### The Special [-] Section
 
@@ -709,11 +709,11 @@ Module files are not used directly by <span class="nctnt ncbi-app">DATATOOL</spa
 
 Module files simply consist of lines of the form "<span class="nctnt ncbi-monospace">KEY = VALUE</span>". Only the key <span class="nctnt ncbi-monospace">MODULE\_IMPORT</span> is currently used (and is the only key ever recognized by <span class="nctnt ncbi-path">project\_tree\_builder</span>). Other keys used to be recognized by <span class="nctnt ncbi-path">module.sh</span> and still harmlessly remain in some files. The possible keys are:
 
--   <span class="nctnt ncbi-monospace">MODULE\_IMPORT</span>      These definitions contain a space-delimited list of other modules to import. The paths should be relative to <span class="nctnt ncbi-path">.../src</span> and should not include extensions.<br/><br/>For example, a valid entry could be:<br/>MODULE\_IMPORT = objects/general/general objects/seq/seq<br/>
+-   <span class="nctnt ncbi-monospace">MODULE\_IMPORT</span> Â Â Â Â  These definitions contain a space-delimited list of other modules to import. The paths should be relative to <span class="nctnt ncbi-path">.../src</span> and should not include extensions.<br/><br/>For example, a valid entry could be:<br/>MODULE\_IMPORT = objects/general/general objects/seq/seq<br/>
 
--   <span class="nctnt ncbi-monospace">MODULE\_ASN</span>, <span class="nctnt ncbi-monospace">MODULE\_DTD</span>, <span class="nctnt ncbi-monospace">MODULE\_XSD</span>      These definitions explicitly set the specification filename (normally <span class="nctnt ncbi-path">foo.asn</span>, <span class="nctnt ncbi-path">foo.dtd</span>, or <span class="nctnt ncbi-path">foo.xsd</span> for <span class="nctnt ncbi-monospace">foo.module</span>). Almost no module files contain this definition. It is no longer used by the <span class="nctnt ncbi-path">project\_tree\_builder</span> and is therefore not necessary
+-   <span class="nctnt ncbi-monospace">MODULE\_ASN</span>, <span class="nctnt ncbi-monospace">MODULE\_DTD</span>, <span class="nctnt ncbi-monospace">MODULE\_XSD</span> Â Â Â Â  These definitions explicitly set the specification filename (normally <span class="nctnt ncbi-path">foo.asn</span>, <span class="nctnt ncbi-path">foo.dtd</span>, or <span class="nctnt ncbi-path">foo.xsd</span> for <span class="nctnt ncbi-monospace">foo.module</span>). Almost no module files contain this definition. It is no longer used by the <span class="nctnt ncbi-path">project\_tree\_builder</span> and is therefore not necessary
 
--   <span class="nctnt ncbi-monospace">MODULE\_PATH</span>      Specifies the directory containing the current module, again relative to <span class="nctnt ncbi-path">.../src</span>. Almost all module files contain this definition, however it is no longer used by either <span class="nctnt ncbi-path">new\_module.sh</span> or the <span class="nctnt ncbi-path">project\_tree\_builder</span> and is therefore not necessary.
+-   <span class="nctnt ncbi-monospace">MODULE\_PATH</span> Â Â Â Â  Specifies the directory containing the current module, again relative to <span class="nctnt ncbi-path">.../src</span>. Almost all module files contain this definition, however it is no longer used by either <span class="nctnt ncbi-path">new\_module.sh</span> or the <span class="nctnt ncbi-path">project\_tree\_builder</span> and is therefore not necessary.
 
 ### Generated Code
 
@@ -823,13 +823,13 @@ Load Balancing
 
 -   [Quality Assurance Domain](ch_app.html#ch_app.Quality_Assurance_Do)
 
-<span class="nctnt highlight">Note:</span> For security reasons not all links in the public version of this document are accessible by the outside NCBI users.
+:heavy_exclamation_mark: __Notes__ For security reasons not all links in the public version of this document are accessible by the outside NCBI users.
 
 The section covers the following topics:
 
 -   The purpose of load balancing
 
--   All the separate components’ purpose, internal details, configuration
+-   All the separate componentsâ€™ purpose, internal details, configuration
 
 -   Communications between the components
 
@@ -847,9 +847,9 @@ Please note that the figure is slightly simplified to remove unnecessary details
 
 In case of local access to the NCBI resources there are two NCBI developed components, which are involved into the interactions. These are LBSMD daemon (Load Balancing Service Mapping Daemon) and mod\_caf (Cookie/Argument Affinity module) - an Apache web server module.
 
-The LBSMD daemon is running on each host in the NCBI network. The daemon reads its configuration file with all the services available on the host described. Then the LBSMD daemon broadcasts the available services and the current host load to the adjacent LBSMD daemons on a regular basis. The data received from the other LBSMD daemons are stored in a special table. So at some stage the LBSMD daemon on each host will have had a full description of the services available on the network as well as the current hosts’ load.
+The LBSMD daemon is running on each host in the NCBI network. The daemon reads its configuration file with all the services available on the host described. Then the LBSMD daemon broadcasts the available services and the current host load to the adjacent LBSMD daemons on a regular basis. The data received from the other LBSMD daemons are stored in a special table. So at some stage the LBSMD daemon on each host will have had a full description of the services available on the network as well as the current hostsâ€™ load.
 
-The mod\_caf Apache’s module analyses special cookies, query line arguments and reads data from the table populated by the LBSMD daemon. Basing on the best match it makes a decision of where to pass a request further.
+The mod\_caf Apacheâ€™s module analyses special cookies, query line arguments and reads data from the table populated by the LBSMD daemon. Basing on the best match it makes a decision of where to pass a request further.
 
 Suppose for a moment that a local NCBI client runs a web browser, points to an NCBI web page and initiates a DB request via the web interface. At this stage the mod\_caf analyses the request line and makes a decision where to pass the request. The request is passed to the ServiceProviderN host which performs the corresponding database query. Then the query results are delivered to the client. The data exchange path is shown on the figure above using solid lines.
 
@@ -889,9 +889,9 @@ Further sections describe all the components in more detail.
 
 As mentioned earlier, the LBSMD daemon runs almost on every host that carries either public or private servers which, in turn, implement NCBI services. The services include CGI programs or standalone servers to access NCBI data.
 
-Each service has a unique name assigned to it. The “TaxService” would be an example of such a name. The name not only identifies a service. It also implies a protocol which is used for data exchange with that service. For example, any client which connects to the “TaxService” service knows how to communicate with that service regardless the way the service is implemented. In other words the service could be implemented as a standalone server on host X and as a CGI program on the same host or on another host Y (please note, however, that there are exceptions and for some service types it is forbidden to have more than one service type on the same host).
+Each service has a unique name assigned to it. The â€œTaxServiceâ€ would be an example of such a name. The name not only identifies a service. It also implies a protocol which is used for data exchange with that service. For example, any client which connects to the â€œTaxServiceâ€ service knows how to communicate with that service regardless the way the service is implemented. In other words the service could be implemented as a standalone server on host X and as a CGI program on the same host or on another host Y (please note, however, that there are exceptions and for some service types it is forbidden to have more than one service type on the same host).
 
-A host can advertize many services. For example, one service (such as “Entrez2”) can operate with binary data only while another one (such as “Entrez2Text”) can operate with text data only. The distinction between those two services could be made by using a content type specifier in the LBSMD daemon configuration file.
+A host can advertize many services. For example, one service (such as â€œEntrez2â€) can operate with binary data only while another one (such as â€œEntrez2Textâ€) can operate with text data only. The distinction between those two services could be made by using a content type specifier in the LBSMD daemon configuration file.
 
 The main purpose of the LBSMD daemon is to maintain a table of all services available at NCBI at the moment. In addition the LBSMD daemon keeps track of servers that are found to be dysfunctional (dead servers). The daemon is also responsible for propagating trouble reports, obtained from applications. The application trouble reports are based on their experience with advertised servers (e.g., an advertised server is not technically marked dead but generates some sort of garbage). Further in this document, the latter kind of feedback is called a penalty.
 
@@ -899,7 +899,7 @@ The principle of load balancing is simple: each server which implements a servic
 
 The LBSMD daemon calculates two parameters for the host on which it is running. The parameters are a normal host status and a BLAST host status (based on the instant load of the system). These parameters are then used to calculate the rate of all (non static) servers on the host. The rates of all other hosts are not calculated but received and stored in the LBSDM table.
 
-The LBSMD daemon can be restarted from a crontab every few minutes on all the production hosts to ensure that the daemon is always running. This technique is safe because no more than one instance of the daemon is permitted on a certain host and any attempt to start more than one is ignored. Normally, though, a running daemon instance is maintained afloat by some kind of monitoring software, such as “puppet” or “monit” that makes use of the crontabs unnecessary.
+The LBSMD daemon can be restarted from a crontab every few minutes on all the production hosts to ensure that the daemon is always running. This technique is safe because no more than one instance of the daemon is permitted on a certain host and any attempt to start more than one is ignored. Normally, though, a running daemon instance is maintained afloat by some kind of monitoring software, such as â€œpuppetâ€ or â€œmonitâ€ that makes use of the crontabs unnecessary.
 
 The main loop of the LBSMD daemon:
 
@@ -951,27 +951,27 @@ causes the contents of the named file <span class="nctnt ncbi-var">filename</spa
 
 Once started, the daemon first tries to read its configuration from <span class="nctnt ncbi-path">/etc/lbsmd/servrc.cfg</span>. If the file is not found (or is not readable) the daemon looks for the configuration file <span class="nctnt ncbi-path">servrc.cfg</span> in the directory from which it has been started. This fallback mechanism is not used when the configuration file name is explicitly stated in the command line. The daemon periodically checks the configuration file and all of its descendants and reloads (discards) their contents if some of the files have been either updated, (re-)moved, or added.
 
-The “<span class="nctnt ncbi-var">filename</span>” can be followed by a pipe character ( \\| ) and some text (up to the end of the line or the comment introduced by the hash character). That text is then prepended to every line (but the <span class="nctnt ncbi-code">%include</span> directives) read from the included file.
+The â€œ<span class="nctnt ncbi-var">filename</span>â€ can be followed by a pipe character ( \\| ) and some text (up to the end of the line or the comment introduced by the hash character). That text is then prepended to every line (but the <span class="nctnt ncbi-code">%include</span> directives) read from the included file.
 
 A configuration line of the form
 
     @zone
 
-specifies the zone to which the entire configuration file applies, where a zone is a subdivision of the existing broadcast domain which does not intermix with other unrelated zones. Only one zone designation is allowed, and it must match the predefined site information (the numeric designation of the entire broadcast domain, which is either “guessed” by LBSMD or preset via a command-line parameter): the zone value must be a binary subset of the site value (which is usually a contiguous set of 1-bits, such as <span class="nctnt ncbi-monospace">0xC0</span> or <span class="nctnt ncbi-monospace">0x1E</span>).
+specifies the zone to which the entire configuration file applies, where a zone is a subdivision of the existing broadcast domain which does not intermix with other unrelated zones. Only one zone designation is allowed, and it must match the predefined site information (the numeric designation of the entire broadcast domain, which is either â€œguessedâ€ by LBSMD or preset via a command-line parameter): the zone value must be a binary subset of the site value (which is usually a contiguous set of 1-bits, such as <span class="nctnt ncbi-monospace">0xC0</span> or <span class="nctnt ncbi-monospace">0x1E</span>).
 
-When no zone is specified, the zone is set equal to the entire site (broadcast domain) so that any regular service defined by the configuration is visible to each and every LBSMD running at the same site. Otherwise, only the servers with bitwise-matching zones are visible to each other: if 1, 2, and 3 are the zones of hosts “X”, “Y” and “Z”, respectively (all hosts reside within the same site, say 7), then servers from “X” are visible by “Z”, but not by “Y”; servers from “Y” are visible by “Z” but not by “X”; and finally, all servers from “Z” are visible by both “X” and “Y”. There’s a way to define servers at “X” to be visible by “Y” using an “Inter” server flag (see below).
+When no zone is specified, the zone is set equal to the entire site (broadcast domain) so that any regular service defined by the configuration is visible to each and every LBSMD running at the same site. Otherwise, only the servers with bitwise-matching zones are visible to each other: if 1, 2, and 3 are the zones of hosts â€œXâ€, â€œYâ€ and â€œZâ€, respectively (all hosts reside within the same site, say 7), then servers from â€œXâ€ are visible by â€œZâ€, but not by â€œYâ€; servers from â€œYâ€ are visible by â€œZâ€ but not by â€œXâ€; and finally, all servers from â€œZâ€ are visible by both â€œXâ€ and â€œYâ€. Thereâ€™s a way to define servers at â€œXâ€ to be visible by â€œYâ€ using an â€œInterâ€ server flag (see below).
 
 A configuration line of the form
 
     [*]user
 
-introduces a user that is added to the host authority. There can be multiple authority lines across the configuration, and they are all aggregated into a list. The list can contain both individual user names and / or group names (denoted by a preceding asterisk). The listed users and / or members of the listed groups, will be allowed to operate on all server records that appear in the LBSMD configuration files on this host (individual server entries may designate additional personnel on a per-server basis). Additional authority entries are only allowed from the same branch of the configuration file tree: so if a file “a” includes a file “b”, where the first host authority is defined, then any file that is included (directly or indirectly) from “b” can add entries to the host authority, while no other file that is included later from “a”, can.
+introduces a user that is added to the host authority. There can be multiple authority lines across the configuration, and they are all aggregated into a list. The list can contain both individual user names and / or group names (denoted by a preceding asterisk). The listed users and / or members of the listed groups, will be allowed to operate on all server records that appear in the LBSMD configuration files on this host (individual server entries may designate additional personnel on a per-server basis). Additional authority entries are only allowed from the same branch of the configuration file tree: so if a file â€œaâ€ includes a file â€œbâ€, where the first host authority is defined, then any file that is included (directly or indirectly) from â€œbâ€ can add entries to the host authority, while no other file that is included later from â€œaâ€, can.
 
 A configuration line of the form
 
     :port
 
-designates a local network port for monitoring by LBSMD: the daemon will regularly pull the port information as provided by servers in run-time: total port capacity, used capacity and free capacity; and make these values available in the load-balance messages sent to other LBSMDs. The ratio “free” over “total” will be used to calculate the port availability (1.0=fully free, 0.0=fully clogged). Servers may use arbitrary units to express the capacity, but both “used” and “free” may not be greater than “total”, and “used” must correspond to the actual used resource, yet “free” may be either calculated (e.g. algorithmically decreased in anticipation of the mouting load in order to shrink the port availability ratio quicker) or simply amounts to “total” – “used”. Note that “free” set to “0” signals the port as currently being unavailable for service (i.e. as if the port was down) – and an automatic connection check, if any, will not be performed by LBSMD on that port.
+designates a local network port for monitoring by LBSMD: the daemon will regularly pull the port information as provided by servers in run-time: total port capacity, used capacity and free capacity; and make these values available in the load-balance messages sent to other LBSMDs. The ratio â€œfreeâ€ over â€œtotalâ€ will be used to calculate the port availability (1.0=fully free, 0.0=fully clogged). Servers may use arbitrary units to express the capacity, but both â€œusedâ€ and â€œfreeâ€ may not be greater than â€œtotalâ€, and â€œusedâ€ must correspond to the actual used resource, yet â€œfreeâ€ may be either calculated (e.g. algorithmically decreased in anticipation of the mouting load in order to shrink the port availability ratio quicker) or simply amounts to â€œtotalâ€ â€“ â€œusedâ€. Note that â€œfreeâ€ set to â€œ0â€ signals the port as currently being unavailable for service (i.e. as if the port was down) â€“ and an automatic connection check, if any, will not be performed by LBSMD on that port.
 
 A configuration line of the form
 
@@ -979,7 +979,7 @@ A configuration line of the form
 
 goes into the host environment. The host environment can be accessed by clients when they perform the service name resolution. The host environment is designed to help the client to know about limitations/options that the host has, and based on this additional information the client can make a decision whether the server (despite the fact that it implements the service) is suitable for carrying out the client's request. For example, the host environment can give the client an idea about what databases are available on the host. The host environment is not interpreted or used in any way by either the daemon or by the load balancing algorithm, except that the name must be a valid identifier. The value may be practically anything, even empty. It is left solely for the client to parse the environment and to look for the information of interest. The host environment can be obtained from the service iterator by a call to <span class="nctnt ncbi-code">SERV\_GetNextInfoEx()</span> (<http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/ident?i=SERV_GetNextInfoEx>), which is documented in the [service mapping API](ch_conn.html#ch_conn.service_mapping_api)
 
-<span class="nctnt highlight">Note</span>: White space characters which surround the name are not preserved but they are preserved in the value i.e. when they appear after the “=” sign.
+<span class="nctnt highlight">Note</span>: White space characters which surround the name are not preserved but they are preserved in the value i.e. when they appear after the â€œ=â€ sign.
 
 A configuration line of the form
 
@@ -991,11 +991,11 @@ defines a server. The detailed description of the individual fields is given bel
 
 -   <span class="nctnt ncbi-var">[check\_specifier]</span> is an optional parameter (if omitted, the surrounding square brackets must not be used). The parameter is a comma separated list and each element in the list can be one of the following.
 
-    -   <span class="nctnt ncbi-var">[-]N[/M]</span> where N and M are integers. This will lead to checking every N seconds with backoff time of M seconds if failed. The “-“ character is used when it is required to check dependencies only, but not the primary connection point. "0", which stands for "no check interval", disables checks for the service.
+    -   <span class="nctnt ncbi-var">[-]N[/M]</span> where N and M are integers. This will lead to checking every N seconds with backoff time of M seconds if failed. The â€œ-â€œ character is used when it is required to check dependencies only, but not the primary connection point. "0", which stands for "no check interval", disables checks for the service.
 
-    -   <span class="nctnt ncbi-var">[!][host[:port]][+[service]]</span> which describes a dependency. The “!” character means negation. The <span class="nctnt ncbi-var">service</span> is a service name the describing service depends on and runs on <span class="nctnt ncbi-var">host:port</span>. The pair <span class="nctnt ncbi-var">host:port</span> is required if no service is specified. The <span class="nctnt ncbi-var">host</span>, :<span class="nctnt ncbi-var">port</span>, or both can be missing if <span class="nctnt ncbi-var">service</span> is specified (in that case the missing parts are read as “any”). The “+” character alone means “this service’s name” (of the one currently being defined). Multiple dependency specifications are allowed.
+    -   <span class="nctnt ncbi-var">[!][host[:port]][+[service]]</span> which describes a dependency. The â€œ!â€ character means negation. The <span class="nctnt ncbi-var">service</span> is a service name the describing service depends on and runs on <span class="nctnt ncbi-var">host:port</span>. The pair <span class="nctnt ncbi-var">host:port</span> is required if no service is specified. The <span class="nctnt ncbi-var">host</span>, :<span class="nctnt ncbi-var">port</span>, or both can be missing if <span class="nctnt ncbi-var">service</span> is specified (in that case the missing parts are read as â€œanyâ€). The â€œ+â€ character alone means â€œthis serviceâ€™s nameâ€ (of the one currently being defined). Multiple dependency specifications are allowed.
 
-    -   <span class="nctnt ncbi-var">[~][DOW[-DOW]][@H[-H]]</span> which defines a schedule. The “~” character means negation. The service runs from <span class="nctnt ncbi-var">DOW</span> to <span class="nctnt ncbi-var">DOW</span> (<span class="nctnt ncbi-var">DOW</span> is one of Su, Mo, Tu, We, Th, Fr, Sa, or Hd, which stands for a federal holiday, and cannot be used in weekday ranges) or any if not specified, and between hours <span class="nctnt ncbi-var">H</span> to <span class="nctnt ncbi-var">H</span> (9-5 means 9:00am thru 4:59pm, 18-0 means 6pm thru midnight). Single <span class="nctnt ncbi-var">DOW</span> and / or <span class="nctnt ncbi-var">H</span> are allowed and mean the exact day of week (or a holiday) and / or one exact hour. Multiple schedule specifications are allowed.
+    -   <span class="nctnt ncbi-var">[~][DOW[-DOW]][@H[-H]]</span> which defines a schedule. The â€œ~â€ character means negation. The service runs from <span class="nctnt ncbi-var">DOW</span> to <span class="nctnt ncbi-var">DOW</span> (<span class="nctnt ncbi-var">DOW</span> is one of Su, Mo, Tu, We, Th, Fr, Sa, or Hd, which stands for a federal holiday, and cannot be used in weekday ranges) or any if not specified, and between hours <span class="nctnt ncbi-var">H</span> to <span class="nctnt ncbi-var">H</span> (9-5 means 9:00am thru 4:59pm, 18-0 means 6pm thru midnight). Single <span class="nctnt ncbi-var">DOW</span> and / or <span class="nctnt ncbi-var">H</span> are allowed and mean the exact day of week (or a holiday) and / or one exact hour. Multiple schedule specifications are allowed.
 
     -   <span class="nctnt ncbi-var">email@ncbi.nlm.nih.gov</span> which makes the LBSMD daemon to send an e-mail to the specified address whenever this server changes its status (e.g. from up to down). Multiple e-mail specifications are allowed. The <span class="nctnt ncbi-var">ncbi.nlm.nih.gov</span> part is fixed and may not be changed.
 
@@ -1043,7 +1043,7 @@ The check script is expected to produce one of the following exit codes:
 | 111 - 120                   | The server is not available and must not be used, i.e. DOWN.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | 123                         | Retain the previous exit code (as supplied in <span class="nctnt ncbi-var">argv[3]</span>) and increment the repetition count. Retain the current server state, otherwise, and log a warning.                                                                                                                                                                                                                                                                                                                                                                          |
 | 124 (*not* followed by 125) | Retain the current server state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| 124 followed by 125         | Turn the server off, with no more checks. <span class="nctnt highlight">Note:</span> This only applies when 124 is followed by 125, both without repetitions.                                                                                                                                                                                                                                                                                                                                                                                                          |
+| 124 followed by 125         | Turn the server off, with no more checks. :heavy_exclamation_mark: __Notes__ This only applies when 124 is followed by 125, both without repetitions.                                                                                                                                                                                                                                                                                                                                                                                                          |
 | 125 (*not* preceded by 124) | Retain the current server state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | 126                         | Script was found but not executable (POSIX, script error).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | 127                         | Script was not found (POSIX, script error).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
@@ -1061,7 +1061,7 @@ If the check script crashes ungracefully (with or without the coredump) 100+ tim
 
 Servers are called SUPPRESSED when they are 100% penalized (see server penalties below); while RESERVED is a special state that LBSMD maintains. 100% penalty makes an entry not only unavailable for regular use (same as RESERVED) but also assumes some maintenance work in progress (so that any underlying state changes will not be announced immediately but only when the entry goes out of the 100% penalized state, if any state change still remains). On the other hand and from the client perspective, RESERVED and SUPPRESSED may look identical.
 
-<span class="nctnt highlight">Note:</span> The check script operation is complementary to setting a penalty prior to doing any disruptive changes in production. In other words, the script is only reliable as long as the service is expected to work. If there is any scheduled maintenance, it should be communicated to LBSMD via a penalty rather than by an assumption that the failing script will do the job of bringing the service to the down state and excluding it from LB.
+:heavy_exclamation_mark: __Notes__ The check script operation is complementary to setting a penalty prior to doing any disruptive changes in production. In other words, the script is only reliable as long as the service is expected to work. If there is any scheduled maintenance, it should be communicated to LBSMD via a penalty rather than by an assumption that the failing script will do the job of bringing the service to the down state and excluding it from LB.
 
 ##### Server Descriptor Specification
 
@@ -1085,7 +1085,7 @@ where:
 
     -   <span class="nctnt ncbi-type">DNS</span> for introduction of a name (fake service), which can be used later in load-balancing for domain name resolution
 
-    -   <span class="nctnt ncbi-type">NAMEHOLD</span> for declaration of service names that cannot be defined in any other configuration files except for the current configuration file. <span class="nctnt highlight">Note:</span> The FIREWALL server specification may not be used in a configuration file (i.e., may neither be declared as services nor as service name holders).
+    -   <span class="nctnt ncbi-type">NAMEHOLD</span> for declaration of service names that cannot be defined in any other configuration files except for the current configuration file. :heavy_exclamation_mark: __Notes__ The FIREWALL server specification may not be used in a configuration file (i.e., may neither be declared as services nor as service name holders).
 
 -   both <span class="nctnt ncbi-var">host</span> and <span class="nctnt ncbi-var">port</span> parameters are optional. Defaults are local host and port 80, except for <span class="nctnt ncbi-type">STANDALONE</span> and <span class="nctnt ncbi-type">DNS</span> servers, which do not have a default port value. If host is specified (by either of the following: keyword localhost, localhost IP address 127.0.0.1, real host name, or IP address) then the described server is not a subject for variable load balancing but is a static server. Such server always has a constant rate, independent of any host load.
 
@@ -1099,11 +1099,11 @@ where:
 
         -   <span class="nctnt ncbi-type">Regular</span> to use an ordinary rate calculation (default, and the only load calculation option allowed for static servers).
 
-    -   Either of these keywords may be suffixed with “Inter”, such as to form <span class="nctnt ncbi-type">RegularInter</span>, making the entry to cross the current zone boundary, and being available outside its zone.
+    -   Either of these keywords may be suffixed with â€œInterâ€, such as to form <span class="nctnt ncbi-type">RegularInter</span>, making the entry to cross the current zone boundary, and being available outside its zone.
 
 -   base rate:
 
-    -   R=value sets the base server reachability rate (as a floating point number); the default is 1000. Any negative value makes the server unreachable, and a value 0 is used. The range of the base rate is between 0.001 and 100000. Note that the range [0.001—0.009] is reverved for STANDBY servers – the ones that are only used by clients if no other usable non-STANDBY counterparts can be found.
+    -   R=value sets the base server reachability rate (as a floating point number); the default is 1000. Any negative value makes the server unreachable, and a value 0 is used. The range of the base rate is between 0.001 and 100000. Note that the range [0.001â€”0.009] is reverved for STANDBY servers â€“ the ones that are only used by clients if no other usable non-STANDBY counterparts can be found.
 
 -   locality markers (Note: If necessary, both L and P markers can be combined in a particular service definition):
 
@@ -1117,7 +1117,7 @@ where:
 
 -   Secure server:
 
-    -   $={yes\\|no}. The default is no.<br/>Indication of the server to be used with secure connections only. For STANDALONE servers it means to use SSL, and for the HTTP\* ones – to use the HTTPS protocol.
+    -   $={yes\\|no}. The default is no.<br/>Indication of the server to be used with secure connections only. For STANDALONE servers it means to use SSL, and for the HTTP\* ones â€“ to use the HTTPS protocol.
 
 -   Content type indication:
 
@@ -1133,18 +1133,18 @@ where:
 
 Server descriptors of type <span class="nctnt ncbi-type">NAMEHOLD</span> are special. As <span class="nctnt ncbi-var">arguments</span>, they have only a server type keyword. The namehold specification informs the daemon that the service of this name and type is not to be defined later in any configuration file except for the current one. Also, if the host (and/or port) is specified, then this protection works only for the service name on the particular host (and/or port).
 
-<span class="nctnt highlight">Note:</span> it is recommended that a dummy port number (such as :0) is always put in the namehold specifications to avoid ambiguities with treating the server type as a host name. The following example disables <span class="nctnt ncbi-var">TestService</span> of type <span class="nctnt ncbi-type">DNS</span> from being defined in all other configuration files included later, and <span class="nctnt ncbi-var">TestService2</span> to be defined as a <span class="nctnt ncbi-app">NCBID</span> service on host foo:
+:heavy_exclamation_mark: __Notes__ it is recommended that a dummy port number (such as :0) is always put in the namehold specifications to avoid ambiguities with treating the server type as a host name. The following example disables <span class="nctnt ncbi-var">TestService</span> of type <span class="nctnt ncbi-type">DNS</span> from being defined in all other configuration files included later, and <span class="nctnt ncbi-var">TestService2</span> to be defined as a <span class="nctnt ncbi-app">NCBID</span> service on host foo:
 
     TestService  NAMEHOLD    :0 DNS
     TestService2 NAMEHOLD foo:0 NCBID
 
 #### Sites
 
-LBSMD is minimally aware of NCBI network layout and can generally guess its “site” information from either an IP address or special location-role files located in the /etc/ncbi directory: a BE-MD production and development site, a BE-MD.QA site, a BE-MD.TRY site, and lastly an ST-VA site. When reading zone information from the “@” directive of the configuration, LBSMD can treat special non-numeric values as the following: “@try” as the production zone within BE-MD.TRY, “@qa” as the production zone within BE-MD.QA, “@dev” as a development zone within the current site, and “@\*prod\*” (e.g. @intprod) as a production zone within the current site – where the production zone has a value of “1” and the development – “2”: so “@2” and “@dev” as well as “@1” and “@\*prod\*” are each equivalent. That makes the definition of zones more convenient by the %include directive with the pipe character:
+LBSMD is minimally aware of NCBI network layout and can generally guess its â€œsiteâ€ information from either an IP address or special location-role files located in the /etc/ncbi directory: a BE-MD production and development site, a BE-MD.QA site, a BE-MD.TRY site, and lastly an ST-VA site. When reading zone information from the â€œ@â€ directive of the configuration, LBSMD can treat special non-numeric values as the following: â€œ@tryâ€ as the production zone within BE-MD.TRY, â€œ@qaâ€ as the production zone within BE-MD.QA, â€œ@devâ€ as a development zone within the current site, and â€œ@\*prod\*â€ (e.g. @intprod) as a production zone within the current site â€“ where the production zone has a value of â€œ1â€ and the development â€“ â€œ2â€: so â€œ@2â€ and â€œ@devâ€ as well as â€œ@1â€ and â€œ@\*prod\*â€ are each equivalent. That makes the definition of zones more convenient by the %include directive with the pipe character:
 
     %include /etc/ncbi/role \|@    # define zone via the role file 
 
-Suppose that the daemon detected its site as ST-VA and assigned it a value of 0x300; then the above directive assigns the current zone the value of 0x100 if the file reads “prod” or “1”, and zone 0x200 if the file reads “dev” or “2”. Note that if the file reads either “try” or “qa”, or “4”, the implied “@” directive will flag an error because of the mismatch between the resultant zone and the current site values.
+Suppose that the daemon detected its site as ST-VA and assigned it a value of 0x300; then the above directive assigns the current zone the value of 0x100 if the file reads â€œprodâ€ or â€œ1â€, and zone 0x200 if the file reads â€œdevâ€ or â€œ2â€. Note that if the file reads either â€œtryâ€ or â€œqaâ€, or â€œ4â€, the implied â€œ@â€ directive will flag an error because of the mismatch between the resultant zone and the current site values.
 
 Both zone and site (or site alone) can be permanently assigned with the command-line parameters and then may not be overridden from the configuration file(s).
 
@@ -1201,7 +1201,7 @@ The following screen will appear
 
 Figure 11. NCBI Service Search Page
 
-As an example of usage a user might enter the partial name of the service like "TaxService" and click on the “Go” button. The search results will display "TaxService", "TaxService3" and "TaxService3Test" if those services are available (see <http://intranet.ncbi.nlm.nih.gov/ieb/ToolBox/NETWORK/lbsmc/search.cgi?key=rb_svc&service=TaxService&host=&button=Go&db=>).
+As an example of usage a user might enter the partial name of the service like "TaxService" and click on the â€œGoâ€ button. The search results will display "TaxService", "TaxService3" and "TaxService3Test" if those services are available (see <http://intranet.ncbi.nlm.nih.gov/ieb/ToolBox/NETWORK/lbsmc/search.cgi?key=rb_svc&service=TaxService&host=&button=Go&db=>).
 
 ##### lbsmc Utility
 
@@ -1211,7 +1211,7 @@ Another way of monitoring the LBSMD daemon is using the lbsmc (<http://intranet.
 
 The NCBI intranet users can also get the list of options by clicking on this link: <http://intranet.ncbi.nlm.nih.gov/ieb/ToolBox/NETWORK/lbsmc.cgi?-h>.
 
-For example, to print a list of hosts which names match the pattern “sutil\*” the user can issue the following command:
+For example, to print a list of hosts which names match the pattern â€œsutil\*â€ the user can issue the following command:
 
     >./lbsmc -h sutil* 0
     LBSMC - Load Balancing Service Mapping Client R100432
@@ -1275,7 +1275,7 @@ If the lbsmc utility is run with the -f option then the output contains two part
 
 The output is provided in either long or short format. The format depends on whether the -w option was specified in the command line (the option requests the long (wide) output). The wide output occupies about 132 columns, while the short (normal) output occupies only 80, which is the standard terminal width.
 
-In case if the service name is more than the allowed number of characters to display the trailing characters will be replaced with “\>”. When there is more information about the host / service to be displayed the “+” character is put beside the host / service name (this additional information can be retrieved by adding the -i option). When both “+” and “\>” are to be shown they are replaced with the single character “\*”. In the case of wide-output format the “\#” character shown in the service line means that there is no host information available for the service (similar to the static servers). The “!” character in the service line denotes that the service was configured / stored with an error (this character actually should never appear in the listings and should be reported whenever encountered). Wide output for hosts contains the time of bootup and startup. If the startup time is preceded by the “~” character then the host was gone for a while and then came back while the lbsmc utility was running. The “+” character in the times is to show that the date belongs to the past year(s).
+In case if the service name is more than the allowed number of characters to display the trailing characters will be replaced with â€œ\>â€. When there is more information about the host / service to be displayed the â€œ+â€ character is put beside the host / service name (this additional information can be retrieved by adding the -i option). When both â€œ+â€ and â€œ\>â€ are to be shown they are replaced with the single character â€œ\*â€. In the case of wide-output format the â€œ\#â€ character shown in the service line means that there is no host information available for the service (similar to the static servers). The â€œ!â€ character in the service line denotes that the service was configured / stored with an error (this character actually should never appear in the listings and should be reported whenever encountered). Wide output for hosts contains the time of bootup and startup. If the startup time is preceded by the â€œ~â€ character then the host was gone for a while and then came back while the lbsmc utility was running. The â€œ+â€ character in the times is to show that the date belongs to the past year(s).
 
 ##### Server Penalizer API and Utility
 
@@ -1287,7 +1287,7 @@ Figure 12. Penalty Value Characteristics
 
 Technically, the penalty is maintained by a daemon, which has the server configured, i.e., received by a certain host, which may be different from the one where the server was put into the configuration file. The penalty first migrates to that host, and then the daemon on that host announces that the server was penalized.
 
-<span class="nctnt highlight">Note:</span> Once a daemon is restarted, the penalty information is lost.
+:heavy_exclamation_mark: __Notes__ Once a daemon is restarted, the penalty information is lost.
 
 [Service mapping API](ch_conn.html#ch_conn.service_mapping_api) has a call <span class="nctnt ncbi-code">SERV\_Penalize()</span> (<http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/ident?i=SERV_Penalize>) declared in <span class="nctnt ncbi-path">connect/ncbi\_service.h</span> (<http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/source/include/connect/ncbi_service.h>), which can be used to set the penalty for the last server obtained from the mapping iterator.
 
@@ -1299,7 +1299,7 @@ For script files (similar to the ones used to start/stop servers), there is a de
     > sleep 5
     now you can shutdown the server
 
-The effect of the above is to set the maximal penalty 100 for the service Servicename (of type <span class="nctnt ncbi-type">STANDALONE</span>) running on host <span class="nctnt ncbi-var">host</span> for at least 120 seconds. After 120 seconds the penalty value will start going down steadily and at some stage the penalty becomes 0. The default hold time equals 0. It takes some time to deliver the penalty value to the other hosts on the network so ‘sleep 5’ is used. Please note the single quotes surrounding the penalty specification: they are required in a command shell because <span class="nctnt ncbi-app">lbsm\_feedback</span> takes only one argument which is the entire penalty specification.
+The effect of the above is to set the maximal penalty 100 for the service Servicename (of type <span class="nctnt ncbi-type">STANDALONE</span>) running on host <span class="nctnt ncbi-var">host</span> for at least 120 seconds. After 120 seconds the penalty value will start going down steadily and at some stage the penalty becomes 0. The default hold time equals 0. It takes some time to deliver the penalty value to the other hosts on the network so â€˜sleep 5â€™ is used. Please note the single quotes surrounding the penalty specification: they are required in a command shell because <span class="nctnt ncbi-app">lbsm\_feedback</span> takes only one argument which is the entire penalty specification.
 
 As soon as the server is down, the <span class="nctnt ncbi-app">LBSMD</span> daemon detects it in a matter of several seconds (if not instructed otherwise by the configuration file) and then does not dispatch to the server until it is back up. In some circumstances, the following command may come in handy:
 
@@ -1313,7 +1313,7 @@ The formal description of the lbsm\_feedback utility parameters is given below.
 
 Figure 13. lbsm\_feedback Arguments
 
-The <span class="nctnt ncbi-monospace">servicename</span> can be an identifier with ‘\*’ for any symbols and / or ‘?’ for a single character. The <span class="nctnt ncbi-monospace">penalty value</span> is an integer value in the range 0 ... 100. The <span class="nctnt ncbi-monospace">port number</span> and <span class="nctnt ncbi-monospace">time</span> are integers. The <span class="nctnt ncbi-monospace">hostname</span> is an identifier and the <span class="nctnt ncbi-monospace">rate value</span> is a floating point value.
+The <span class="nctnt ncbi-monospace">servicename</span> can be an identifier with â€˜\*â€™ for any symbols and / or â€˜?â€™ for a single character. The <span class="nctnt ncbi-monospace">penalty value</span> is an integer value in the range 0 ... 100. The <span class="nctnt ncbi-monospace">port number</span> and <span class="nctnt ncbi-monospace">time</span> are integers. The <span class="nctnt ncbi-monospace">hostname</span> is an identifier and the <span class="nctnt ncbi-monospace">rate value</span> is a floating point value.
 
 #### SVN Repository
 
@@ -1582,7 +1582,7 @@ makes the host to serve requests that don't have any DB argument in their query 
 
 #### Log File
 
-The CAF module uses the Apache web server log files to put CAF module’s messages into.
+The CAF module uses the Apache web server log files to put CAF moduleâ€™s messages into.
 
 #### Monitoring
 
@@ -1649,7 +1649,7 @@ The following additional HTTP tags are recognized in the client request to the D
 <li><p><span class="nctnt ncbi-type">HTTP_POST</span></p></li>
 <li><p><span class="nctnt ncbi-type">FIREWALL</span></p></li>
 </ul>
-<br/>The keyword describes the server type which the client is capable to handle. The default is any (when the tag is not present in the HTTP header), and in case of a connection request, the dispatcher will accommodate an actual found server with the connection mode, which the client requested, by relaying data appropriately and in a way suitable for the server.<br/><span class="nctnt highlight">Note: </span><span class="nctnt ncbi-type">FIREWALL</span> indicates that the client chooses a firewall method of communication.<br/><span class="nctnt highlight">Note:</span> Some server types can be ignored if not compatible with the current client mode</td>
+<br/>The keyword describes the server type which the client is capable to handle. The default is any (when the tag is not present in the HTTP header), and in case of a connection request, the dispatcher will accommodate an actual found server with the connection mode, which the client requested, by relaying data appropriately and in a way suitable for the server.<br/><span class="nctnt highlight">Note: </span><span class="nctnt ncbi-type">FIREWALL</span> indicates that the client chooses a firewall method of communication.<br/>:heavy_exclamation_mark: __Notes__ Some server types can be ignored if not compatible with the current client mode</td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="nctnt ncbi-code">Client-Mode: &lt;client-mode&gt;</span></td>
@@ -1695,7 +1695,7 @@ The DISPD dispatcher can produce the following HTTP tags in response to the clie
 | <span class="nctnt ncbi-code">Relay-Path: \<path\></span>                          | The tag shows how the information was passed along by the DISPD dispatcher and the NCBID utility. This is essential for debugging purposes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | <span class="nctnt ncbi-code">Server-Info-\<n\>: \<server-info\></span>            | The tag(s) (enumerated increasingly by suffix <span class="nctnt ncbi-code">\<n\></span>, starting from 1) give a list of servers, where the requested service is available. The list can have up to five entries. However, there is only one entry generated when the service was requested either in firewall mode or by a Web browser. For a non-local client, the returned server descriptors can include <span class="nctnt ncbi-type">FIREWALL</span> server specifications. Despite preserving information about host, port, type, and other (but not all) parameters of the original servers, <span class="nctnt ncbi-type">FIREWALL</span> descriptors are not specifications of real servers, but they are created on-the-fly by the DISPD dispatcher to indicate that the connection point of the server cannot be otherwise reached without the use of either firewalling or relaying. |
 | <span class="nctnt ncbi-code">Connection-Info: \<host\> \<port\> \<ticket\></span> | The tag is generated in a response to a stateful-capable client and includes a host (in a dotted notation) and a port number (decimal value) of the connection point where the server is listening (if either the server has specifically started or the FWDaemon created that connection point because of the client's request). The ticket value (hexadecimal) represents the 4-byte ticket that must be passed to the server as binary data at the very beginning of the stream. If instead of a host, a port, and ticket information there is a keyword <span class="nctnt ncbi-type">TRY\_STATELESS</span>, then for some reasons (see <span class="nctnt ncbi-code">Dispatcher-Failures</span> tag below) the request failed but may succeed if the client would switch into a stateless mode.                                                                                               |
-| <span class="nctnt ncbi-code">Dispatcher-Failures: \<failures\></span>             | The tag value lists all transient failures that the dispatcher might have experienced while processing the request. A fatal error (if any) always appears as the last failure in the list. In this case, the reply body would contain a copy of the message as well.<br/><span class="nctnt highlight">Note:</span> Fatal dispatching failure is also indicated by an unsuccessful HTTP completion code.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| <span class="nctnt ncbi-code">Dispatcher-Failures: \<failures\></span>             | The tag value lists all transient failures that the dispatcher might have experienced while processing the request. A fatal error (if any) always appears as the last failure in the list. In this case, the reply body would contain a copy of the message as well.<br/>:heavy_exclamation_mark: __Notes__ Fatal dispatching failure is also indicated by an unsuccessful HTTP completion code.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | <span class="nctnt ncbi-code">Used-Server-Info-n: \<server\_info\></span>          | The tag informs the client end of server infos that having been unsuccessfully used during current connection request (so that the client will be able to skip over them if needs to).<br/><span class="nctnt ncbi-code">n</span> is an integral suffix, enumerating from 1.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | <span class="nctnt ncbi-code">Dispatcher-Messages:</span>                          | The tag is used to issue a message into standard error log of a client. The message is intercepted and delivered from within Toolkit HTTP API.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 
@@ -1703,15 +1703,15 @@ The DISPD dispatcher can produce the following HTTP tags in response to the clie
 
 After making a dispatching request and using the dispatching information returned, the client can usually connect to the server on its own. Sometimes, however, the client has to connect to the DISPD dispatcher again to proceed with communication with the server. For the DISPD dispatcher this would then be a connection request which can go one of two similar ways, relaying and firewalling.
 
-The figures (Figure7, Figure8) provided at the very beginning of the “Load Balancing” chapter can be used for better understanding of the communication schemes described below.
+The figures (Figure7, Figure8) provided at the very beginning of the â€œLoad Balancingâ€ chapter can be used for better understanding of the communication schemes described below.
 
 -   In the relay mode, the DISPD dispatcher passes data from the client to the server and back, playing the role of a middleman. Data relaying occurs when, for instance, a Web browser client wants to communicate with a service governed by the DISPD dispatcher itself.
 
--   In the firewall mode, DISPD sends out only the information about where the client has to connect to communicate with the server. This connection point and a verifiable ticket are specified in the <span class="nctnt ncbi-code">Connection-Info</span> tag in the reply header. <span class="nctnt highlight">Note:</span> firewalling actually pertains only to the stateful-capable clients and servers.
+-   In the firewall mode, DISPD sends out only the information about where the client has to connect to communicate with the server. This connection point and a verifiable ticket are specified in the <span class="nctnt ncbi-code">Connection-Info</span> tag in the reply header. :heavy_exclamation_mark: __Notes__ firewalling actually pertains only to the stateful-capable clients and servers.
 
 The firewall mode is selected by the presence of the <span class="nctnt ncbi-type">FIREWALL</span> keyword in the <span class="nctnt ncbi-code">Accepted-Server-Types</span> tag set by the client sitting behind a firewall and not being able to connect to an arbitrary port.
 
-These are scenarios of data flow between the client and the server, depending on the “stateness” of the client:
+These are scenarios of data flow between the client and the server, depending on the â€œstatenessâ€ of the client:
 
 A. Stateless client
 
@@ -1727,7 +1727,7 @@ The client connects to the DISPD dispatcher with a connection request (e.g., the
 2  
 If the client chooses to use the firewall mode then the only way to communicate with the server is to connect to the DISPD dispatcher (making a connection request) and use the DISPD dispatcher as a relay.
 
-<span class="nctnt highlight">Note:</span> Even if the server is stand-alone (but lacking S=yes in the configuration file of the LBSMD daemon) then the DISPD dispatcher initiates a microsession to the server and wraps its output into an HTTP/1.0-compliant reply. Data from both HTTP and NCBID servers are simply relayed one-to-one.
+:heavy_exclamation_mark: __Notes__ Even if the server is stand-alone (but lacking S=yes in the configuration file of the LBSMD daemon) then the DISPD dispatcher initiates a microsession to the server and wraps its output into an HTTP/1.0-compliant reply. Data from both HTTP and NCBID servers are simply relayed one-to-one.
 
 B. Stateful-capable client
 
@@ -1739,7 +1739,7 @@ If the firewall mode is selected, then the client has to expect <span class="nct
 
 <span class="nctnt highlight">Note: </span><span class="nctnt ncbi-type">TRY\_STATELESS</span> could be induced by many reasons, mainly because all servers for the service are stateless ones or because the FWDaemon is not available on the host, where the client's request was received.
 
-<span class="nctnt highlight">Note:</span> Outlined scenarios show that no prior dispatching information is required for a stateless client to make a connection request, because the DISPD dispatcher can always be used as a data relay (in this way, Web browsers can access NCBI services). But for a stateful-capable client to establish a dedicated connection an additional step of obtaining dispatching information must precede the actual connection.
+:heavy_exclamation_mark: __Notes__ Outlined scenarios show that no prior dispatching information is required for a stateless client to make a connection request, because the DISPD dispatcher can always be used as a data relay (in this way, Web browsers can access NCBI services). But for a stateful-capable client to establish a dedicated connection an additional step of obtaining dispatching information must precede the actual connection.
 
 To support requests from Web browsers, which are unaware of HTTP extensions comprising dispatching protocol the DISPD dispatcher considers an incoming request that does not contain input dispatching tags as a connection request from a stateless-only client.
 
@@ -1788,13 +1788,13 @@ For the sake of the backward compatibility the NCBID utility creates the followi
 
 The NCBI Firewall Daemon (FWDaemon) is essentially a network multiplexer listening at an advertised network address.
 
-The FWDaemon works in a close cooperation with the DISPD dispatcher which informs FWDaemon on how to connect to the “real” NCBI server and then instructs the network client to connect to FWDaemon (instead of the “real” NCBI server). Thus, the FWDaemon serves as a middleman that just pumps the network traffic from the network client to the NCBI server and back.
+The FWDaemon works in a close cooperation with the DISPD dispatcher which informs FWDaemon on how to connect to the â€œrealâ€ NCBI server and then instructs the network client to connect to FWDaemon (instead of the â€œrealâ€ NCBI server). Thus, the FWDaemon serves as a middleman that just pumps the network traffic from the network client to the NCBI server and back.
 
 The FWDaemon allows a network client to establish a persistent TCP/IP connection to any of publicly advertised NCBI services, provided that the client is allowed to make an outgoing network connection to any of the following FWDaemon addresses (on front-end NCBI machines):
 
     ports 5860..5870 at both 130.14.29.112 and 165.112.7.12
 
-<span class="nctnt highlight">Note:</span> One FWDaemon can simultaneously serve many client/server pairs.
+:heavy_exclamation_mark: __Notes__ One FWDaemon can simultaneously serve many client/server pairs.
 
 ##### FWDaemon Behind a "Regular" Firewall
 
@@ -1802,7 +1802,7 @@ If a network client is behind a regular firewall, then a system administrator sh
 
 ##### FWDaemon Behind a "Non-Transparent" Firewall
 
-<span class="nctnt highlight">Note:</span> If a firewall is "non-transparent" (this is an extremely rare case), then a system administrator must "map" the corresponding ports on your firewall server to the advertised FWDaemon addresses (shown above). In this case, you will have to specify the address of your firewall server in the client configuration.
+:heavy_exclamation_mark: __Notes__ If a firewall is "non-transparent" (this is an extremely rare case), then a system administrator must "map" the corresponding ports on your firewall server to the advertised FWDaemon addresses (shown above). In this case, you will have to specify the address of your firewall server in the client configuration.
 
 The mapping on your non-transparent firewall server should be similar to the following:
 
@@ -1822,7 +1822,7 @@ Having the page loaded into a browser the user will see the following.
 
 Figure 15. FWDaemon Checking Web Page
 
-By clicking the “Check” button a page similar to the following will appear.
+By clicking the â€œCheckâ€ button a page similar to the following will appear.
 
 <span>[![Image FWDaemonCheckPage.gif](/book-test1/static/img/FWDaemonCheckPage.gif)](/book-test1/static/img/FWDaemonCheckPage.gif "Click to see the full-resolution image")</span>
 
@@ -1832,7 +1832,7 @@ The outside NCBI network users can check the connection to the NAT service follo
 
 -   Run the FWDaemon presence check as described above.
 
--   Take connection properties from any line where the status is “OK”. For example 130.14.29.112:5864
+-   Take connection properties from any line where the status is â€œOKâ€. For example 130.14.29.112:5864
 
 -   Establish a telnet session using those connection properties. The example of a connection session is given below (a case when a connection was successfully established).
 
@@ -2107,7 +2107,7 @@ There are multiple ways to write data to <span class="nctnt ncbi-app">NetCache</
 
         -   Lifetime prolongation can be disabled by setting the <span class="nctnt ncbi-monospace">prolong\_on\_read</span> entry to <span class="nctnt ncbi-code">false</span> in [netcached.ini](http://www.ncbi.nlm.nih.gov/viewvc/v1/trunk/c++/src/app/netcache/netcached.ini?view=log).
 
-        -   <span class="nctnt highlight">Note:</span> Calling <span class="nctnt ncbi-func">GetBlobSize()</span> will prolong a blob's lifetime (unless <span class="nctnt ncbi-monospace">prolong\_on\_read</span> is <span class="nctnt ncbi-code">false</span>), but calling <span class="nctnt ncbi-func">GetBlobInfo()</span> will not.
+        -   :heavy_exclamation_mark: __Notes__ Calling <span class="nctnt ncbi-func">GetBlobSize()</span> will prolong a blob's lifetime (unless <span class="nctnt ncbi-monospace">prolong\_on\_read</span> is <span class="nctnt ncbi-code">false</span>), but calling <span class="nctnt ncbi-func">GetBlobInfo()</span> will not.
 
 #### Set up your program to use NetCache
 
@@ -2322,7 +2322,7 @@ A:Yes, you can mirror NC servers, master-master style, including between BETH an
 
 A:I have seen 400MB blobs there being written and read without an incident a thousand times a day (<http://mini.ncbi.nlm.nih.gov/1k3ru>). We can do experiments to see how your load will be handled. As a general rule, you should ask <span class="oem_mark">grid-core@ncbi.nlm.nih.gov</span> for guidance when changing your NC usage.
 
-**Q:How is the expiration of BLOBs handled by NetCache? My thinking is coming from two directions. First, I wouldn’t want BLOBs deleted out from under me, but also, if the expiration is too long, I don’t want to be littering the NetCache. That is: do I need to work hard to remove all of my BLOBs or can I just trust the automatic clean-up?**
+**Q:How is the expiration of BLOBs handled by NetCache? My thinking is coming from two directions. First, I wouldnâ€™t want BLOBs deleted out from under me, but also, if the expiration is too long, I donâ€™t want to be littering the NetCache. That is: do I need to work hard to remove all of my BLOBs or can I just trust the automatic clean-up?**
 
 A:You can specify a "time-to-live" when you create a blob. If you don't specify a value, you can find the service's default value by calling <span class="nctnt ncbi-func">GetBlobInfo()</span>. See the [basic ideas](ch_app.html#ch_app.The_basic_ideas) section for more details.
 
