@@ -416,7 +416,7 @@ It is possible to tune up the C++ code generation by using a definition file, wh
 4  
 ```[-]```
 
-Parameter definitions follow a "name = value" format. The "name" part of the definition serves two functions: (1) selecting the specific element to which the definition applies, and (2) selecting the code generation parameter (such as ```**\_class**```) that will be fine-tuned for that element.
+Parameter definitions follow a "name = value" format. The "name" part of the definition serves two functions: (1) selecting the specific element to which the definition applies, and (2) selecting the code generation parameter (such as **```\_class```**) that will be fine-tuned for that element.
 
 To modify a top-level element, use a definition line where the name part is simply the desired code generation parameter (such as ```**\_class**```). To modify a nested element, use a definition where the code generation parameter is prefixed by a dot-separated "path" of the successive container element names from the data format specification. For path elements of type ```SET OF``` or ```SEQUENCE OF```, use an "```E```" as the element name (which would otherwise be anonymous). <span class="nctnt highlight">Note:</span> Element names will depend on whether you are using ASN.1, DTD, or Schema.
 
