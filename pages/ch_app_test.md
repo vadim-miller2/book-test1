@@ -18,7 +18,7 @@ Overview
 
 ### Introduction
 
-Most of the applications discussed in this chapter are built on a regular basis, at least once a day from the latest sources, and if you are in NCBI, then you can find the latest version in the directory: <span class="nctnt ncbi-path">$NCBI/c++/Release/bin/</span> (or <span class="nctnt ncbi-path">$NCBI/c++/Debug/bin/</span>).
+Most of the applications discussed in this chapter are built on a regular basis, at least once a day from the latest sources, and if you are in NCBI, then you can find the latest version in the directory: `$NCBI/c++/Release/bin/` (or `$NCBI/c++/Debug/bin/`).
 
 ### Chapter Outline
 
@@ -205,7 +205,7 @@ The following is an outline of the topics presented in this chapter:
 DATATOOL: Code Generation and Data Serialization Utility
 --------------------------------------------------------
 
-<span class="nctnt ncbi-app">DATATOOL</span> source code is located at <span class="nctnt ncbi-path">c++/src/serial/datatool;</span> this application can perform the following:
+<span class="nctnt ncbi-app">DATATOOL</span> source code is located at `c++/src/serial/datatool;` this application can perform the following:
 
 -   Generate C++ data storage classes based on [ASN.1](http://www.itu.int/ITU-T/studygroups/com17/languages), [DTD](http://www.w3.org/TR/REC-xml) or [XML Schema](http://www.w3.org/XML/Schema) specification to be used with [NCBI data serialization streams](ch_ser.html).
 
@@ -277,34 +277,34 @@ See [Table 2](ch_app.html#ch_app.tools_table2).
 
 Table 2. Code generation arguments
 
-| Argument        | Effect                                                                                                     | Comments                                                                                                                                                                             |
-|-----------------|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| -od \<file\>    | C++ code [definition file](ch_app.html#ch_app.datatool.html_refDefFile)                                    | See [Definition file](ch_app.html#ch_app.datatool.html_refDefFile)                                                                                                                   |
-| -ods            | Generate an example definition file (e.g. <span class="nctnt ncbi-path">MyModuleName.\_sample\_def</span>) | Must be used with another option that generates code such as -oA.                                                                                                                    |
-| -odi            | Ignore absent code definition file                                                                         |                                                                                                                                                                  |
-| -odw            | Issue a warning about absent code definition file                                                          |                                                                                                                                                                  |
-| -oA             | Generate C++ files for all types                                                                           | Only types from the main module are used (see [-m](ch_app.html#ch_app.tools_table1) and -mx arguments).                                                                              |
-| -ot \<types\>   | Generate C++ files for listed types                                                                        | Only types from the main module are used (see [-m](ch_app.html#ch_app.tools_table1) and -mx arguments).                                                                              |
-| -ox \<types\>   | Exclude types from generation                                                                              |                                                                                                                                                                  |
-| -oX             | Turn off recursive type generation                                                                         |                                                                                                                                                                  |
-| -of \<file\>    | Write the list of generated C++ files                                                                      |                                                                                                                                                                  |
-| -oc \<file\>    | Write combining C++ files                                                                                  |                                                                                                                                                                  |
-| -on \<string\>  | Default namespace                                                                                          | The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't use a namespace at all and overrides the -on option specified elsewhere.             |
-| -opm \<dir\>    | Directory for searching source modules                                                                     |                                                                                                                                                                  |
-| -oph \<dir\>    | Directory for generated \*.hpp files                                                                       |                                                                                                                                                                  |
-| -opc \<dir\>    | Directory for generated \*.cpp files                                                                       |                                                                                                                                                                  |
-| -or \<prefix\>  | Add prefix to generated file names                                                                         |                                                                                                                                                                  |
-| -orq            | Use quoted syntax form for generated include files                                                         |                                                                                                                                                                  |
-| -ors            | Add source file dir to generated file names                                                                |                                                                                                                                                                  |
-| -orm            | Add module name to generated file names                                                                    |                                                                                                                                                                  |
-| -orA            | Combine all -or\* prefixes                                                                                 |                                                                                                                                                                  |
-| -ocvs           | create ".cvsignore" files                                                                                  |                                                                                                                                                                  |
-| -oR \<dir\>     | Set -op\* and -or\* arguments for NCBI directory tree                                                      |                                                                                                                                                                  |
-| -oDc            | Turn ON generation of Doxygen-style comments                                                               | The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't generate Doxygen comments and overrides the -oDc option specified elsewhere.         |
-| -odx \<string\> | URL of documentation root folder                                                                           | For Doxygen                                                                                                                                                                          |
-| -lax\_syntax    | Allow non-standard ASN.1 syntax accepted by asntool                                                        | The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't allow non-standard syntax and overrides the -lax\_syntax option specified elsewhere. |
-| -pch \<string\> | Name of the precompiled header file to include in all \*.cpp files                                         |                                                                                                                                                                  |
-| -oex \<export\> | Add storage-class modifier to generated classes                                                            | Can be overriden by [[-].\_export](ch_app.html#ch_app.datatool.html_refDefCommon) in the definition file.                                                                            |
+| Argument        | Effect                                                                  | Comments                                                                                                                                                                             |
+|-----------------|-------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| -od \<file\>    | C++ code [definition file](ch_app.html#ch_app.datatool.html_refDefFile) | See [Definition file](ch_app.html#ch_app.datatool.html_refDefFile)                                                                                                                   |
+| -ods            | Generate an example definition file (e.g. `MyModuleName._sample_def`)   | Must be used with another option that generates code such as -oA.                                                                                                                    |
+| -odi            | Ignore absent code definition file                                      |                                                                                                                                                                  |
+| -odw            | Issue a warning about absent code definition file                       |                                                                                                                                                                  |
+| -oA             | Generate C++ files for all types                                        | Only types from the main module are used (see [-m](ch_app.html#ch_app.tools_table1) and -mx arguments).                                                                              |
+| -ot \<types\>   | Generate C++ files for listed types                                     | Only types from the main module are used (see [-m](ch_app.html#ch_app.tools_table1) and -mx arguments).                                                                              |
+| -ox \<types\>   | Exclude types from generation                                           |                                                                                                                                                                  |
+| -oX             | Turn off recursive type generation                                      |                                                                                                                                                                  |
+| -of \<file\>    | Write the list of generated C++ files                                   |                                                                                                                                                                  |
+| -oc \<file\>    | Write combining C++ files                                               |                                                                                                                                                                  |
+| -on \<string\>  | Default namespace                                                       | The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't use a namespace at all and overrides the -on option specified elsewhere.             |
+| -opm \<dir\>    | Directory for searching source modules                                  |                                                                                                                                                                  |
+| -oph \<dir\>    | Directory for generated \*.hpp files                                    |                                                                                                                                                                  |
+| -opc \<dir\>    | Directory for generated \*.cpp files                                    |                                                                                                                                                                  |
+| -or \<prefix\>  | Add prefix to generated file names                                      |                                                                                                                                                                  |
+| -orq            | Use quoted syntax form for generated include files                      |                                                                                                                                                                  |
+| -ors            | Add source file dir to generated file names                             |                                                                                                                                                                  |
+| -orm            | Add module name to generated file names                                 |                                                                                                                                                                  |
+| -orA            | Combine all -or\* prefixes                                              |                                                                                                                                                                  |
+| -ocvs           | create ".cvsignore" files                                               |                                                                                                                                                                  |
+| -oR \<dir\>     | Set -op\* and -or\* arguments for NCBI directory tree                   |                                                                                                                                                                  |
+| -oDc            | Turn ON generation of Doxygen-style comments                            | The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't generate Doxygen comments and overrides the -oDc option specified elsewhere.         |
+| -odx \<string\> | URL of documentation root folder                                        | For Doxygen                                                                                                                                                                          |
+| -lax\_syntax    | Allow non-standard ASN.1 syntax accepted by asntool                     | The value "-" in the [Definition file](ch_app.html#ch_app.datatool.html_refDefFile) means don't allow non-standard syntax and overrides the -lax\_syntax option specified elsewhere. |
+| -pch \<string\> | Name of the precompiled header file to include in all \*.cpp files      |                                                                                                                                                                  |
+| -oex \<export\> | Add storage-class modifier to generated classes                         | Can be overriden by [[-].\_export](ch_app.html#ch_app.datatool.html_refDefCommon) in the definition file.                                                                            |
 
 ### Data Specification Conversion
 
@@ -400,7 +400,7 @@ It is possible to convert source Schema into ASN.1, and then use <span class="nc
 
 ### Definition File
 
-It is possible to tune up the C++ code generation by using a definition file, which could be specified in the [-od](ch_app.html#ch_app.tools_table2) argument. The definition file uses the generic [NCBI configuration](ch_core.html#ch_core.registry_syntax) format also used in the configuration (<span class="nctnt ncbi-path">\*.ini</span>) files found in NCBI's applications.
+It is possible to tune up the C++ code generation by using a definition file, which could be specified in the [-od](ch_app.html#ch_app.tools_table2) argument. The definition file uses the generic [NCBI configuration](ch_core.html#ch_core.registry_syntax) format also used in the configuration (`*.ini`) files found in NCBI's applications.
 
 <span class="nctnt ncbi-app">DATATOOL</span> looks for code generation parameters in several sections of the file in the following order:
 
@@ -478,7 +478,7 @@ Or
     [TypeName]
     _file=AnotherName
 
-would put the class <span class="nctnt ncbi-class">CTypeName</span> in files with the base name <span class="nctnt ncbi-path">AnotherName</span>, whereas these two:
+would put the class <span class="nctnt ncbi-class">CTypeName</span> in files with the base name `AnotherName`, whereas these two:
 
     [ModuleName]
     _file=AnotherName
@@ -488,7 +488,7 @@ Or
     [-]
     _file=AnotherName
 
-put **all** the generated classes into a single file with the base name <span class="nctnt ncbi-path">AnotherName</span>.
+put **all** the generated classes into a single file with the base name `AnotherName`.
 
 `_extra_headers`      Specify additional header files to include.
 
@@ -519,7 +519,7 @@ Or
     [TypeName]
     _class=CAnotherName
 
-would cause the class generated for the type <span class="nctnt ncbi-path">TypeName</span> to be named <span class="nctnt ncbi-class">CAnotherName</span>, whereas these two:
+would cause the class generated for the type `TypeName` to be named <span class="nctnt ncbi-class">CAnotherName</span>, whereas these two:
 
     [ModuleName]
     _class=CAnotherName
@@ -690,13 +690,13 @@ First find the <span class="nctnt ncbi-app">DATATOOL</span>-assigned name by cre
 
     datatool -ods -oA -m catalogentry.xsd
 
-The sample definition file (<span class="nctnt ncbi-path">catalogentry.\_sample\_def</span>) shows `RR` as the class name:
+The sample definition file (`catalogentry._sample_def`) shows `RR` as the class name:
 
     [CatalogEntry]
     RR._class = 
     Summary._class = 
 
-Then edit the module definition file (<span class="nctnt ncbi-path">catalogentry.def</span>) and change `RR` to a more descriptive class name, for example:
+Then edit the module definition file (`catalogentry.def`) and change `RR` to a more descriptive class name, for example:
 
     [CatalogEntry]
     RR._class=CRecordChoice
@@ -705,15 +705,15 @@ The new name will be used the next time the module is built.
 
 ### Module File
 
-Module files are not used directly by <span class="nctnt ncbi-app">DATATOOL</span>, but they are read by <span class="nctnt ncbi-path">new\_module.sh</span> and [project\_tree\_builder](ch_config.html#ch_config._Build_the_Toolkit) and therefore determine what <span class="nctnt ncbi-app">DATATOOL</span>'s command line will be when <span class="nctnt ncbi-app">DATATOOL</span> is invoked from the NCBI build system.
+Module files are not used directly by <span class="nctnt ncbi-app">DATATOOL</span>, but they are read by `new_module.sh` and [project\_tree\_builder](ch_config.html#ch_config._Build_the_Toolkit) and therefore determine what <span class="nctnt ncbi-app">DATATOOL</span>'s command line will be when <span class="nctnt ncbi-app">DATATOOL</span> is invoked from the NCBI build system.
 
-Module files simply consist of lines of the form "`KEY = VALUE`". Only the key `MODULE_IMPORT` is currently used (and is the only key ever recognized by <span class="nctnt ncbi-path">project\_tree\_builder</span>). Other keys used to be recognized by <span class="nctnt ncbi-path">module.sh</span> and still harmlessly remain in some files. The possible keys are:
+Module files simply consist of lines of the form "`KEY = VALUE`". Only the key `MODULE_IMPORT` is currently used (and is the only key ever recognized by `project_tree_builder`). Other keys used to be recognized by `module.sh` and still harmlessly remain in some files. The possible keys are:
 
--   `MODULE_IMPORT`      These definitions contain a space-delimited list of other modules to import. The paths should be relative to <span class="nctnt ncbi-path">.../src</span> and should not include extensions.<br/><br/>For example, a valid entry could be:<br/>MODULE\_IMPORT = objects/general/general objects/seq/seq<br/>
+-   `MODULE_IMPORT`      These definitions contain a space-delimited list of other modules to import. The paths should be relative to `.../src` and should not include extensions.<br/><br/>For example, a valid entry could be:<br/>MODULE\_IMPORT = objects/general/general objects/seq/seq<br/>
 
--   `MODULE_ASN`, `MODULE_DTD`, `MODULE_XSD`      These definitions explicitly set the specification filename (normally <span class="nctnt ncbi-path">foo.asn</span>, <span class="nctnt ncbi-path">foo.dtd</span>, or <span class="nctnt ncbi-path">foo.xsd</span> for `foo.module`). Almost no module files contain this definition. It is no longer used by the <span class="nctnt ncbi-path">project\_tree\_builder</span> and is therefore not necessary
+-   `MODULE_ASN`, `MODULE_DTD`, `MODULE_XSD`      These definitions explicitly set the specification filename (normally `foo.asn`, `foo.dtd`, or `foo.xsd` for `foo.module`). Almost no module files contain this definition. It is no longer used by the `project_tree_builder` and is therefore not necessary
 
--   `MODULE_PATH`      Specifies the directory containing the current module, again relative to <span class="nctnt ncbi-path">.../src</span>. Almost all module files contain this definition, however it is no longer used by either <span class="nctnt ncbi-path">new\_module.sh</span> or the <span class="nctnt ncbi-path">project\_tree\_builder</span> and is therefore not necessary.
+-   `MODULE_PATH`      Specifies the directory containing the current module, again relative to `.../src`. Almost all module files contain this definition, however it is no longer used by either `new_module.sh` or the `project_tree_builder` and is therefore not necessary.
 
 ### Generated Code
 
@@ -925,7 +925,7 @@ The local NCBI users can also visit the following link:
 
 <http://intranet.ncbi.nlm.nih.gov/ieb/ToolBox/NETWORK/lbsmd.cgi>
 
-The default name of the LBSMD daemon configuration file is <span class="nctnt ncbi-path">/etc/lbsmd/servrc.cfg</span>. Each line can be one of the following:
+The default name of the LBSMD daemon configuration file is `/etc/lbsmd/servrc.cfg`. Each line can be one of the following:
 
 -   an include directive
 
@@ -949,7 +949,7 @@ A configuration line of the form
 
 causes the contents of the named file <span class="nctnt ncbi-var">filename</span> to be inserted here. The daemon always assumes that relative file names (those that do not start with the slash character, /) are based on the daemon startup directory. This is true for any level of nesting.
 
-Once started, the daemon first tries to read its configuration from <span class="nctnt ncbi-path">/etc/lbsmd/servrc.cfg</span>. If the file is not found (or is not readable) the daemon looks for the configuration file <span class="nctnt ncbi-path">servrc.cfg</span> in the directory from which it has been started. This fallback mechanism is not used when the configuration file name is explicitly stated in the command line. The daemon periodically checks the configuration file and all of its descendants and reloads (discards) their contents if some of the files have been either updated, (re-)moved, or added.
+Once started, the daemon first tries to read its configuration from `/etc/lbsmd/servrc.cfg`. If the file is not found (or is not readable) the daemon looks for the configuration file `servrc.cfg` in the directory from which it has been started. This fallback mechanism is not used when the configuration file name is explicitly stated in the command line. The daemon periodically checks the configuration file and all of its descendants and reloads (discards) their contents if some of the files have been either updated, (re-)moved, or added.
 
 The “<span class="nctnt ncbi-var">filename</span>” can be followed by a pipe character ( \\| ) and some text (up to the end of the line or the comment introduced by the hash character). That text is then prepended to every line (but the <span class="nctnt ncbi-code">%include</span> directives) read from the included file.
 
@@ -1065,7 +1065,7 @@ Servers are called SUPPRESSED when they are 100% penalized (see server penalties
 
 ##### Server Descriptor Specification
 
-The <span class="nctnt ncbi-var">server\_descriptor</span>, also detailed in <span class="nctnt ncbi-path">connect/ncbi\_server\_info.h</span> (<http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/source/include/connect/ncbi_server_info.h>), consists of the following fields:
+The <span class="nctnt ncbi-var">server\_descriptor</span>, also detailed in `connect/ncbi_server_info.h` (<http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/source/include/connect/ncbi_server_info.h>), consists of the following fields:
 
 <span class="nctnt ncbi-code">server\_type [host][:port] [arguments] [flags]</span>
 
@@ -1089,7 +1089,7 @@ where:
 
 -   both <span class="nctnt ncbi-var">host</span> and <span class="nctnt ncbi-var">port</span> parameters are optional. Defaults are local host and port 80, except for <span class="nctnt ncbi-type">STANDALONE</span> and <span class="nctnt ncbi-type">DNS</span> servers, which do not have a default port value. If host is specified (by either of the following: keyword localhost, localhost IP address 127.0.0.1, real host name, or IP address) then the described server is not a subject for variable load balancing but is a static server. Such server always has a constant rate, independent of any host load.
 
--   <span class="nctnt ncbi-var">arguments</span> are required for HTTP\* servers and must specify the local part of the URL of the CGI program and, optionally, parameters such as <span class="nctnt ncbi-path">/somepath/somecgi.cgi?param1&param2=value2&param3=value3</span>. If no parameters are to be supplied, then the question mark (?) must be omitted, too. For <span class="nctnt ncbi-app">NCBID</span> servers, arguments are parameters to pass to the server and are formed as arguments for CGI programs, i.e., param1&param2&param3=value. As a special rule, '' (two single quotes) may be used to denote an empty argument for the <span class="nctnt ncbi-app">NCBID</span> server. <span class="nctnt ncbi-type">STANDALONE</span> and <span class="nctnt ncbi-type">DNS</span> servers do not take any <span class="nctnt ncbi-var">arguments</span>.
+-   <span class="nctnt ncbi-var">arguments</span> are required for HTTP\* servers and must specify the local part of the URL of the CGI program and, optionally, parameters such as `/somepath/somecgi.cgi?param1&param2=value2&param3=value3`. If no parameters are to be supplied, then the question mark (?) must be omitted, too. For <span class="nctnt ncbi-app">NCBID</span> servers, arguments are parameters to pass to the server and are formed as arguments for CGI programs, i.e., param1&param2&param3=value. As a special rule, '' (two single quotes) may be used to denote an empty argument for the <span class="nctnt ncbi-app">NCBID</span> server. <span class="nctnt ncbi-type">STANDALONE</span> and <span class="nctnt ncbi-type">DNS</span> servers do not take any <span class="nctnt ncbi-var">arguments</span>.
 
 -   <span class="nctnt ncbi-var">flags</span> can come in any order (but no more than one instance of a flag is allowed) and essentially are the optional modifiers of values used by default. The following flags are recognized (see [ncbi\_server\_info.h](http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/source/include/connect/ncbi_server_info.h)):
 
@@ -1167,9 +1167,9 @@ The configuration files structure is unified for all the hosts in the NCBI netwo
 
 Figure 9. LBSMD Configuration Files Structure
 
-The common for all the configuration file prefix <span class="nctnt ncbi-path">/etc/lbsmd</span> is omitted on the figure. The arrows on the diagram show how the files are included.
+The common for all the configuration file prefix `/etc/lbsmd` is omitted on the figure. The arrows on the diagram show how the files are included.
 
-The files <span class="nctnt ncbi-path">servrc.cfg</span> and <span class="nctnt ncbi-path">servrc.cfg.systems</span> have fixed structure and should not be changed at all. The purpose of the file <span class="nctnt ncbi-path">local/servrc.cfg.systems</span> is to be modified by the systems group while the purpose of the file <span class="nctnt ncbi-path">local/servrc.cfg.ieb</span> isto be modified by the delegated members of the respected groups. To make it easier for changes all the <span class="nctnt ncbi-path">local/servrc.cfg.ieb</span> files from all the hosts in the NCBI network are stored in a centralized SVN repository. The repository can be received by issuing the following command:
+The files `servrc.cfg` and `servrc.cfg.systems` have fixed structure and should not be changed at all. The purpose of the file `local/servrc.cfg.systems` is to be modified by the systems group while the purpose of the file `local/servrc.cfg.ieb` isto be modified by the delegated members of the respected groups. To make it easier for changes all the `local/servrc.cfg.ieb` files from all the hosts in the NCBI network are stored in a centralized SVN repository. The repository can be received by issuing the following command:
 
 <span class="nctnt ncbi-cmd">svn co svn+ssh://subvert.be-md.ncbi.nlm.nih.gov/export/home/LBSMD\_REPO</span>
 
@@ -1179,7 +1179,7 @@ The file names in that repository match the following pattern:
 
 where `be-md` is used for Bethesda, MD site and `st-va` is used for Sterling, VA site. The optional `.qa` suffix is used for quality assurance department hosts.
 
-So, if it is required to change the <span class="nctnt ncbi-path">/etc/lbsmd/local/servrc.cfg.ieb</span> file on the sutils1 host in Bethesda the <span class="nctnt ncbi-path">sutils1.be-md</span> file is to be changed in the repository.
+So, if it is required to change the `/etc/lbsmd/local/servrc.cfg.ieb` file on the sutils1 host in Bethesda the `sutils1.be-md` file is to be changed in the repository.
 
 As soon as the modified file is checked in the file will be delivered to the corresponding host with the proper name automatically. The changes will take effect in a few minutes. The process of the configuration distribution is illustrated on the figure below.
 
@@ -1289,7 +1289,7 @@ Technically, the penalty is maintained by a daemon, which has the server configu
 
 <span class="nctnt highlight">Note:</span> Once a daemon is restarted, the penalty information is lost.
 
-[Service mapping API](ch_conn.html#ch_conn.service_mapping_api) has a call <span class="nctnt ncbi-code">SERV\_Penalize()</span> (<http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/ident?i=SERV_Penalize>) declared in <span class="nctnt ncbi-path">connect/ncbi\_service.h</span> (<http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/source/include/connect/ncbi_service.h>), which can be used to set the penalty for the last server obtained from the mapping iterator.
+[Service mapping API](ch_conn.html#ch_conn.service_mapping_api) has a call <span class="nctnt ncbi-code">SERV\_Penalize()</span> (<http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/ident?i=SERV_Penalize>) declared in `connect/ncbi_service.h` (<http://www.ncbi.nlm.nih.gov/IEB/ToolBox/CPP_DOC/lxr/source/include/connect/ncbi_service.h>), which can be used to set the penalty for the last server obtained from the mapping iterator.
 
 For script files (similar to the ones used to start/stop servers), there is a dedicated utility program called `lbsm_feedback` (<http://intranet.ncbi.nlm.nih.gov/ieb/ToolBox/CPP_DOC/lxr/source/src/connect/daemons/lbsm_feedback.c>), which sets the penalty from the command line. This command should be used with extreme care because it affects the load-balancing mechanism substantially,.
 
@@ -1323,17 +1323,17 @@ The SVN repository where the LBSMD daemon source code is located can be retrieve
 
 The daemon code is in this file:
 
-<span class="nctnt ncbi-path">c++/src/connect/daemons/lbsmd.c</span>
+`c++/src/connect/daemons/lbsmd.c`
 
 #### Log Files
 
 The LBSMD daemon stores its log files at the following location:
 
-<span class="nctnt ncbi-path">/var/log/lbsmd</span>
+`/var/log/lbsmd`
 
 The file is formed locally on a host where LBSMD daemon is running. The log file size is limited to prevent the disk being flooded with messages. A standard log rotation is applied to the log file so you may see the files:
 
-<span class="nctnt ncbi-path">/var/log/lbsmd.X.gz</span>
+`/var/log/lbsmd.X.gz`
 
 where X is a number of the previous log file.
 
@@ -1458,7 +1458,7 @@ There are 4 predefined proxies that may be used [or operated on] without prior d
 
 <span class="nctnt highlight">NOTE</span>: It is very important to keep in mind that arguments and alt-arguments are treated differently, case-wise. Alt-args are case insensitive, and are screened before the main argument (but appear as if the main argument has been found). On the other hand, main arguments are special case-sensitive, and are checked twice: "as is" first, then in all CAPs. So having both "DB" for alt-argument and "db" for the main, hides the main argument, and actually makes it case-insensitive. CAF will warn on some occurrences when it detects whether the argument overloading is about to happen (take a look at the logs).
 
-The CAF module is also able to detect if a request comes from a local client. The <span class="nctnt ncbi-path">/etc/ncbi/local\_ips</span> file describes the rules for making the decision.
+The CAF module is also able to detect if a request comes from a local client. The `/etc/ncbi/local_ips` file describes the rules for making the decision.
 
 The file is line-oriented, i.e. supposes to have one IP spec per one line. Comments are introduced by either "\#" or "!", no continuation lines allowed, the empty lines are ignored.
 
@@ -1606,7 +1606,7 @@ The status of the CAF modules can be seen via a web interface using the followin
 
 #### Overview
 
-The DISPD dispatcher is a CGI/1.0-compliant program (the actual file name is <span class="nctnt ncbi-path">dispd.cgi</span>). Its purpose is mapping a requested service name to an actual server location when the client has no direct access to the LBSMD daemon. This mapping is called dispatching. Optionally, the DISPD dispatcher can also pass data between the client, who requested the mapping, and the server, which implements the service, found as a result of dispatching. This combined mode is called a connection. The client may choose any of these modes if there are no special requirements on data transfer (e.g., firewall connection). In some cases, however, the requested connection mode implicitly limits the request to be a dispatching-only request, and the actual data flow between the client and the server occurs separately at a later stage.
+The DISPD dispatcher is a CGI/1.0-compliant program (the actual file name is `dispd.cgi`). Its purpose is mapping a requested service name to an actual server location when the client has no direct access to the LBSMD daemon. This mapping is called dispatching. Optionally, the DISPD dispatcher can also pass data between the client, who requested the mapping, and the server, which implements the service, found as a result of dispatching. This combined mode is called a connection. The client may choose any of these modes if there are no special requirements on data transfer (e.g., firewall connection). In some cases, however, the requested connection mode implicitly limits the request to be a dispatching-only request, and the actual data flow between the client and the server occurs separately at a later stage.
 
 #### Protocol Description
 
@@ -1751,9 +1751,9 @@ The DISPD dispatcher always preserves original HTTP tags <span class="nctnt ncbi
 
 #### Overview
 
-The LBSMD daemon supports services of type NCBID which are really Unix filter programs that read data from the stdin stream and write the output into the stdout stream without having a common protocol. Thus, HTTP/1.0 was chosen as a framed protocol for wrapping both requests and replies, and the NCBID utility CGI program was created to pass a request from the HTTP body to the server and to put the reply from the server into the HTTP body and send it back to the client. The NCBID utility also provides a dedicated connection between the server and the client, if the client supports the stateful way of communication. Former releases of the NCBID utility were implemented as a separate CGI program however the latest releases integrated the NCBID utility and the DISPD dispatcher into a single component (<span class="nctnt ncbi-path">ncbid.cgi</span> is a hard link to <span class="nctnt ncbi-path">dispd.cgi</span>).
+The LBSMD daemon supports services of type NCBID which are really Unix filter programs that read data from the stdin stream and write the output into the stdout stream without having a common protocol. Thus, HTTP/1.0 was chosen as a framed protocol for wrapping both requests and replies, and the NCBID utility CGI program was created to pass a request from the HTTP body to the server and to put the reply from the server into the HTTP body and send it back to the client. The NCBID utility also provides a dedicated connection between the server and the client, if the client supports the stateful way of communication. Former releases of the NCBID utility were implemented as a separate CGI program however the latest releases integrated the NCBID utility and the DISPD dispatcher into a single component (`ncbid.cgi` is a hard link to `dispd.cgi`).
 
-The NCBID utility determines the requested service from the query string in the same way as the DISPD dispatcher does, i.e., by looking into the value of the CGI parameter service. An executable file which has to be run is then obtained by searching the configuration file (shared with the LBSMD daemon; the default name is <span class="nctnt ncbi-path">servrc.cfg</span>): the path to the executable along with optional command-line parameters is specified after the bar character ("\\|") in the line containing a service definition.
+The NCBID utility determines the requested service from the query string in the same way as the DISPD dispatcher does, i.e., by looking into the value of the CGI parameter service. An executable file which has to be run is then obtained by searching the configuration file (shared with the LBSMD daemon; the default name is `servrc.cfg`): the path to the executable along with optional command-line parameters is specified after the bar character ("\\|") in the line containing a service definition.
 
 The NCBID utility can work in either of two connection modes, stateless and stateful, as determined by reading the following HTTP header tag:
 
@@ -1850,9 +1850,9 @@ The outside NCBI network users can check the connection to the NAT service follo
 
 The FWDaemon stores its log files at the following location:
 
-<span class="nctnt ncbi-path">/opt/machine/fwdaemon/log/fwdaemon</span>
+`/opt/machine/fwdaemon/log/fwdaemon`
 
-which is usually a link to <span class="nctnt ncbi-path">/var/log/fwdaemon</span>.
+which is usually a link to `/var/log/fwdaemon`.
 
 The file is formed locally on a host where FWDaemon is running.
 
@@ -1866,7 +1866,7 @@ The data exchange is illustrated on the figure below.
 
 Figure 17. DISPD FWDaemon Data Exchange
 
-The location of the <span class="nctnt ncbi-path">.dispd.msg</span> file is detected by the DISPD dispatcher as follows. The dispatcher determines the user name who owns the <span class="nctnt ncbi-path">dispd.cgi</span> executable. Then the dispatcher looks to the home directory for that user. The directory is used to look for the <span class="nctnt ncbi-path">.dispd.msg</span> file. The FWDaemon is run under the same user and the <span class="nctnt ncbi-path">.dispd.msg</span> file is saved by the daemon in its home directory.
+The location of the `.dispd.msg` file is detected by the DISPD dispatcher as follows. The dispatcher determines the user name who owns the `dispd.cgi` executable. Then the dispatcher looks to the home directory for that user. The directory is used to look for the `.dispd.msg` file. The FWDaemon is run under the same user and the `.dispd.msg` file is saved by the daemon in its home directory.
 
 ### Launcherd Utility
 
@@ -1902,7 +1902,7 @@ The quality assurance (QA) domain uses the same equipment and the same network a
 
 `CAFQAMap NCBIQA /opt/machine/httpd/public/conf/ncbiqa.mapping`
 
-The directive above defines the NCBIQA cookie which triggers names substitutions found in the <span class="nctnt ncbi-path">/opt/machine/httpd/public/conf/ncbiqa.mapping</span> file.
+The directive above defines the NCBIQA cookie which triggers names substitutions found in the `/opt/machine/httpd/public/conf/ncbiqa.mapping` file.
 
 To set the cookie the user can visit the following link:
 
@@ -1914,7 +1914,7 @@ A screen similar to the following will appear:
 
 Figure 18. QA Cookie Manager.
 
-While connecting to a certain service the cookie is analyzed by the CAF module and if the QA cookie is detected then name mapping is triggered. The mapping is actually a process of replacing one name with another. The replacement rules are stored in the <span class="nctnt ncbi-path">/opt/machine/httpd/public/conf/ncbiqa.mapping</span> file. The file content could be similar to the following:
+While connecting to a certain service the cookie is analyzed by the CAF module and if the QA cookie is detected then name mapping is triggered. The mapping is actually a process of replacing one name with another. The replacement rules are stored in the `/opt/machine/httpd/public/conf/ncbiqa.mapping` file. The file content could be similar to the following:
 
 `portal      portalqa`
 
@@ -2113,7 +2113,7 @@ There are multiple ways to write data to <span class="nctnt ncbi-app">NetCache</
 
 To use <span class="nctnt ncbi-app">NetCache</span> from your application, you must use the [NCBI application framework](ch_core.html#ch_core.CNcbiApplication) by deriving you application class from <span class="nctnt ncbi-class">CNcbiApplication</span>. If your application is a CGI, you can derive from <span class="nctnt ncbi-class">CCgiApplication</span>.
 
-You will need at least the following libraries in your <span class="nctnt ncbi-path">Makefile.\<appname\>.app</span>:
+You will need at least the following libraries in your `Makefile.<appname>.app`:
 
     # For CNcbiApplication-derived programs:
     LIB = xconnserv xthrserv xconnect xutil xncbi
