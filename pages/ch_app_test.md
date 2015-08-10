@@ -7,7 +7,7 @@ nav: pages/ch_app_test
 <span class="label">24</span>Applications
 =========================================
 
-Created: April 1, 2003; Last Update: March 17, 2015.
+Created: `April 1, 2003;` Last Update: March 17, 2015.
 
 Overview
 --------
@@ -18,7 +18,11 @@ Overview
 
 ### Introduction
 
-Most of the applications discussed in this chapter are built on a regular basis, at least once a day from the latest sources, and if you are in NCBI, then you can find the latest version in the directory: <span class="nctnt ncbi-path">$NCBI/c++/Release/bin/</span> (or <span class="nctnt ncbi-path">$NCBI/c++/Debug/bin/</span>).
+Most of the applications 
+
+`discussed in this chapter 
+are built on a regular basis,
+at least once a day from the latest` sources, and if you are in NCBI, then you can find the latest version in the directory: <span class="nctnt ncbi-path">$NCBI/c++/Release/bin/</span> (or <span class="nctnt ncbi-path">$NCBI/c++/Debug/bin/</span>).
 
 ### Chapter Outline
 
