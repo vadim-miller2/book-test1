@@ -8,6 +8,8 @@ nav: contribute
 NCBI welcomes contributions to its open source projects.  Feel free to 
 submit pull requests, documentation updates and other suggestions.
 
+Yay! VAKATOV
+
 ##### Check us out on GitHub
 
 <ul class="repo-list no-padding">
