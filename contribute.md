@@ -10,6 +10,8 @@ submit pull requests, documentation updates and other suggestions.
 
 Yay! VAKATOV
 
+Yay! VAKATOV - 2
+
 ##### Check us out on GitHub
 
 <ul class="repo-list no-padding">
