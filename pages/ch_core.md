@@ -7,7 +7,7 @@ nav: pages/ch_core
 <span class="label">8</span>Portability, Core Functionality and Application Framework
 =====================================================================================
 
-Last Update: December 29, 2014.
+Last Update: December 29, 2014.  TEST TEST OGOGO
 
 Overview
 --------
