@@ -9,6 +9,8 @@ The NCBI C++ Toolkit Book
 
 National Center for Biotechnology Information (US): Bethesda (MD); 2004.
 
+THIS IS TO TEST A PULL REQUEST by DENIS VAKATOV
+
 Contents
 --------
 
