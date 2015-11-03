@@ -53,4 +53,5 @@ Contents
 -   [Release Notes](pages/part8)
 -   [Appendix - Books and Styles](pages/appendix)
 
+(c) NCBI 2015
 
